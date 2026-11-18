@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yellow Shelf</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--bg:#FFFBEB;--soft:#FFF4CC;--accent:#F5B400}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:"Nunito Sans",system-ui,-apple-system,sans-serif;font-size:17px;min-height:100vh;position:relative}
+body{background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;min-height:100vh;position:relative}
 body::before{content:"";position:absolute;left:0;right:0;top:0;height:260px;z-index:-1;
  background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
 .wrap{max-width:900px;margin:0 auto;padding:28px 18px 60px}
-.brand{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.02em;color:#5B4B1E;text-decoration:none}
-h1{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:clamp(2rem,6vw,3rem);line-height:1.1;margin:10px 0 4px}
+.brand{font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.12em;color:#5B4B1E;text-decoration:none}
+h1{font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:700;letter-spacing:-.02em;font-size:clamp(2rem,6vw,3rem);line-height:1.1;margin:10px 0 4px}
 .crumbs{color:#5B4B1E;font-weight:700;font-size:.95rem;margin-bottom:30px;min-height:1.4em}
 .crumbs a{color:#5B4B1E;text-decoration:none;border-bottom:2px solid rgba(91,75,30,.25)}
 .crumbs a:hover{border-color:#5B4B1E}
@@ -27,7 +27,7 @@ h1{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:clamp(2r
 .card:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--line)}
 .card:active{transform:translateY(2px);box-shadow:0 2px 0 var(--line)}
 .ic{flex:0 0 48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:26px}
-.t{font-weight:800;font-size:1.08rem;line-height:1.25}
+.t{font-weight:600;font-size:1.08rem;line-height:1.25}
 .s{color:var(--muted);font-size:.85rem;font-weight:600;margin-top:2px}
 .c0 .ic{background:#FFF4CC}.c1 .ic{background:#DFF6EC}.c2 .ic{background:#E0F0FF}.c3 .ic{background:#FFE8D6}.c4 .ic{background:#E6FAF7}.c5 .ic{background:#FDECEC}
 .msg{background:#fff;border:2px dashed var(--line);border-radius:18px;padding:22px;color:var(--muted);text-align:center}
