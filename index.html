@@ -78,11 +78,13 @@ async function load() {
   const j = await r.json();
   const root = {dirs: {}, files: []};
   for (const it of j.tree) {
-    if (it.type !== "blob" || SKIP.test(it.path)) continue;
-    const parts = it.path.split("/"), file = parts.pop();
+    const parts = it.path.split("/");
+    const file = it.type === "blob" ? parts.pop() : null;
+    if (parts.some(p => p.startsWith("."))) continue;   // hidden folders
     let node = root;
     for (const p of parts) node = node.dirs[p] ||= {dirs: {}, files: []};
-    node.files.push({name: file, path: it.path});
+    if (it.type === "tree") { node.dirs; continue; }
+    if (file && !SKIP.test(it.path)) node.files.push({name: file, path: it.path});
   }
   return root;
 }
