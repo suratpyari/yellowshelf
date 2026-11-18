@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Grade 7 Tenses — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --card:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-soft:#E3DAFB;
+  --short:#4FB3A9; --short-soft:#DDF3F0;
+  --long:#F2A541; --long-soft:#FDEFD9;
+  --ct:#6C8EE0; --ct-soft:#E1E9FB;
+  --ok:#3E9B6A; --ok-soft:#DFF3E7; --again:#D9725B; --again-soft:#FBE5DF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:Inter,"Trebuchet MS",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(2rem,6.5vw,2.8rem);font-weight:800}
+.sub{color:var(--muted);margin:4px 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:#fff;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;display:flex;gap:7px;align-items:center}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip small{color:var(--muted);font-weight:600}
+.bar-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 8px;font-weight:700;color:var(--muted);font-size:.92rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.scene{perspective:1400px}
+.card{position:relative;min-height:340px;cursor:pointer;transition:transform .5s;transform-style:preserve-3d;border:0;padding:0;width:100%;background:none;font:inherit;color:inherit;text-align:left;display:grid}
+.card.flip{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:24px;padding:22px 22px 20px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;border:2px solid var(--line)}
+.back{transform:rotateY(180deg)}
+.tagline{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.tag{font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.marks{font-weight:800;color:var(--muted);font-size:.9rem}
+.qnum{font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:3rem;line-height:1;color:var(--accent-soft);margin-bottom:4px}
+.qtext{font-size:1.3rem;font-weight:700;flex:1}
+.hint{color:var(--muted);font-size:.88rem;margin-top:16px;text-align:center}
+.back h2{font-size:1.1rem;color:var(--muted);margin-bottom:8px}
+.back .qsmall{font-weight:700;font-size:.98rem;margin-bottom:12px}
+.back ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.back li::marker{color:var(--accent)}
+.controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{flex:1;min-width:120px;border:0;border-radius:16px;padding:14px 16px;font:inherit;font-weight:800;font-size:1rem;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--line)}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 4px 0 #5B3FB0}
+.btn.ok{background:var(--ok-soft);color:var(--ok);box-shadow:0 4px 0 #BFE3CD}
+.btn.again{background:var(--again-soft);color:var(--again);box-shadow:0 4px 0 #F2C9BE}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
+.nav .btn{flex:0 1 auto;font-size:.92rem;padding:10px 14px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.done{background:var(--card);border-radius:24px;padding:26px;border:2px solid var(--line);text-align:center}
+.big{font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:clamp(3rem,13vw,4.6rem);line-height:1;color:var(--accent)}
+.hidden{display:none!important}
+.tiny{color:var(--muted);font-size:.82rem;margin-top:14px}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.bar>i{transition:none}}
+</style>
+<style id="yellow-theme">
+:root{--bg:#FFFBEB;--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--accent:#F5B400;--accent-ink:#1E293B;--accent-soft:#FFF4CC;--chip:#FFF4CC}
+body{position:relative}
+h1{font-weight:700;letter-spacing:-.02em}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:230px;z-index:-1;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
+  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+.sub{color:#5B4B1E!important}
+.chip[aria-pressed="true"]{background:#FFF4CC!important;border-color:#F5B400!important}
+#startBtn,#nextBtn,#retryWrongBtn,.btn.primary{background:linear-gradient(180deg,#FFD24D,#FFC21A)!important;color:#1E293B!important;box-shadow:0 4px 0 #D99A00!important}
+.bar{background:rgba(255,255,255,.7)!important}
+.bar>i{background:linear-gradient(90deg,#FB923C,#F97316)!important}
+.back li::marker{color:#F59E0B}
+.qnum{color:#FDE68A!important}
+.big{color:#F59E0B!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Grade 7 Tenses</h1>
+  <p class="sub">Flashcards · rules, differences, corrections and writing practice for all 12 tenses. Answer out loud or on paper, then flip to check.</p>
+
+  <div class="chips" id="chips"></div>
+  <div class="chips" style="margin-top:8px" id="opts"></div>
+
+  <div id="deckView">
+    <div class="bar-row"><span id="count"></span><span id="tally"></span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scene">
+      <button class="card" id="card" aria-live="polite">
+        <div class="face front">
+          <div class="tagline"><span class="tag" id="fTag"></span><span class="marks" id="fMarks"></span></div>
+          <div class="qnum" id="fNum"></div>
+          <div class="qtext" id="fText"></div>
+          <div class="hint">Tap the card or press Space to see the answer</div>
+        </div>
+        <div class="face back">
+          <div class="tagline"><span class="tag" id="bTag"></span><span class="marks" id="bMarks"></span></div>
+          <h2>Key points</h2>
+          <div class="qsmall" id="bText"></div>
+          <ul id="bPts"></ul>
+        </div>
+      </button>
+    </div>
+    <div class="controls" id="flipCtl"><button class="btn primary" id="flipBtn">Show answer</button></div>
+    <div class="controls hidden" id="rateCtl">
+      <button class="btn again" id="againBtn">Need practice</button>
+      <button class="btn ok" id="okBtn">I knew it</button>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prevBtn">← Previous</button>
+      <button class="btn" id="skipBtn">Skip →</button>
+    </div>
+    <p class="tiny">Keys: Space = flip · ← → = move · K = knew it · P = need practice</p>
+  </div>
+
+  <div class="done hidden" id="doneView">
+    <h2 style="font-size:1.6rem">Round complete</h2>
+    <div class="big" id="dScore"></div>
+    <p id="dMsg"></p>
+    <div class="controls">
+      <button class="btn again" id="practiceBtn">Practise the tricky ones</button>
+      <button class="btn primary" id="restartBtn">Start again</button>
+    </div>
+  </div>
+</div>
+<script>
+const RAW={"short": [["Name the four forms of each tense, using the verb ‘write’ in the present.", 2, ["Simple: writes · Continuous: is writing", "Perfect: has written · Perfect continuous: has been writing"]], ["Give the structure (formula) of the present perfect continuous tense with an example.", 2, ["has/have + been + verb-ing", "e.g. She has been studying since morning."]], ["Give the structure of the past perfect tense. When do we use it?", 2, ["had + past participle (V3).", "For the earlier of two past actions: The train had left when I reached."]], ["Give the structure of the future perfect continuous tense with an example.", 2, ["will have been + verb-ing", "e.g. By March, I will have been living here for ten years."]], ["Write two uses of the simple present tense, with an example of each.", 2, ["Habits/routines: Riya practises the piano every evening.", "Universal truths: Water boils at 100 °C. (Also timetables: The train leaves at 6:15.)"]], ["What are stative verbs? Why don’t we use them in the continuous form?", 2, ["Verbs that show a state, not an action: know, believe, like, own, seem.", "They describe something that just is, not something in progress: “I know” (not “I am knowing”)."]], ["Explain the difference: “She has gone to Delhi” and “She has been to Delhi”.", 2, ["Has gone: she went and is still there (not back yet).", "Has been: she went and has come back (an experience)."]], ["Why is “I have seen him yesterday” wrong? Correct it.", 2, ["A finished past time (yesterday, ago, last week) needs the simple past, not the present perfect.", "Correct: I saw him yesterday."]], ["When do we use ‘since’ and when ‘for’? Give an example of each.", 2, ["Since + a point in time: I have lived here since 2020.", "For + a length of time: I have lived here for five years."]], ["Why do we say “I will call you when I reach home” and not “when I will reach”?", 2, ["After time words like when, as soon as, until, after, we use the simple present for the future.", "Only the main clause takes will: I will call you."]], ["Write two ways to talk about the future other than ‘will’, with examples.", 2, ["be going to — plans or evidence: Look at the clouds! It is going to rain.", "Present continuous for arrangements: We are having a party tonight. (Simple present for timetables.)"]], ["Differentiate between the past continuous and the simple past in “I was taking a shower when the phone rang.”", 2, ["Past continuous (was taking) = the longer action in progress.", "Simple past (rang) = the short action that interrupted it."]], ["Change into the negative and interrogative: “He plays chess.”", 2, ["Negative: He does not play chess.", "Question: Does he play chess? (does + base verb; the -s goes away)."]], ["Change into the negative and interrogative: “They had finished the work.”", 2, ["Negative: They had not finished the work.", "Question: Had they finished the work?"]], ["Give the three forms (V1, V2, V3) of: rise, lie (rest), lay, swim.", 2, ["rise – rose – risen; lie – lay – lain", "lay – laid – laid; swim – swam – swum"]], ["What is the difference between ‘lie’ and ‘lay’?", 2, ["Lie = to rest; no object (lie – lay – lain): He has lain in bed all day.", "Lay = to put something down; needs an object (lay – laid – laid): The hen laid two eggs."]], ["Identify the tense: “The house is being painted.” and “The letter has been posted.”", 2, ["is being painted: present continuous (passive).", "has been posted: present perfect (passive)."]], ["What happens to tenses in reported speech? Give an example.", 2, ["The tense usually moves one step back: present → past, present perfect → past perfect.", "He said, “I am reading.” → He said that he was reading."]], ["How does ‘always’ change the meaning of the present continuous?", 2, ["“He is always leaving his things around!” shows annoyance at a repeated habit.", "Plain simple present (“He always leaves”) just states a habit."]], ["Fill in and give the rule: “Neither the teacher nor the students ____ (know) the answer.”", 2, ["know", "With neither…nor, the verb agrees with the nearer subject (students → plural)."]], ["Correct the sentence: “She had wrote the letter before I came.”", 2, ["She had written the letter before I came.", "Past perfect needs the past participle (V3): write – wrote – written."]], ["What is the difference between the future continuous and the future perfect?", 2, ["Future continuous: action in progress at a future time — At 8 pm I will be studying.", "Future perfect: action finished before a future time — By 8 pm I will have finished."]]], "long": [["Explain the four forms of the present tense with their structure, uses and one example each.", 5, ["Simple present: V1/V1+s — habits, facts, timetables: The sun rises in the east.", "Present continuous: am/is/are + -ing — now, temporary, plans: She is reading now.", "Present perfect: has/have + V3 — completed with present result, experience: I have finished.", "Present perfect continuous: has/have been + -ing — started in past, still going: It has been raining for hours."]], ["Explain the four forms of the past tense with their structure, uses and one example each.", 5, ["Simple past: V2 — finished action at a past time: We went to Shimla last year.", "Past continuous: was/were + -ing — in progress in the past: They were playing when it rained.", "Past perfect: had + V3 — the earlier of two past actions: The train had left.", "Past perfect continuous: had been + -ing — duration up to a past point: He had been working there for ten years."]], ["Explain the four forms of the future tense with their structure, uses and one example each.", 5, ["Simple future: will + V1 — predictions, promises, quick decisions: I will help you.", "Future continuous: will be + -ing — in progress at a future time: This time tomorrow we will be flying.", "Future perfect: will have + V3 — finished before a future time: By Friday she will have finished.", "Future perfect continuous: will have been + -ing — duration up to a future point: By December he will have been learning for two years."]], ["Explain with examples the difference between the simple past and the present perfect.", 5, ["Simple past: finished action at a stated past time (yesterday, ago, in 2020): I lost my pen yesterday.", "Present perfect: past action linked to now, no fixed time: I have lost my pen (I still don’t have it).", "Present perfect with unfinished periods: so far, this year, today, ever, never, already, yet.", "Common error: “He has finished an hour ago” → “He finished an hour ago.”"]], ["Write a short paragraph (6–8 sentences) about your last holiday using at least four different past tenses. Underline and name each tense.", 5, ["Simple past: We went to Goa.", "Past continuous: While we were walking on the beach, it started to rain.", "Past perfect: We had booked the hotel before we left.", "Past perfect continuous: We had been waiting for this trip for months.", "Marks for correct forms, correct naming and a connected paragraph."]], ["Explain the rules for using tenses in time and conditional clauses, with examples.", 5, ["After when, as soon as, until, before, after: use simple present for the future — I will call you when I reach.", "First conditional: If + simple present, will + V1 — If it rains, we will stay home.", "Never “If he will come” or “When I will grow up”.", "The main clause carries ‘will’; the time/if clause does not."]], ["Explain stative verbs and the ‘since/for’ rule, and show how they combine in the present perfect.", 5, ["Stative verbs (know, believe, own, like, seem) describe states and aren’t used in continuous forms.", "Since + point in time; for + length of time.", "For states that continue up to now, use present perfect, not perfect continuous: We have known each other for years.", "Errors: “I am knowing him since 2020” → “I have known him since 2020.”"]], ["Write the negative and interrogative forms of all 12 tenses for the verb ‘play’ with ‘they’.", 5, ["Present: do not play / Do they play? · are not playing / Are they playing? · have not played / Have they played? · have not been playing / Have they been playing?", "Past: did not play / Did they play? · were not playing / Were they playing? · had not played / Had they played? · had not been playing / Had they been playing?", "Future: will not play / Will they play? · will not be playing / Will they be playing? · will not have played / Will they have played? · will not have been playing / Will they have been playing?"]]], "ct": [["Read: “Yesterday I go to the market. I am buying vegetables when I meet my friend. We talk for an hour.” Rewrite it correctly and explain each change.", 4, ["Yesterday I went to the market. I was buying vegetables when I met my friend. We talked for an hour.", "‘Yesterday’ needs the simple past.", "The longer action in progress takes the past continuous (was buying); the interruption takes the simple past (met)."]], ["Which is better, and why? (a) “I live in Pune for five years.” (b) “I have been living in Pune for five years.”", 3, ["(b) is correct.", "The action started in the past and is still going on, with ‘for’ + a length of time → present perfect continuous (or ‘have lived’).", "(a) uses simple present, which cannot show duration up to now."]], ["Your friend says, “Both ‘She is knowing the answer’ and ‘She knows the answer’ are fine.” How would you explain why one is wrong?", 3, ["‘Know’ is a stative verb; it describes a state, not an action in progress.", "Stative verbs aren’t used in continuous forms, so only “She knows the answer” is correct.", "Other examples: believe, own, seem, belong."]], ["Look at dark clouds in the sky. Would you say “It will rain” or “It is going to rain”? Explain your choice.", 3, ["“It is going to rain” is better.", "‘Be going to’ is used for predictions based on present evidence (the clouds).", "‘Will’ is more for general predictions or decisions made at the moment."]], ["Write three sentences about your plans for next year: one in simple future, one in future continuous, one in future perfect. Explain the difference in meaning.", 3, ["e.g. I will join the art club. / This time next year I will be studying in Class 8. / By December I will have read 20 books.", "Simple future = a plan/prediction; future continuous = in progress at a future time; future perfect = finished before a future time.", "Any correct, meaningful sentences are accepted."]], ["Why do you think English has so many tenses? Could we manage with just past, present and future? Give an example where the extra tense changes the meaning.", 3, ["Extra tenses show time order, duration and whether an action is finished.", "“When I arrived, she left” (she left after) vs “When I arrived, she had left” (she left before).", "Any well-reasoned answer with a good example is accepted."]], ["A student wrote: “By the time the doctor arrived, the patient died.” Is there a problem? Explain and correct it.", 3, ["The earlier past action needs the past perfect.", "Correct: By the time the doctor arrived, the patient had died.", "‘By the time’ + past signals that the other action was already complete."]], ["Make a story starter (3–4 sentences) that uses the past perfect continuous to explain why something happened.", 3, ["e.g. The ground was wet and muddy. It had been raining all night. The children had been waiting to play football, but now they couldn’t.", "Past perfect continuous (had been + -ing) shows a longer action before a past moment and explains its result.", "Marks for correct form and logical cause–effect."]]]};
+const SECS=[
+ {id:"short",name:"Short answer",color:"var(--short)",soft:"var(--short-soft)",list:RAW.short||[]},
+ {id:"long",name:"Long answer",color:"var(--long)",soft:"var(--long-soft)",list:RAW.long||[]},
+ {id:"ct",name:"Critical thinking",color:"var(--ct)",soft:"var(--ct-soft)",list:RAW.ct||[]}].filter(s=>s.list.length);
+const ALL=[];SECS.forEach(s=>s.list.forEach((q,i)=>ALL.push({s,n:i+1,q:q[0],m:q[1],pts:q[2]})));
+let sel=new Set(SECS.map(s=>s.id)), shuffleOn=false;
+let deck=[],idx=0,flipped=false,rated={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+function chips(){
+  const c=$("chips");c.innerHTML="";
+  const all=document.createElement("button");all.className="chip";all.setAttribute("aria-pressed",sel.size===SECS.length);
+  all.innerHTML=`All <small>${ALL.length}</small>`;all.onclick=()=>{sel=new Set(SECS.map(s=>s.id));chips();build();};c.appendChild(all);
+  SECS.forEach(s=>{const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",sel.size<SECS.length&&sel.has(s.id));
+    b.innerHTML=`<span class="dot" style="background:${s.color}"></span>${s.name} <small>${s.list.length}</small>`;
+    b.onclick=()=>{sel=new Set([s.id]);chips();build();};c.appendChild(b);});
+  const o=$("opts");o.innerHTML="";
+  const sh=document.createElement("button");sh.className="chip";sh.setAttribute("aria-pressed",shuffleOn);sh.textContent="🔀 Shuffle";
+  sh.onclick=()=>{shuffleOn=!shuffleOn;chips();build();};o.appendChild(sh);
+}
+function build(list){
+  deck=list||ALL.filter(c=>sel.has(c.s.id));if(shuffleOn||list)deck=shuffle(deck);
+  idx=0;rated={};$("doneView").classList.add("hidden");$("deckView").classList.remove("hidden");render();
+}
+function setFlip(v){flipped=v;$("card").classList.toggle("flip",v);
+  $("flipCtl").classList.toggle("hidden",v);$("rateCtl").classList.toggle("hidden",!v);}
+function render(){
+  const c=deck[idx];setFlip(false);
+  $("count").textContent=`Card ${idx+1} of ${deck.length}`;
+  const k=Object.values(rated).filter(v=>v).length,p=Object.values(rated).filter(v=>!v).length;
+  $("tally").textContent=`✓ ${k}   ↻ ${p}`;
+  $("bar").style.width=(Object.keys(rated).length/deck.length*100)+"%";
+  [["fTag","bTag"]].flat().forEach(id=>{const t=$(id);t.textContent=c.s.name;t.style.background=c.s.soft;t.style.color="var(--ink)";});
+  $("fMarks").textContent=$("bMarks").textContent=`${c.m} mark${c.m>1?"s":""}`;
+  $("fNum").textContent=String(idx+1).padStart(2,"0");$("fNum").style.color=c.s.soft;
+  $("fText").textContent=c.q;$("bText").textContent=c.q;
+  const ul=$("bPts");ul.innerHTML="";c.pts.forEach(p=>{const li=document.createElement("li");li.textContent=p;ul.appendChild(li);});
+  $("prevBtn").disabled=idx===0;
+  $("skipBtn").textContent=idx===deck.length-1?"Finish →":"Skip →";
+}
+function rate(v){rated[idx]=v;go(1);}
+function go(d){const n=idx+d;if(n<0)return;if(n>=deck.length){finish();return;}idx=n;render();}
+function finish(){
+  const tot=deck.length,k=Object.values(rated).filter(v=>v).length;
+  $("deckView").classList.add("hidden");$("doneView").classList.remove("hidden");
+  $("dScore").textContent=`${k}/${tot}`;
+  const miss=deck.filter((_,i)=>rated[i]!==true);
+  $("dMsg").textContent=miss.length?`${miss.length} card${miss.length>1?"s":""} to practise again (including any you skipped).`:"You knew every card — excellent!";
+  $("practiceBtn").classList.toggle("hidden",!miss.length);
+  $("practiceBtn").onclick=()=>build(miss);
+}
+$("card").onclick=()=>setFlip(!flipped);
+$("flipBtn").onclick=()=>setFlip(true);
+$("okBtn").onclick=()=>rate(true);
+$("againBtn").onclick=()=>rate(false);
+$("prevBtn").onclick=()=>go(-1);
+$("skipBtn").onclick=()=>go(1);
+$("restartBtn").onclick=()=>build();
+document.addEventListener("keydown",e=>{
+  if($("deckView").classList.contains("hidden"))return;
+  if(e.key===" "){e.preventDefault();setFlip(!flipped);}
+  else if(e.key==="ArrowRight")go(1);
+  else if(e.key==="ArrowLeft")go(-1);
+  else if(flipped&&(e.key==="k"||e.key==="K"))rate(true);
+  else if(flipped&&(e.key==="p"||e.key==="P"))rate(false);
+});
+chips();build();
+</script>
+</body>
+</html>
