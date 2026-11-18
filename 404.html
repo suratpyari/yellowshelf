@@ -69,9 +69,9 @@ function kind(name) {
 }
 function pretty(name) {
   const k = kind(name), base = name.replace(/\.[^.]+$/, "");
-  if (k.label === "Quiz" && /^[\w-]*quiz$/i.test(base)) return "Quiz";
-  if (k.label === "Flashcards" && /^[\w-]*flashcards?$/i.test(base)) return "Flashcards";
-  return base.replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim().replace(/^./, c => c.toUpperCase());
+  let t = base;
+  if (k.label === "Quiz" || k.label === "Flashcards") t = t.replace(/[\s_-]*(quiz|flashcards?)([\s_-]*\d+)?$/i, "") || k.label;
+  return t.replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim().replace(/^./, c => c.toUpperCase());
 }
 const folderIcon = d => ["🎒","📗","📘","📙","📕","📒"][d] || "📁";
 
