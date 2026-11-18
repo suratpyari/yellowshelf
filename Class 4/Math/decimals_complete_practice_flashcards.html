@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Decimals: Complete Chapter Practice — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --card:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-soft:#E3DAFB;
+  --short:#4FB3A9; --short-soft:#DDF3F0;
+  --long:#F2A541; --long-soft:#FDEFD9;
+  --ct:#6C8EE0; --ct-soft:#E1E9FB;
+  --ok:#3E9B6A; --ok-soft:#DFF3E7; --again:#D9725B; --again-soft:#FBE5DF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:Inter,"Trebuchet MS",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(2rem,6.5vw,2.8rem);font-weight:800}
+.sub{color:var(--muted);margin:4px 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:#fff;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;display:flex;gap:7px;align-items:center}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip small{color:var(--muted);font-weight:600}
+.bar-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 8px;font-weight:700;color:var(--muted);font-size:.92rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.scene{perspective:1400px}
+.card{position:relative;min-height:340px;cursor:pointer;transition:transform .5s;transform-style:preserve-3d;border:0;padding:0;width:100%;background:none;font:inherit;color:inherit;text-align:left;display:grid}
+.card.flip{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:24px;padding:22px 22px 20px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;border:2px solid var(--line)}
+.back{transform:rotateY(180deg)}
+.tagline{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.tag{font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.marks{font-weight:800;color:var(--muted);font-size:.9rem}
+.qnum{font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:3rem;line-height:1;color:var(--accent-soft);margin-bottom:4px}
+.qtext{font-size:1.3rem;font-weight:700;flex:1}
+.hint{color:var(--muted);font-size:.88rem;margin-top:16px;text-align:center}
+.back h2{font-size:1.1rem;color:var(--muted);margin-bottom:8px}
+.back .qsmall{font-weight:700;font-size:.98rem;margin-bottom:12px}
+.back ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.back li::marker{color:var(--accent)}
+.controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{flex:1;min-width:120px;border:0;border-radius:16px;padding:14px 16px;font:inherit;font-weight:800;font-size:1rem;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--line)}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 4px 0 #5B3FB0}
+.btn.ok{background:var(--ok-soft);color:var(--ok);box-shadow:0 4px 0 #BFE3CD}
+.btn.again{background:var(--again-soft);color:var(--again);box-shadow:0 4px 0 #F2C9BE}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
+.nav .btn{flex:0 1 auto;font-size:.92rem;padding:10px 14px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.done{background:var(--card);border-radius:24px;padding:26px;border:2px solid var(--line);text-align:center}
+.big{font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:clamp(3rem,13vw,4.6rem);line-height:1;color:var(--accent)}
+.hidden{display:none!important}
+.tiny{color:var(--muted);font-size:.82rem;margin-top:14px}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.bar>i{transition:none}}
+</style>
+<style id="yellow-theme">
+:root{--bg:#FFFBEB;--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--accent:#F5B400;--accent-ink:#1E293B;--accent-soft:#FFF4CC;--chip:#FFF4CC}
+body{position:relative}
+h1{font-weight:700;letter-spacing:-.02em}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:230px;z-index:-1;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
+  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+.sub{color:#5B4B1E!important}
+.chip[aria-pressed="true"]{background:#FFF4CC!important;border-color:#F5B400!important}
+#startBtn,#nextBtn,#retryWrongBtn,.btn.primary{background:linear-gradient(180deg,#FFD24D,#FFC21A)!important;color:#1E293B!important;box-shadow:0 4px 0 #D99A00!important}
+.bar{background:rgba(255,255,255,.7)!important}
+.bar>i{background:linear-gradient(90deg,#FB923C,#F97316)!important}
+.back li::marker{color:#F59E0B}
+.qnum{color:#FDE68A!important}
+.big{color:#F59E0B!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Decimals: Complete Chapter Practice</h1>
+  <p class="sub">30 written practice cards: short answers, full working and critical thinking.</p>
+
+  <div class="chips" id="chips"></div>
+  <div class="chips" style="margin-top:8px" id="opts"></div>
+
+  <div id="deckView">
+    <div class="bar-row"><span id="count"></span><span id="tally"></span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scene">
+      <button class="card" id="card" aria-live="polite">
+        <div class="face front">
+          <div class="tagline"><span class="tag" id="fTag"></span><span class="marks" id="fMarks"></span></div>
+          <div class="qnum" id="fNum"></div>
+          <div class="qtext" id="fText"></div>
+          <div class="hint">Tap the card or press Space to see the answer</div>
+        </div>
+        <div class="face back">
+          <div class="tagline"><span class="tag" id="bTag"></span><span class="marks" id="bMarks"></span></div>
+          <h2>Key points</h2>
+          <div class="qsmall" id="bText"></div>
+          <ul id="bPts"></ul>
+        </div>
+      </button>
+    </div>
+    <div class="controls" id="flipCtl"><button class="btn primary" id="flipBtn">Show answer</button></div>
+    <div class="controls hidden" id="rateCtl">
+      <button class="btn again" id="againBtn">Need practice</button>
+      <button class="btn ok" id="okBtn">I knew it</button>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prevBtn">← Previous</button>
+      <button class="btn" id="skipBtn">Skip →</button>
+    </div>
+    <p class="tiny">Keys: Space = flip · ← → = move · K = knew it · P = need practice</p>
+  </div>
+
+  <div class="done hidden" id="doneView">
+    <h2 style="font-size:1.6rem">Round complete</h2>
+    <div class="big" id="dScore"></div>
+    <p id="dMsg"></p>
+    <div class="controls">
+      <button class="btn again" id="practiceBtn">Practise the tricky ones</button>
+      <button class="btn primary" id="restartBtn">Start again</button>
+    </div>
+  </div>
+</div>
+<script>
+const RAW={"short": [["Explain how to convert a fraction with denominator 10, 100 or 1000 into a decimal.", 2, ["Write the numerator as the decimal digits.", "Place the decimal point one, two or three places from the right, according to the denominator."]], ["What are like decimals?", 2, ["Decimals having the same number of digits after the decimal point.", "Zeroes may be added at the end to make them like decimals."]], ["What are equivalent decimals?", 2, ["Decimals that have the same value.", "Adding or removing zeroes at the end of the decimal part does not change the value."]], ["How do you write a decimal in expanded form?", 2, ["Write each digit according to its place value.", "Use ones, tenths, hundredths and thousandths."]], ["Convert 0.238 into a fraction.", 2, ["There are three digits after the decimal point.", "0.238 = 238/1000."]], ["Find the reciprocal of 0.5.", 2, ["0.5 = 1/2.", "The reciprocal is 2."]], ["Write 5.79 as a mixed number.", 2, ["The whole-number part is 5.", "The decimal part 0.79 is 79/100, so 5.79 = 5 79/100."]], ["Why can 2.37 be written as 2.370?", 2, ["A zero added at the end of the decimal part does not change the value.", "Both are equivalent decimals."]], ["Write 60 + 2/10 + 3/100 + 7/1000 as a decimal.", 2, ["2/10 = 0.2; 3/100 = 0.03; 7/1000 = 0.007.", "The decimal is 60.237."]], ["What should you remember when adding or subtracting decimals?", 2, ["Line up the decimal points.", "Add zeroes at the end when needed so the decimal places line up."]]], "long": [["Write 176.801 in expanded form and name the place value of each digit.", 5, ["1 is in the hundreds place; 7 in tens; 6 in ones.", "8 is in tenths; 0 in hundredths; 1 in thousandths.", "Expanded form: 100 + 70 + 6 + 0.8 + 0.001."]], ["Convert 408/10, 46/1000 and 18/100 into decimals. Show the placement of the decimal point.", 5, ["408/10 = 40.8.", "46/1000 = 0.046.", "18/100 = 0.18."]], ["Make 2.4, 3.5 and 5.21 like decimals. Explain your method.", 5, ["The greatest number of decimal places is two.", "Write 2.40, 3.50 and 5.21.", "Add zeroes only at the end of the decimal part."]], ["Check whether 16.75 and 16.750 are equivalent decimals. Explain.", 5, ["They are equivalent decimals.", "16.750 has an extra zero at the end of the decimal part.", "The value remains 16.75."]], ["Calculate 28.930 + 38.398. Show the aligned addition.", 5, ["Line up decimal points.", "Add thousandths, hundredths, tenths and whole-number places.", "The sum is 67.328."]], ["Calculate 102.900 - 93.0. Show the aligned subtraction.", 5, ["Write 93.0 as 93.000.", "Line up decimal points and subtract.", "The difference is 9.900, or 9.9."]], ["Explain how to compare 0.112 and 0.0112.", 5, ["Write 0.112 as 0.1120 to compare equal decimal places.", "Compare from left to right.", "0.112 is greater than 0.0112."]], ["Write 5.781 in expanded form using fractions with denominators 10, 100 and 1000.", 5, ["5 is the ones digit.", "7 tenths = 7/10; 8 hundredths = 8/100; 1 thousandth = 1/1000.", "5.781 = 5 + 7/10 + 8/100 + 1/1000."]], ["A student saves ₹50.67 in February, ₹67.78 in March, ₹43.45 in April and ₹89.90 in May. Find the total savings.", 5, ["Add all four amounts, aligning decimal points.", "50.67 + 67.78 + 43.45 + 89.90.", "Total savings = ₹251.80."]], ["A person buys groceries worth ₹405.75 and pays with ₹500. How much change should be returned? Explain.", 5, ["Subtract the cost from the amount paid.", "₹500.00 - ₹405.75.", "Correct change = ₹94.25."]]], "ct": [["A cashier returns ₹85.25 after receiving ₹500 for groceries costing ₹405.75. Is the change correct? Find the correct change.", 3, ["Correct change is ₹500.00 - ₹405.75 = ₹94.25.", "₹85.25 is short by ₹9.00.", "Any clearly explained subtraction earns credit."]], ["A classmate says 4.50 is greater than 4.5 because it has more digits. Is the classmate correct? Explain.", 3, ["No, they are equivalent decimals.", "A zero at the end of the decimal part does not change value.", "Both represent four and five tenths."]], ["A student writes 0.8 as 0.08. Identify the mistake and correct it.", 3, ["0.8 means eight tenths.", "0.08 means eight hundredths.", "The correct decimal for eight tenths is 0.8."]], ["You need to add 7.5 and 0.85. Explain how you would avoid a place-value mistake.", 3, ["Write 7.5 as 7.50.", "Line up the decimal points.", "7.50 + 0.85 = 8.35."]], ["A number is 0.001 more than 3.921. What is the number? Explain your reasoning.", 3, ["0.001 is one thousandth.", "Increase the thousandths digit by one.", "The number is 3.922."]], ["A shop bill is ₹248.60 and the customer pays ₹300. One person subtracts 248.6 from 3000 by mistake. Explain the error.", 3, ["The amount paid is ₹300, not ₹3000.", "Write 300 as 300.00.", "The correct change is ₹51.40."]], ["A student claims 0.305 is greater than 0.35 because 305 is greater than 35. Is this correct?", 3, ["No. Compare equal decimal places: 0.305 and 0.350.", "305 thousandths is less than 350 thousandths.", "So 0.305 is smaller."]], ["A ribbon is 6.25 m long. Two pieces of 1.5 m and 2.35 m are cut off. How much remains?", 3, ["Total cut = 1.50 + 2.35 = 3.85 m.", "Remaining length = 6.25 - 3.85.", "0.4? Correction: remaining length is 2.40 m."]], ["A student writes 2.37 = 2.037 when adding a zero. Explain why this is wrong.", 3, ["A zero can be added only at the end of the decimal part without changing value.", "Putting zero between non-zero digits changes place values.", "2.37 = 2.370, not 2.037."]], ["Two friends save ₹12.50 and ₹8.75 each week. How much do they save together in 4 weeks?", 3, ["Weekly total = ₹12.50 + ₹8.75 = ₹21.25.", "Four-week total = ₹21.25 × 4.", "Total = ₹85.00."]]]};
+const SECS=[
+ {id:"short",name:"Short answer",color:"var(--short)",soft:"var(--short-soft)",list:RAW.short||[]},
+ {id:"long",name:"Long answer",color:"var(--long)",soft:"var(--long-soft)",list:RAW.long||[]},
+ {id:"ct",name:"Critical thinking",color:"var(--ct)",soft:"var(--ct-soft)",list:RAW.ct||[]}].filter(s=>s.list.length);
+const ALL=[];SECS.forEach(s=>s.list.forEach((q,i)=>ALL.push({s,n:i+1,q:q[0],m:q[1],pts:q[2]})));
+let sel=new Set(SECS.map(s=>s.id)), shuffleOn=false;
+let deck=[],idx=0,flipped=false,rated={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+function chips(){
+  const c=$("chips");c.innerHTML="";
+  const all=document.createElement("button");all.className="chip";all.setAttribute("aria-pressed",sel.size===SECS.length);
+  all.innerHTML=`All <small>${ALL.length}</small>`;all.onclick=()=>{sel=new Set(SECS.map(s=>s.id));chips();build();};c.appendChild(all);
+  SECS.forEach(s=>{const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",sel.size<SECS.length&&sel.has(s.id));
+    b.innerHTML=`<span class="dot" style="background:${s.color}"></span>${s.name} <small>${s.list.length}</small>`;
+    b.onclick=()=>{sel=new Set([s.id]);chips();build();};c.appendChild(b);});
+  const o=$("opts");o.innerHTML="";
+  const sh=document.createElement("button");sh.className="chip";sh.setAttribute("aria-pressed",shuffleOn);sh.textContent="🔀 Shuffle";
+  sh.onclick=()=>{shuffleOn=!shuffleOn;chips();build();};o.appendChild(sh);
+}
+function build(list){
+  deck=list||ALL.filter(c=>sel.has(c.s.id));if(shuffleOn||list)deck=shuffle(deck);
+  idx=0;rated={};$("doneView").classList.add("hidden");$("deckView").classList.remove("hidden");render();
+}
+function setFlip(v){flipped=v;$("card").classList.toggle("flip",v);
+  $("flipCtl").classList.toggle("hidden",v);$("rateCtl").classList.toggle("hidden",!v);}
+function render(){
+  const c=deck[idx];setFlip(false);
+  $("count").textContent=`Card ${idx+1} of ${deck.length}`;
+  const k=Object.values(rated).filter(v=>v).length,p=Object.values(rated).filter(v=>!v).length;
+  $("tally").textContent=`✓ ${k}   ↻ ${p}`;
+  $("bar").style.width=(Object.keys(rated).length/deck.length*100)+"%";
+  [["fTag","bTag"]].flat().forEach(id=>{const t=$(id);t.textContent=c.s.name;t.style.background=c.s.soft;t.style.color="var(--ink)";});
+  $("fMarks").textContent=$("bMarks").textContent=`${c.m} mark${c.m>1?"s":""}`;
+  $("fNum").textContent=String(idx+1).padStart(2,"0");$("fNum").style.color=c.s.soft;
+  $("fText").textContent=c.q;$("bText").textContent=c.q;
+  const ul=$("bPts");ul.innerHTML="";c.pts.forEach(p=>{const li=document.createElement("li");li.textContent=p;ul.appendChild(li);});
+  $("prevBtn").disabled=idx===0;
+  $("skipBtn").textContent=idx===deck.length-1?"Finish →":"Skip →";
+}
+function rate(v){rated[idx]=v;go(1);}
+function go(d){const n=idx+d;if(n<0)return;if(n>=deck.length){finish();return;}idx=n;render();}
+function finish(){
+  const tot=deck.length,k=Object.values(rated).filter(v=>v).length;
+  $("deckView").classList.add("hidden");$("doneView").classList.remove("hidden");
+  $("dScore").textContent=`${k}/${tot}`;
+  const miss=deck.filter((_,i)=>rated[i]!==true);
+  $("dMsg").textContent=miss.length?`${miss.length} card${miss.length>1?"s":""} to practise again (including any you skipped).`:"You knew every card — excellent!";
+  $("practiceBtn").classList.toggle("hidden",!miss.length);
+  $("practiceBtn").onclick=()=>build(miss);
+}
+$("card").onclick=()=>setFlip(!flipped);
+$("flipBtn").onclick=()=>setFlip(true);
+$("okBtn").onclick=()=>rate(true);
+$("againBtn").onclick=()=>rate(false);
+$("prevBtn").onclick=()=>go(-1);
+$("skipBtn").onclick=()=>go(1);
+$("restartBtn").onclick=()=>build();
+document.addEventListener("keydown",e=>{
+  if($("deckView").classList.contains("hidden"))return;
+  if(e.key===" "){e.preventDefault();setFlip(!flipped);}
+  else if(e.key==="ArrowRight")go(1);
+  else if(e.key==="ArrowLeft")go(-1);
+  else if(flipped&&(e.key==="k"||e.key==="K"))rate(true);
+  else if(flipped&&(e.key==="p"||e.key==="P"))rate(false);
+});
+chips();build();
+</script>
+</body>
+</html>
