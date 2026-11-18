@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Climate of India — MCQ Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFBEB; --surface:#FFFFFF; --ink:#1E293B; --muted:#78716C; --line:#FDE68A;
+  --accent:#F5B400; --accent-ink:#1E293B; --ok:#2FBF85; --ok-bg:#DDF8EC; --bad:#FF7A7A; --bad-bg:#FFE6E6;
+  --chip:#FFF4CC;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:800}
+h2{font-size:1.5rem;font-weight:700}
+.sub{color:var(--muted);margin:6px 0 24px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+.label{font-weight:700;margin:20px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:.95rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--ink)}
+.chip small{color:var(--muted)}
+button{font:inherit}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:14px;padding:14px 22px;font-weight:700;font-size:1.05rem;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;font-weight:600;color:var(--muted);font-size:.95rem}
+.bar{height:8px;background:var(--chip);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;color:var(--muted)}
+.tag .dot{width:9px;height:9px;border-radius:50%}
+.q{font-size:1.25rem;font-weight:700;margin:10px 0 18px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;font-size:1rem}
+.opt b{flex:0 0 28px;height:28px;border-radius:8px;background:var(--chip);display:grid;place-items:center;font-size:.9rem}
+.opt:hover:not(:disabled){border-color:var(--muted)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok b{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad b{background:var(--bad);color:#fff}
+.fb{margin-top:16px;padding:12px 14px;border-radius:12px;font-size:.98rem;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border-left:5px solid var(--bad)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px}
+.score{font-family:"Baloo 2",system-ui,sans-serif;font-size:clamp(3.5rem,14vw,5.5rem);font-weight:800;line-height:1}
+.brk{display:grid;gap:8px;margin:18px 0}
+.brk div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:var(--chip);border-radius:10px;font-size:.95rem}
+.rev{border-top:1px solid var(--line);padding:14px 0}
+.rev p{margin:4px 0}
+.rev .y{color:var(--bad)} .rev .c{color:var(--ok);font-weight:700}
+.hidden{display:none!important}
+.hint{color:var(--muted);font-size:.85rem}
+.grid{display:grid;grid-template-columns:auto repeat(4,1fr);gap:4px;font-size:.8rem;margin-top:8px;overflow-x:auto}
+.grid span{background:var(--chip);padding:6px 8px;border-radius:6px}
+.grid .h{font-weight:700;background:transparent}
+@media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="home">
+  <h1>Climate of India</h1>
+  <p class="sub">Every point from the chapter (pages 37–48), as multiple-choice questions.</p>
+  <div class="panel">
+    <div class="label" style="margin-top:0">Sections</div>
+    <div class="chips" id="chapChips"></div>
+    <div class="label">Number of questions</div>
+    <div class="chips" id="countChips"></div>
+    <div class="row" style="margin-top:24px">
+      <button class="btn" id="startBtn">Start quiz</button>
+      <span class="hint" id="poolInfo"></span>
+    </div>
+  </div>
+  <p class="hint" style="margin-top:14px">Tip: press 1–4 to pick an answer, Enter for the next question.</p>
+</section>
+
+<section id="quiz" class="hidden">
+  <div class="top"><span id="qCount"></span><span id="qScore"></span></div>
+  <div class="bar"><i id="qBar"></i></div>
+  <div class="panel">
+    <span class="tag" id="qTag"></span>
+    <div class="q" id="qText"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="fb" id="qFb"></div>
+    <div class="foot">
+      <button class="btn ghost" id="quitBtn">End quiz</button>
+      <button class="btn" id="nextBtn" disabled>Next</button>
+    </div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="panel">
+    <h2>Your score</h2>
+    <div class="row" style="align-items:baseline;margin-top:8px"><span class="score" id="rScore"></span><span id="rPct" style="font-weight:700;color:var(--muted)"></span></div>
+    <p id="rMsg" style="margin:8px 0 0"></p>
+    <div class="brk" id="rBrk"></div>
+    <div class="row">
+      <button class="btn" id="retryWrongBtn">Retry wrong answers</button>
+      <button class="btn ghost" id="homeBtn">New quiz</button>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:16px" id="revPanel">
+    <h2>Review mistakes</h2>
+    <div id="rRev"></div>
+  </div>
+</section>
+
+</div>
+<script>
+/* [question, [correct, wrong1, wrong2, wrong3], explanation] — options shuffled at runtime */
+const CH = [
+{id:"cli",name:"Climate & the six ritus",color:"#2A9D8F",qs:[
+["The word ‘climate’ comes from the Greek word ‘klima’, which means:",["Tilt","Weather","Heat","Season"],"Klima means ‘tilt’."],
+["The climate of a place is determined by:",["The angle at which the Sun’s rays reach the Earth","The number of rivers","The size of its cities","Its population"],"Climate depends on the angle of the Sun’s rays."],
+["The study of climate is called:",["Climatology","Meteorology","Geology","Topography"],"Climatology."],
+["Climate is the:",["Average state of weather over a long period for a larger area","Weather of a single day","Rainfall of one week","Temperature at noon"],"Climate = average weather conditions over a long period, studied for a larger area."],
+["Regions near the Equator have a climate that is:",["Hot and humid, with rain every afternoon","Cold and dry","Hot and dry with no rain","Cold and wet"],"It rains every afternoon all year round — hot and humid."],
+["Weather is recorded:",["Daily, with weather instruments","Once a year","Once a decade","Only during the monsoon"],"Weather is recorded on a daily basis."],
+["Climatic data is an average picture of weather data for about:",["35–40 years","5–10 years","1 year","100 years"],"35–40 years of weather data."],
+["The type of climate affects people’s:",["Clothes, food, festivals, housing and lifestyle","Only their clothes","Only their language","Nothing at all"],"It affects how people live, dress, eat, celebrate and build homes."],
+["How many seasons are commonly described in the chapter?",["Five","Four","Six","Three"],"Summer, monsoon, autumn, winter and spring."],
+["Which season is NOT experienced by all places on Earth?",["Monsoon","Summer","Winter","Spring"],"Not all places get the monsoon (rainy season)."],
+["In which classical texts is the year divided into six ritus?",["Atharvaveda and Manu Smriti","Ramayana and Mahabharata","Arthashastra and Rigveda","Panchatantra and Jataka"],"Atharvaveda and Manu Smriti."],
+["Each ritu lasts about:",["Two months","One month","Three months","Four months"],"Six ritus, each about two months."],
+["Vasanta Ritu is:",["Spring","Summer","Autumn","Winter"],"Vasanta = Spring."],
+["Spring (Vasanta Ritu) lasts from:",["Mid-March to mid-May","Mid-May to mid-July","Mid-July to mid-September","Mid-January to mid-March"],"Mid-March to mid-May."],
+["Which festival is linked with Vasanta Ritu?",["Holi","Diwali","Onam","Makar Sankranti"],"Holi."],
+["Grishma Ritu is:",["Summer","Spring","Monsoon","Pre-winter"],"Grishma = Summer."],
+["Summer (Grishma Ritu) lasts from:",["Mid-May to mid-July","Mid-March to mid-May","Mid-September to mid-November","Mid-November to mid-January"],"Mid-May to mid-July."],
+["Which is associated with Grishma Ritu?",["Akshaya Tritiya and offerings to the Sun god","Holi","Navaratri","Diwali"],"Akshaya Tritiya, offerings to the Sun god."],
+["Grishma Ritu is characterised by:",["Hot, dry weather; the Earth becomes dry","Blooming flowers","Lush greenery","Long nights"],"Hot, dry weather with high temperatures."],
+["Varsha Ritu is:",["Monsoon","Winter","Autumn","Spring"],"Varsha = Monsoon."],
+["Monsoon (Varsha Ritu) lasts from:",["Mid-July to mid-September","Mid-May to mid-July","Mid-September to mid-November","Mid-March to mid-May"],"Mid-July to mid-September."],
+["Which festivals are linked with Varsha Ritu?",["Rakshabandhan and Onam","Holi and Lohri","Diwali and Pongal","Navaratri and Durga Puja"],"Rakshabandhan, Onam, renewal of crops."],
+["Sharad Ritu is:",["Autumn","Summer","Pre-winter","Spring"],"Sharad = Autumn."],
+["Autumn (Sharad Ritu) lasts from:",["Mid-September to mid-November","Mid-November to mid-January","Mid-July to mid-September","Mid-January to mid-March"],"Mid-September to mid-November."],
+["Which festivals are linked with Sharad Ritu?",["Navaratri and Durga Puja","Holi","Makar Sankranti","Rakshabandhan"],"Navaratri, Durga Puja."],
+["Sharad Ritu is characterised by:",["Cool weather, receding monsoons, beginning of harvest","Coldest time, long nights","Hot, dry weather","Blooming flowers"],"Cool weather, receding monsoons, harvest begins."],
+["Hemanta Ritu is:",["Pre-winter","Winter","Autumn","Spring"],"Hemanta = Pre-winter."],
+["Pre-winter (Hemanta Ritu) lasts from:",["Mid-November to mid-January","Mid-January to mid-March","Mid-September to mid-November","Mid-May to mid-July"],"Mid-November to mid-January."],
+["Which festival is linked with Hemanta Ritu?",["Diwali","Holi","Onam","Makar Sankranti"],"Diwali and preparation for colder months."],
+["Shishira Ritu is:",["Winter","Pre-winter","Monsoon","Summer"],"Shishira = Winter."],
+["Winter (Shishira Ritu) lasts from:",["Mid-January to mid-March","Mid-November to mid-January","Mid-March to mid-May","Mid-September to mid-November"],"Mid-January to mid-March."],
+["Which festival is linked with Shishira Ritu?",["Makar Sankranti","Diwali","Holi","Durga Puja"],"Makar Sankranti."],
+["Which ritu is the coldest time, with long nights and crisp days?",["Shishira","Hemanta","Sharad","Vasanta"],"Shishira (Winter)."]
+]},
+{id:"div",name:"Climatic diversity of India",color:"#3D5AFE",qs:[
+["India has which type of climate?",["Tropical monsoon","Temperate","Polar","Mediterranean"],"Tropical monsoon climate, even though the northern half lies in the temperate zone."],
+["India’s northern half lies in which zone?",["Temperate zone","Torrid zone","Frigid zone","Equatorial zone"],"Northern half is in the temperate zone, yet India has a tropical monsoon climate."],
+["The average temperature in India’s tropical monsoon climate is about:",["26 °C","16 °C","36 °C","6 °C"],"Average 26 °C."],
+["The range of temperature in this climate is about:",["6 °C","26 °C","16 °C","1 °C"],"Range about 6 °C."],
+["A second key feature of India’s climate is:",["Seasonal reversal of wind direction","No rain at all","Same wind all year","Snow everywhere"],"Winds reverse with the seasons."],
+["During the summer monsoon, winds blow:",["Onshore — from sea to land, moisture-laden","Offshore — from land to sea, dry","From the North Pole","Only at night"],"Summer: onshore, moisture-laden."],
+["In winter, mostly dry winds blow:",["Offshore — from land to sea","Onshore — from sea to land","Up the mountains","From the Equator"],"Winter: offshore, dry."],
+["‘Onshore’ wind means wind that blows:",["From sea to land","From land to sea","From mountain to valley","From east to west"],"Onshore = sea to land."],
+["‘Offshore’ wind means wind that blows:",["From land to sea","From sea to land","From valley to mountain","Upwards"],"Offshore = land to sea."],
+["Which place has the lowest winter temperature in India (below −50 °C)?",["Drass, Ladakh","Shimla","Jaisalmer","Gulmarg"],"Drass in Ladakh."],
+["Summer temperatures rise to about 50 °C in:",["Jaisalmer, Rajasthan","Drass","Kochi","Shillong"],"Jaisalmer, Rajasthan."],
+["Where does heavy snow fall in winter?",["Great Himalayas and Karakoram","Peninsular plateau","Thar Desert","Coastal plains"],"Great Himalayas and Karakoram."],
+["Which region never experiences any snow?",["The peninsular region","The Great Himalayas","The Karakoram","Ladakh"],"Peninsular India never gets snow."],
+["Annual rainfall in Rajasthan’s Thar Desert is about:",["10 cm","100 cm","500 cm","1,187 cm"],"About 10 cm."],
+["Annual rainfall in Meghalaya exceeds:",["500 cm","100 cm","50 cm","2,000 cm"],"Over 500 cm."],
+["Which place gets the highest rainfall in the world?",["Mawsynram","Jaisalmer","Shillong","Kochi"],"Mawsynram, near Cherrapunji, Khasi Hills."],
+["Mawsynram is located in which hills?",["Khasi Hills","Garo Hills","Nilgiri Hills","Aravalli Hills"],"Khasi Hills, near Cherrapunji."],
+["Mawsynram gets about how much rainfall?",["1,187 cm","500 cm","200 cm","10 cm"],"1,187 cm."],
+["Why does southern India stay hot and wet throughout the year?",["It lies near the Equator","It is at high altitude","It is far from the sea","It gets snow"],"It lies near the Equator."],
+["Interior and central parts of India have which type of climate?",["Extreme (continental)","Equable","Maritime","Polar"],"Very hot summers, very cold winters — continental."],
+["Places with extreme temperatures are said to have:",["Continental climate","Maritime climate","Equable climate","Montane climate"],"Continental climate."],
+["Most places in the Northern Plains experience:",["Continental climate with very hot summers and very cold winters","Equable climate","Snow all year","Rain every afternoon"],"Continental climate."],
+["Coastal areas like Kerala and Tamil Nadu have a climate that is:",["Warm, equable or moderate","Extreme","Very cold","Arid"],"Equable — neither too hot nor too cold."],
+["Coastal areas are neither too hot nor too cold because of:",["The maritime effect and sea breeze","High altitude","Snowfall","Western disturbances"],"Maritime effect and day-time sea breeze."],
+["In coastal areas, the annual temperature range is:",["Small","Very large","Zero","Same as the desert"],"Very little difference between summer and winter."],
+["The India Climatic Zone Map is based on which classification?",["Köppen classification","Richter scale","Beaufort scale","Mercalli scale"],"Köppen classification."],
+["On the Köppen map, western Rajasthan is shown as:",["Arid","Tropical wet","Montane","Humid subtropical"],"Arid (Thar Desert region)."],
+["Which climatic zone is shown for Jammu & Kashmir and Arunachal Pradesh on the map?",["Montane","Arid","Tropical wet","Semi-arid"],"Montane (mountain) climate."],
+["The narrow Western coastal strip is shown on the map as:",["Tropical wet","Arid","Montane","Semi-arid"],"Tropical wet."]
+]},
+{id:"fac",name:"Factors affecting climate",color:"#D1495B",qs:[
+["Temperature varies with latitude partly due to:",["The spherical shape of the Earth","The Earth’s colour","The number of oceans","Human activity"],"The Earth is spherical, so sunlight strikes at different angles."],
+["Latitude also affects temperature because of the:",["Change in angle of Sun’s rays as Earth orbits the Sun","Moon’s phases","Speed of rivers","Height of buildings"],"Changing angle of the Sun’s rays during revolution."],
+["Which pole faces the Sun in a season is decided by:",["The tilt of the Earth’s axis and revolution","Ocean currents","Altitude","Mountains"],"Tilt of the axis and revolution."],
+["As we move from the Equator towards the Poles, the climate:",["Gets colder","Gets hotter","Stays the same","Gets wetter"],"It gets colder."],
+["India lies in the:",["Tropics and subtropics","Arctic Circle","Temperate zone only","Equatorial zone only"],"Tropics and subtropics — high temperatures all year."],
+["Why is Cochin (Kochi) warm all year round?",["It is near the Equator","It is at high altitude","It is in the desert","It gets snow"],"Close to the Equator."],
+["Amritsar has warm summers and cold winters because:",["It lies far north, far from the Equator","It is on the coast","It is in the Western Ghats","It is at sea level near the Equator"],"Higher latitude, far from the Equator."],
+["Temperature decreases with altitude at about:",["1 °C for every 165 m","1 °C for every 1,000 m","10 °C for every 165 m","1 °C for every 16 m"],"About 1 °C per 165 m."],
+["The decrease of temperature with height is called:",["Normal lapse rate","Coriolis effect","Maritime effect","Urban heat island"],"Normal lapse rate."],
+["Shimla is cooler than Ludhiana, though both are at the same latitude, because:",["Shimla is at a higher altitude","Shimla is near the sea","Ludhiana is in the mountains","Shimla is near the Equator"],"Higher altitude → cooler."],
+["The Himalayas act as an effective wall against:",["Cold winds from the North","Monsoon rain","Sea breeze","Sunlight"],"They block cold northern winds."],
+["Because of the Himalayas, winters in the Northern Plains are:",["Not as severe as they would have been","More severe","Snowy","Same as Siberia"],"The Himalayas shield the plains."],
+["The Himalayas make the moisture-laden summer monsoon winds:",["Shed their moisture in northern India","Escape out of India","Turn dry","Blow towards the sea"],"They prevent the winds from escaping."],
+["Statements: (1) India’s climate would not be affected without the Himalayas. (2) The Himalayas stop monsoon winds escaping India. Which is correct?",["Only 2 is correct","Only 1 is correct","Both 1 and 2 are correct","Neither is correct"],"Statement 1 is false; statement 2 is true."],
+["The windward side of a mountain is the side that:",["Faces the wind and receives more rain","Is away from the wind","Is always dry","Faces north"],"Windward = facing the wind; more rain."],
+["Which slope of the Western Ghats gets heavier rainfall?",["Western (windward) slope","Eastern (leeward) slope","Both equally","Neither"],"The western slope is windward."],
+["The eastern slope of the Western Ghats is on the:",["Leeward side","Windward side","Coastal side","Equator side"],"Leeward side — less rain."],
+["The Deccan Plateau receives scanty rainfall because:",["The Western Ghats block the Arabian Sea branch of the monsoon","It is near the sea","It is very high","It gets western disturbances"],"It lies in the rain shadow of the Western Ghats."],
+["Mawsynram, the Shillong Plateau and the Brahmaputra Valley get rain from:",["The Bay of Bengal branch of the South-west monsoon","The Arabian Sea branch","Western disturbances","The North-east monsoon"],"Bay of Bengal sub-branch."],
+["The monsoon winds rise up funnelled through which hills before shedding rain at Mawsynram?",["Khasi Hills","Nilgiri Hills","Aravalli Hills","Shivalik Hills"],"Khasi Hills."],
+["The Shillong Plateau and Brahmaputra Valley get only about 200 cm because they are:",["In the rain shadow (leeward side)","Too close to the sea","At sea level","In the desert"],"They are on the leeward side."],
+["India is enclosed on three sides by:",["Bay of Bengal, Arabian Sea and Indian Ocean","Himalayas, Thar and Ghats","Pacific, Atlantic and Arctic","Red Sea, Black Sea and Caspian Sea"],"India is a peninsula."],
+["Oceans act as a storehouse of:",["Moisture for winds blowing towards land","Snow","Sand","Cold winds"],"Moisture for land-bound winds."],
+["Places near the sea have an equable climate because of:",["The moderating influence of land and sea breezes","High altitude","Western disturbances","Jet streams"],"Land and sea breezes moderate temperature."],
+["Places far away from the sea have:",["A severe climate with extreme temperatures","An equable climate","Rain every day","Snow all year"],"Extreme (continental) climate."],
+["The main feature of monsoons is:",["Seasonal reversal","Constant direction","Snowfall","No rain"],"Monsoons are seasonal winds that reverse direction."],
+["In winter, monsoon winds blow from land to sea as the:",["Dry North-east monsoon","Moist South-west monsoon","Westerly disturbance","Loo"],"North-east monsoon — dry."],
+["In summer, monsoon winds blow from sea to land as the:",["Moisture-laden South-west monsoon","Dry North-east monsoon","Jet stream","Kalbaisakhi"],"South-west monsoon."],
+["Westerly (western) disturbances come from the:",["Mediterranean Sea","Bay of Bengal","Arabian Sea","Pacific Ocean"],"From the Mediterranean region."],
+["Westerly disturbances bring rain and snow to:",["North-western India in winter","South India in summer","North-east India in monsoon","Coastal India in autumn"],"North-western India in winter."],
+["Westerly disturbances are:",["Shallow cyclonic storms from 35–50 °N","Hot dry winds of Rajasthan","Sea breezes","Ocean currents"],"Shallow cyclonic storms from 35–50 °N."],
+["Westerly disturbances pick up moisture over the:",["Mediterranean and Caspian Seas","Bay of Bengal and Arabian Sea","Indian Ocean","Red Sea"],"Mediterranean and Caspian Seas."],
+["Westerly disturbances give snowfall to mountains in:",["Iran, Afghanistan, Pakistan and North India","Sri Lanka and Maldives","Myanmar and Thailand","Kerala and Tamil Nadu"],"Iran, Afghanistan, Pakistan and North India."],
+["Which are local winds that influence climate in some areas?",["Mango showers and kalbaisakhi","Westerlies and trade winds","Jet streams and typhoons","Hurricanes and willy-willies"],"Mango showers and kalbaisakhi are local winds."],
+["Upper-air currents play an important role in:",["Causing the monsoon","Making deserts","Forming glaciers","Creating earthquakes"],"Upper-air currents help cause the monsoon."],
+["The high-speed winds in the upper air are called:",["Jet streams","Loo","Sea breeze","Trade winds"],"Jet streams."],
+["Jet stream speed ranges from:",["110 km/h in summer to 184 km/h in winter","184 km/h in summer to 110 km/h in winter","25 km/h to 50 km/h","50 km/h to 250 km/h"],"110 km/h (summer) to 184 km/h (winter)."],
+["The word ‘monsoon’ comes from the Arabic word:",["Mausam (mausim)","Klima","Varsha","Barsaat"],"Mausam/mausim, meaning seasons."],
+["Which ragas were inspired by the monsoon?",["Meghamalhar and Amruthavarshini","Bhairavi and Yaman","Darbari and Bhupali","Todi and Kalyani"],"Meghamalhar and Amruthavarshini."]
+]},
+{id:"top",name:"Topography & microclimate",color:"#B5651D",qs:[
+["‘Topography’ means:",["The arrangement of natural and artificial physical features of an area","The study of weather","Rainfall measurement","Map colours"],"Arrangement of natural and artificial features."],
+["Topography influences:",["Temperature, precipitation and wind patterns","Only population","Only soil colour","Only time zones"],"Temperature, precipitation and winds."],
+["Mumbai has a moderate maritime climate because it is:",["On the Arabian Sea coast","At high altitude","Far inland","In the Himalayas"],"Coastal location."],
+["Nagpur, inland at a similar latitude to Mumbai, has:",["Hotter summers and cooler winters","Same climate as Mumbai","Snow all year","Rain every afternoon"],"Inland → extreme temperatures."],
+["Describing a region’s climate involves patterns over:",["Three decades or more","One year","One month","One week"],"Over three decades or more."],
+["A microclimate is:",["The climate of a small, specific area that differs from the surrounding climate","The climate of a whole continent","Weather for one day","A tiny cyclone"],"Small area, different from surroundings."],
+["Microclimates can be caused by:",["Buildings, vegetation, water bodies, elevation and human activities","Only latitude","Only ocean currents","Only the Moon"],"Local factors."],
+["Which is NOT a factor that creates a microclimate?",["Latitude","Presence of buildings","Presence of water bodies","Vegetation"],"Latitude affects large regions, not microclimates."],
+["A microclimate can exist in a space as small as:",["A garden, street corner or forest patch","A whole country","A continent","An ocean"],"Localised area."],
+["Unlike regional climates, microclimates can vary within:",["A few metres","Hundreds of kilometres","Different countries","Different continents"],"Short-scale impact."],
+["Cities are warmer than nearby rural areas. This is called:",["Urban Heat Island (UHI)","Rain shadow","Maritime effect","Lapse rate"],"Urban Heat Island effect."],
+["The Urban Heat Island is caused by:",["Concrete, asphalt and reduced vegetation","More trees","Lakes","Snow"],"Concrete, asphalt, less vegetation."],
+["Which city centre is given as an example of UHI?",["Delhi","Shimla","Drass","Kochi"],"Delhi’s city centre is warmer than rural surroundings."],
+["Forests provide conditions that are:",["Cooler and more humid under the canopy","Hotter and drier","Snowy","Windier"],"Forest microclimate."],
+["Which forest is given as an example of a forest microclimate?",["Sundarbans mangrove forests","Thar scrub","Aravalli forests","Nilgiri tea gardens"],"Sundarbans mangroves."],
+["In the Himalayas, which slopes receive more sunlight and are warmer?",["South-facing slopes","North-facing slopes","East-facing only","All equally"],"South-facing slopes."],
+["In Mumbai, coastal neighbourhoods compared to inland suburbs like Thane are:",["Cooler and more humid","Hotter and drier","Snowier","Exactly the same"],"Coastal vs inland microclimate."],
+["Microclimates are important in:",["Agriculture, architecture and urban planning","Only sports","Only music","Only space travel"],"They affect comfort, plant growth and local weather."]
+]},
+{id:"life",name:"Climate & Indian lifestyle",color:"#0077B6",qs:[
+["A majority of people in India depend on ____ for their livelihood.",["Agriculture","Fishing","Mining","Tourism"],"Agriculture."],
+["Farmers wait for the monsoon to:",["Sow their main crop","Harvest wheat","Sell cattle","Build houses"],"Sowing depends on the monsoon."],
+["Most of India’s rain falls between:",["June and September","December and February","March and May","October and November"],"June–September — hence the need for irrigation."],
+["Western disturbances help produce bumper crops of:",["Wheat and barley in Punjab","Rice in Kerala","Tea in Assam","Cotton in Gujarat"],"Wheat and barley in Punjab."],
+["Winter rain in Tamil Nadu is good for:",["Rice and millets","Wheat and barley","Apples","Tea"],"Rice and millets."],
+["Makar Sankranti is celebrated when:",["The Sun begins its northward journey (Uttarayan)","The monsoon arrives","The rabi crop is harvested in April","The Sun sets earliest"],"Mid-January, Uttarayan."],
+["Makar Sankranti marks:",["End of the winter solstice and beginning of the harvest season","Start of the monsoon","End of the rainy season","Punjabi New Year"],"Also people thank the Sun God for good crops."],
+["Baisakhi is celebrated in:",["April","January","August","November"],"April."],
+["Baisakhi marks the harvest of the:",["Rabi crop","Kharif crop","Sugarcane","Rice"],"Rabi crop."],
+["Baisakhi coincides with:",["The Punjabi New Year","Diwali","Onam","Makar Sankranti"],"Punjabi New Year; bhangra is danced."],
+["Which dance is associated with Baisakhi?",["Bhangra","Kathakali","Garba","Bihu"],"Bhangra."],
+["Pongal is celebrated in:",["Tamil Nadu","Kerala","Punjab","Assam"],"Tamil Nadu, in January."],
+["Pongal is named after:",["A rice dish made from the newly harvested crop","A king","A river","A dance"],"The rice dish ‘pongal’."],
+["Pongal marks:",["The end of the winter harvest","The start of the monsoon","The rabi harvest","Punjabi New Year"],"End of the winter harvest."],
+["Onam is celebrated in:",["Kerala in August–September","Punjab in April","Assam in January","Tamil Nadu in January"],"Kerala, August–September."],
+["Onam marks the rice harvest and the homecoming of:",["King Mahabali","King Ashoka","Lord Rama","King Vikramaditya"],"King Mahabali."],
+["Onam coincides with:",["The end of the South-west monsoon","The start of winter","The Punjabi New Year","Uttarayan"],"End of the South-west monsoon."],
+["Lohri is celebrated mainly in:",["Punjab, in January","Assam, in April","Kerala, in August","Bengal, in October"],"Punjab, January."],
+["Lohri is associated with the harvest of:",["Sugarcane","Rice","Tea","Cotton"],"Sugarcane; bonfires and folk songs."],
+["Magh Bihu is celebrated in:",["Assam","Punjab","Tamil Nadu","Rajasthan"],"Assam, January."],
+["The makeshift huts built during Magh Bihu are called:",["Meji","Pandal","Gopuram","Jhum"],"Meji."],
+["Teej is celebrated mainly by women in:",["Rajasthan, Uttar Pradesh and Bihar","Kerala and Tamil Nadu","Assam and Meghalaya","Gujarat and Goa"],"July–August; welcomes the monsoon."],
+["Teej welcomes:",["The monsoon","Winter","The harvest of rabi","The New Year"],"Teej welcomes the monsoon."],
+["Varsha Mangal (rain festivals) are celebrated in parts of:",["Maharashtra and Bengal","Punjab and Haryana","Kerala and Karnataka","Rajasthan and Gujarat"],"Celebrating the onset of rains."],
+["‘Monsoon failure’ refers to:",["Poor rainfall during the monsoon season","Too much rain","Early winter","Snowfall"],"Poor monsoon rainfall."],
+["Rain in India is:",["Unevenly distributed and unpredictable","Even and predictable","Only in winter","Only in the desert"],"Floods and droughts can exist side by side."],
+["In crowded cities, water can be conserved by:",["Rainwater harvesting from rooftops","Cutting trees","Building more roads","Letting rain flow into drains"],"Collect, filter and store rooftop rainwater."],
+["In villages, the flow of water can be slowed by:",["Bunds and check-dams","Concrete roads","Cutting forests","Mining"],"They help recharge wells."],
+["Poor rainfall damages crops like:",["Rice, wheat, pulses and oilseeds","Only tea","Only apples","Only rubber"],"Lower yields reduce farmers’ incomes."],
+["Poor rainfall can lead to:",["Food shortages and inflation","Lower food prices","More snowfall","Cooler summers"],"Rise in cost of living."]
+]},
+{id:"cyc",name:"Cyclones",color:"#7B2CBF",qs:[
+["Which of these is a climate-related disaster mentioned in the chapter?",["Cyclones, floods and landslides","Volcanoes","Meteor strikes","Solar eclipses"],"Cyclones, floods, landslides and others."],
+["Cyclones are formed by wind circulation around a:",["Low-pressure area","High-pressure area","Mountain","River"],"Low-pressure area."],
+["The calm centre of a cyclone is called the:",["Eye","Vortex","Edge","Funnel"],"The eye."],
+["The eye of a cyclone has:",["Very low pressure, clearer skies, warmer temperature, calm","Dense cloud and violent wind","High pressure and heavy rain","Snow"],"Eye = calm, clear, very low pressure."],
+["The vortex of a cyclone has:",["Dense cloud, violent wind, thunderstorm and torrential rain","Clear skies and calm","Less cloud and less wind","High pressure"],"Vortex is the stormiest region."],
+["The edge of a cyclone has:",["Higher pressure, higher temperature, less cloud, wind and rain","Very low pressure and calm","Violent wind","Torrential rain"],"Edge of storm."],
+["The clouds in a cyclone are:",["Towering cumulonimbus clouds","Cirrus clouds","Fog","Stratus only"],"Towering cumulonimbus."],
+["According to the diagram, a cyclone moves at about:",["25 km per hour","250 km per hour","5 km per hour","500 km per hour"],"About 25 km/h."],
+["In the Northern Hemisphere, cyclone winds rotate:",["Anticlockwise","Clockwise","Straight","Up and down only"],"Anticlockwise (counter-clockwise)."],
+["In the Southern Hemisphere, cyclone winds rotate:",["Clockwise","Anticlockwise","Straight","Not at all"],"Clockwise."],
+["Which force deflects winds to the right in the Northern Hemisphere?",["Coriolis force","Gravity","Magnetic force","Friction"],"Coriolis force."],
+["An anticyclone develops around a:",["High-pressure area","Low-pressure area","Volcano","Glacier"],"High pressure."],
+["An anticyclone generally brings:",["Clear blue skies and fine weather","Heavy rain and storms","Snowstorms","Floods"],"Fine weather."],
+["In an anticyclone, winds blow:",["Outward — clockwise in NH, anticlockwise in SH","Inward — anticlockwise in NH","Straight up","Only at night"],"Outward from the centre."],
+["Tropical storm winds usually blow at:",["50–250 km/h","5–10 km/h","500–1,000 km/h","25 km/h only"],"50–250 km per hour."],
+["A tropical storm can be over:",["1,200 km wide","12 km wide","120 m wide","12,000 km wide"],"Over 1,200 km wide."],
+["Tropical storms are called hurricanes in the:",["Atlantic","Indian Ocean","Western Pacific","West Australian waters"],"Atlantic — hurricanes."],
+["Tropical storms are called typhoons in the:",["Western Pacific","Atlantic","Indian Ocean","Arabian Sea"],"Western Pacific — typhoons."],
+["Tropical storms are called ‘willy-willy’ in:",["West Australian ocean waters","Atlantic","Indian Ocean","Caribbean"],"West Australian waters."],
+["In the Indian Ocean, tropical storms are called:",["Cyclones","Typhoons","Hurricanes","Tornadoes"],"Cyclones."],
+["Cyclones form when warm tropical waters are at least:",["26.5 °C","16.5 °C","36.5 °C","6.5 °C"],"At least 26.5 °C."],
+["Tropical storms do not form closer than about ____ from the Equator.",["500 km","50 km","5,000 km","5 km"],"About 500 km, because Coriolis force is weak there."],
+["Why don’t cyclones form very close to the Equator?",["Coriolis force is weak there","Water is too cold","There is no wind","It is too high"],"Weak Coriolis force."],
+["In India, cyclones occur frequently in:",["Bay of Bengal and Arabian Sea","Thar Desert","Himalayas","Deccan Plateau"],"Both seas."],
+["Which states’ coastal areas suffer cyclone destruction?",["West Bengal, Odisha, Andhra Pradesh, Tamil Nadu, Maharashtra","Punjab and Haryana","Rajasthan and MP","Himachal and Uttarakhand"],"Coastal states."],
+["Which coastal districts of India suffer cyclonic damage year after year?",["Eastern coastal districts","Western desert districts","Himalayan districts","Central districts"],"Eastern coast."],
+["What causes maximum damage in coastal areas during a cyclone?",["Storm surges","Fog","Snow","Dust"],"Storm surges."],
+["A storm surge is:",["A rise in ocean water level due to extreme surface winds","A drop in temperature","An earthquake","A type of cloud"],"Rise in sea level due to winds."],
+["Water levels in a storm surge may rise by:",["3 m or more","3 cm","30 m","0.3 m"],"3 m or more."],
+["A cyclone can last for:",["Over a week","A few minutes","Many years","Exactly one hour"],"They could last over a week."],
+["The Odisha super cyclone struck on:",["29 October 1999","29 October 2009","1 June 1999","26 January 2001"],"29 October 1999."],
+["The 1999 Odisha cyclone formed in the:",["Bay of Bengal","Arabian Sea","Indian Ocean near Kerala","Pacific"],"Bay of Bengal."],
+["Wind speed of the 1999 Odisha cyclone was:",["250–300 km/h","50–100 km/h","25 km/h","500 km/h"],"250–300 km per hour."],
+["The 1999 cyclone struck about ____ of Odisha’s coast.",["200 km","20 km","1,200 km","2,000 km"],"About 200 km."],
+["Heavy rain poured continuously during the 1999 Odisha cyclone for:",["3 days","3 weeks","3 hours","3 months"],"3 days."],
+["High sea waves of 13–20 feet swept about ____ inland.",["20 km","2 km","200 km","500 km"],"20 km inland."],
+["8-metre tidal waves lashed the coast from:",["Puri to Balasore","Chennai to Vizag","Mumbai to Goa","Kolkata to Digha"],"Puri to Balasore."],
+["Land became infertile after the 1999 cyclone due to:",["Salinisation caused by the tidal surge","Snow","Volcanic ash","Desert sand"],"Salt water from the surge."],
+["Within 36 hours, the 1999 cyclone killed over:",["10,000 people","100 people","1,000 people","1 lakh people"],"Over 10,000 people."],
+["The 1999 cyclone affected how many villages?",["18,000 villages in 6 districts and 28 coastal towns","1,800 villages","180 villages","18 villages"],"18,000 villages, 6 districts, 28 towns."]
+]},
+{id:"dis",name:"Floods, landslides & forest fires",color:"#E76F51",qs:[
+["Floods happen when:",["Water overflows onto land that is usually dry","Land becomes very dry","Snow melts slowly","There is no rain"],"Overflow onto dry land."],
+["Which is a cause of flooding mentioned in the chapter?",["Heavy rainfall, river overflow, storm surges, dam failure, urban flooding, deforestation","Only earthquakes","Only snowfall","Only volcanoes"],"Six natural and human-made causes."],
+["Heavy rainfall causes floods when:",["Rain falls faster than the ground can absorb or drains can carry away","Rain is light","Rivers are dry","There are more trees"],"Water accumulates."],
+["River overflow is common in:",["River basins during monsoons or glacier melting","Deserts","Plateaus","Cities only"],"River basins."],
+["Urban flooding is caused by:",["Poor drainage, concrete surfaces and clogged drains","Too many forests","Low rainfall","Sand dunes"],"Water cannot flow away → flash floods."],
+["Deforestation increases floods because it:",["Reduces the land’s ability to absorb rainwater","Adds more soil","Stops rain","Cools the air"],"More surface runoff."],
+["Floods are especially common in India during:",["June–September (monsoon)","December–February","March–May","October only"],"Monsoon season."],
+["Brahmaputra floods occur in:",["Assam","Bihar","Kerala","Gujarat"],"Assam."],
+["Kosi River floods occur in:",["Bihar","Assam","Odisha","Maharashtra"],"Bihar — the Kosi."],
+["Floods in the Northern Plains are caused by:",["River overflow during monsoons and glacial melt","Cyclones only","Dam failure only","Poor drainage only"],"Ganga and Brahmaputra basins."],
+["Cyclones Yaas and Amphan caused floods in:",["Eastern India (Odisha, West Bengal)","Western India","Southern India","Himalayas"],"Eastern India."],
+["Floods in Eastern India are caused by:",["Cyclones from the Bay of Bengal and heavy rainfall","Glacial melt","Western disturbances","Loo"],"Bay of Bengal cyclones."],
+["The 2005 floods in Western India occurred in:",["Mumbai","Chennai","Kolkata","Delhi"],"2005 Mumbai floods."],
+["Western India floods are caused by:",["Sudden heavy rainfall and poor drainage","Cyclones from Bay of Bengal","Glacier melt","Kosi river"],"Gujarat, Rajasthan, Maharashtra."],
+["Kerala floods occurred in:",["2018 and 2019","2005","1999","2013 only"],"Kerala floods 2018 and 2019."],
+["Floods in Southern India are caused by:",["Monsoon rains, cyclones and deforestation","Glacial melt","Western disturbances","Snowfall"],"Kerala, TN, AP, Karnataka."],
+["Flash floods and landslides in Uttarakhand, Himachal and Arunachal are caused by:",["Melting glaciers and intense rainfall","Cyclones","Desert storms","Poor drainage in cities"],"Himalayan & North-eastern regions."],
+["NDRF stands for:",["National Disaster Response Force","National Defence Relief Fund","New Delhi Rescue Force","National Drought Relief Force"],"National Disaster Response Force."],
+["NDRF battalions are positioned at:",["12 locations across India","2 locations","50 locations","Only in Delhi"],"12 strategic locations."],
+["NDRF handles:",["Both natural and human-made disasters","Only floods","Only fires","Only war"],"Rescue and evacuation in cyclones, landslides, floods."],
+["A landslide is:",["Sudden movement of rocks or debris down a slope","Rise in sea level","A forest fire","A cyclone over land"],"Downslope movement of rock/debris."],
+["Landslides occur when the stability of a slope is weakened by:",["Heavy rainfall, earthquakes, deforestation, construction, mining, glacial melting","Only sunshine","Planting trees","Sea breeze"],"Natural and human causes in hilly regions."],
+["Landslides in the Himalayan region (J&K, HP, Uttarakhand) are due to:",["Steep slopes, earthquakes, heavy rainfall","Sparse vegetation","Mining only","Poor drainage"],"Himalayan Region."],
+["Landslides in the North-eastern hills are due to:",["High rainfall, loose soil, deforestation","Desert winds","Glaciers","Volcanoes"],"Arunachal, Assam, Manipur, Mizoram."],
+["Landslides in the Western Ghats (Kerala, Karnataka, TN, Maharashtra) are due to:",["Monsoon rains and deforestation","Snow","Mining only","Earthquakes only"],"Western Ghats."],
+["Landslides in the Eastern Ghats (Odisha, AP) are due to:",["Rainfall, mining and soil erosion","Glacial melt","Snowstorms","Sea breeze"],"Eastern Ghats."],
+["Landslides in Sikkim and Darjeeling hills are due to:",["Unstable slopes, construction and heavy rains","Desert winds","Cyclones only","Low rainfall"],"Sikkim & Darjeeling Hills."],
+["Forest fires are also known as:",["Wildfires","Bushfires only in India","Firestorms","Heatwaves"],"Wildfires."],
+["Forest fires can start naturally through:",["Lightning strikes","Rainfall","Snow","Sea breeze"],"Lightning."],
+["Human-induced forest fires can be caused by:",["Unattended campfires, burning debris, deliberate fire-setting","Planting trees","Rainwater harvesting","Check-dams"],"Human activities."],
+["Forest fires spread rapidly due to:",["Dry summers, prolonged droughts and strong winds","Heavy rain","High humidity","Snow"],"Climatic conditions."],
+["Forest fires in Central India (MP, Chhattisgarh) are due to:",["Large forest cover, dry deciduous forests, human activity","Pine forests","Jhum farming","Sparse grassland"],"Central India."],
+["Pine forests, dry summers and steep terrain cause forest fires in:",["Western Himalayas (Uttarakhand, HP, J&K)","Southern India","Western India","Eastern India"],"Western Himalayas."],
+["Forest fires in Eastern India (Odisha, Jharkhand, WB) are due to:",["Dry forests, shifting cultivation, high temperatures","Pine forests","Sparse vegetation","Jhum only"],"Eastern India."],
+["Slash-and-burn (jhum) farming causes forest fires in:",["North-eastern states","Western India","Central India","Southern India"],"Assam, Manipur, Mizoram, Nagaland."],
+["Forest fires in Southern India are due to:",["Dry forests, prolonged dry spells, human encroachment","Jhum farming","Pine forests","Glacial melt"],"AP, Telangana, Karnataka, TN, Kerala."],
+["Sparse vegetation and grasslands cause forest fires in:",["Western India — Rajasthan (Aravalli Hills), Gujarat","North-east","Western Himalayas","Kerala"],"Western India."]
+]},
+{id:"cc",name:"Climate change",color:"#6A994E",qs:[
+["Climate change refers to:",["Long-term shifts in temperatures and weather patterns","A single hot day","Daily weather changes","Seasonal festivals"],"Long-term shifts."],
+["Today, climate change is mainly driven by:",["Human activities, especially burning fossil fuels","Only natural causes","The Moon","Earthquakes"],"Human activities."],
+["Which are fossil fuels?",["Coal, oil and gas","Solar, wind and hydro","Wood and dung only","Uranium and thorium"],"Coal, oil and natural gas."],
+["Burning fossil fuels increases the level of:",["Carbon dioxide in the air","Oxygen","Nitrogen only","Water vapour only"],"More CO₂ → global warming."],
+["Fossil fuels were formed from:",["Remains of plants and animals buried millions of years ago","Volcanic lava","Sea salt","Meteorites"],"Heat and pressure turned them into coal, petroleum and gas."],
+["Which are causes of climate change in India mentioned in the text?",["Large population, unpredictable weather and rapid urbanisation","Too many forests","Too few cities","Cold winds"],"Population, weather patterns, urbanisation."],
+["Heatwaves are becoming more frequent and intense in:",["Northern and central India","Only Kerala","Only the North-east","Only islands"],"Northern and central parts."],
+["Heatwaves increase the risk of:",["Heatstroke, water shortages and energy demand for cooling","Snowfall","Floods only","Earthquakes"],"Heat-related risks."],
+["Climate change is making the Indian monsoon:",["Unpredictable, with erratic rainfall","Perfectly regular","Disappear completely","Only a winter event"],"Affects crops, irrigation and water."],
+["Himalayan glaciers melting faster threatens water supply for rivers like:",["Ganga and Brahmaputra","Godavari and Krishna","Narmada and Tapi","Kaveri and Pennar"],"Glacier-fed rivers."],
+["Which coastal cities are at risk from rising sea levels and coastal erosion?",["Mumbai, Chennai and Kolkata","Delhi and Jaipur","Shimla and Manali","Bhopal and Nagpur"],"Coastal cities."],
+["Climate change increases the spread of diseases like:",["Malaria and dengue","Polio","Measles","Chickenpox"],"Malaria and dengue; also air pollution and water-related illnesses."],
+["Mitigation means:",["Reducing greenhouse gas emissions","Preparing for disasters","Educating citizens","Signing treaties"],"Mitigation = reducing emissions."],
+["Which is a mitigation step?",["Shifting to solar, wind and hydro power","Building early warning systems","Developing climate-resilient crops","Water conservation only"],"Renewable energy, efficiency, afforestation."],
+["Adaptation means:",["Preparing for climate impacts","Reducing emissions","Burning more fuel","Cutting forests"],"Adaptation = coping with impacts."],
+["Which is an adaptation step?",["Developing climate-resilient crops and early warning systems","Using renewable energy","Promoting afforestation","Energy-efficient transport"],"Resilient crops, irrigation, warnings, water management."],
+["Early warning systems help prepare for:",["Floods, cyclones and heatwaves","Festivals","Exams","Elections"],"Disaster preparedness."],
+["Community awareness includes supporting:",["Traditional ecological knowledge","Deforestation","More fossil fuels","Urban sprawl"],"Communities living in harmony with nature."],
+["NAPCC stands for:",["National Action Plan on Climate Change","National Agency for Pollution Control","National Authority for Climate Policy","New Agreement on Pollution and Climate"],"National Action Plan on Climate Change."],
+["International cooperation helps India with:",["Technology transfer, finance and knowledge-sharing","Only sports","Only trade in oil","Only tourism"],"Collaboration with other countries."],
+["India needs which kind of approach to climate change?",["Multi-pronged","Single-step","No action","Only international"],"Mitigation, adaptation, awareness, policy."],
+["India’s fight against climate change aims at a future that is:",["Sustainable, resilient and equitable","Industrial only","Fossil-fuel based","Isolated"],"For people, economy and culture."]
+]}
+];
+
+const COUNTS=[10,25,50,"All"];
+let selChaps=new Set(CH.map(c=>c.id)), selCount=25;
+let deck=[],idx=0,score=0,answered=false,wrong=[],results={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderHome(){
+  const cc=$("chapChips");cc.innerHTML="";
+  const total=CH.reduce((n,c)=>n+c.qs.length,0);
+  const all=document.createElement("button");all.className="chip";
+  all.setAttribute("aria-pressed",selChaps.size===CH.length);
+  all.innerHTML=`All sections <small>${total}</small>`;
+  all.onclick=()=>{selChaps=selChaps.size===CH.length?new Set():new Set(CH.map(c=>c.id));renderHome();};
+  cc.appendChild(all);
+  CH.forEach(c=>{const b=document.createElement("button");b.className="chip";
+    b.setAttribute("aria-pressed",selChaps.has(c.id));
+    b.innerHTML=`<span class="dot" style="background:${c.color}"></span>${esc(c.name)} <small>${c.qs.length}</small>`;
+    b.onclick=()=>{selChaps.has(c.id)?selChaps.delete(c.id):selChaps.add(c.id);renderHome();};
+    cc.appendChild(b);});
+  const kc=$("countChips");kc.innerHTML="";
+  COUNTS.forEach(n=>{const b=document.createElement("button");b.className="chip";
+    b.setAttribute("aria-pressed",selCount===n);b.textContent=n;
+    b.onclick=()=>{selCount=n;renderHome();};kc.appendChild(b);});
+  const pool=CH.filter(c=>selChaps.has(c.id)).reduce((n,c)=>n+c.qs.length,0);
+  $("poolInfo").textContent=pool?`${pool} questions available`:"Pick at least one section";
+  $("startBtn").disabled=!pool;
+}
+const build=list=>list.map(({c,q})=>({c,text:q[0],exp:q[2],opts:shuffle(q[1].map((t,i)=>({t,ok:i===0})))}));
+function start(list){deck=list;idx=0;score=0;wrong=[];results={};show("quiz");renderQ();}
+function startFromHome(){
+  let pool=[];CH.filter(c=>selChaps.has(c.id)).forEach(c=>c.qs.forEach(q=>pool.push({c,q})));
+  pool=shuffle(pool);if(selCount!=="All")pool=pool.slice(0,selCount);
+  start(build(pool));
+}
+function show(id){["home","quiz","result"].forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0);}
+function renderQ(){
+  answered=false;const d=deck[idx];
+  $("qCount").textContent=`Question ${idx+1} of ${deck.length}`;
+  $("qScore").textContent=`Score ${score}`;
+  $("qBar").style.width=(idx/deck.length*100)+"%";
+  $("qTag").innerHTML=`<span class="dot" style="background:${d.c.color}"></span>${esc(d.c.name)}`;
+  $("qText").textContent=d.text;
+  const o=$("qOpts");o.innerHTML="";
+  d.opts.forEach((op,i)=>{const b=document.createElement("button");b.className="opt";
+    b.innerHTML=`<b>${"ABCD"[i]}</b><span>${esc(op.t)}</span>`;b.onclick=()=>pick(i);o.appendChild(b);});
+  $("qFb").className="fb";$("qFb").textContent="";
+  $("nextBtn").disabled=true;$("nextBtn").textContent=idx===deck.length-1?"See score":"Next";
+  o.firstChild.focus({preventScroll:true});
+}
+function pick(i){
+  if(answered)return;answered=true;
+  const d=deck[idx],btns=[...$("qOpts").children],ok=d.opts[i].ok;
+  btns.forEach((b,j)=>{b.disabled=true;if(d.opts[j].ok)b.classList.add("ok");});
+  const r=results[d.c.id]||(results[d.c.id]={c:d.c,right:0,total:0});r.total++;
+  const fb=$("qFb"),ans=d.opts.find(x=>x.ok).t;
+  if(ok){score++;r.right++;fb.className="fb show ok";fb.innerHTML=`<strong>Correct.</strong> ${esc(d.exp)}`;}
+  else{btns[i].classList.add("bad");wrong.push({d,picked:d.opts[i].t});
+    fb.className="fb show bad";fb.innerHTML=`<strong>Not quite.</strong> Answer: ${esc(ans)}. ${esc(d.exp)}`;}
+  $("qScore").textContent=`Score ${score}`;
+  $("nextBtn").disabled=false;$("nextBtn").focus({preventScroll:true});
+}
+function next(){if(!answered)return;idx++;idx<deck.length?renderQ():finish();}
+function finish(){
+  const n=Object.values(results).reduce((s,r)=>s+r.total,0);
+  show("result");
+  $("rScore").textContent=`${score}/${n}`;
+  const pct=n?Math.round(score/n*100):0;$("rPct").textContent=`${pct}%`;
+  $("rMsg").textContent=!n?"No questions answered.":pct>=90?"Excellent — you know this chapter very well.":pct>=70?"Good work. Review the mistakes below to close the gaps.":pct>=50?"Fair. Go through the mistakes, then retry them.":"Re-read the chapter, then retry the wrong answers.";
+  $("rBrk").innerHTML=Object.values(results).map(r=>`<div><span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${r.c.color};margin-right:8px"></span>${esc(r.c.name)}</span><strong>${r.right}/${r.total}</strong></div>`).join("");
+  $("retryWrongBtn").classList.toggle("hidden",!wrong.length);
+  $("revPanel").classList.toggle("hidden",!wrong.length);
+  $("rRev").innerHTML=wrong.map(w=>`<div class="rev"><p><strong>${esc(w.d.text)}</strong></p><p class="y">Your answer: ${esc(w.picked)}</p><p class="c">Correct: ${esc(w.d.opts.find(x=>x.ok).t)}</p><p class="hint">${esc(w.d.exp)}</p></div>`).join("");
+}
+$("startBtn").onclick=startFromHome;
+$("nextBtn").onclick=next;
+$("quitBtn").onclick=finish;
+$("homeBtn").onclick=()=>{show("home");renderHome();};
+$("retryWrongBtn").onclick=()=>start(shuffle(wrong.map(w=>({...w.d,opts:shuffle(w.d.opts)}))));
+document.addEventListener("keydown",e=>{
+  if($("quiz").classList.contains("hidden"))return;
+  const k=parseInt(e.key,10);
+  if(k>=1&&k<=4&&!answered&&deck[idx].opts[k-1])pick(k-1);
+  else if(e.key==="Enter"&&answered){e.preventDefault();next();}
+});
+renderHome();
+</script>
+<style id="fun-theme">
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&display=swap');
+body{background:#FFFBEB!important;min-height:100vh;position:relative;overflow-x:hidden}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:250px;z-index:-1;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 70px no-repeat,
+  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+  radial-gradient(circle at 55% 12%,rgba(255,255,255,.4) 0 12px,transparent 13px),
+  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+h1{font-family:"Playfair Display",Georgia,serif!important;color:#1E293B!important;font-weight:800!important}
+.sub{color:#5B4B1E!important}
+.sub::before{content:"🌍 "}
+.hint{color:#78716C!important}
+.panel{border:1px solid #FDE68A!important;border-radius:22px!important;box-shadow:0 14px 40px rgba(245,180,0,.18)!important}
+.label{color:#1E1B4B}
+.label::before{content:"⭐ "}
+.chip{background:#fff!important;border:2px solid #FDE68A!important;font-weight:700;transition:transform .15s}
+.chip:hover{transform:translateY(-2px)}
+.chip[aria-pressed="true"]{background:#FFF4CC!important;border-color:#F5B400!important;box-shadow:0 3px 0 #FDE68A}
+.chip .dot{width:12px!important;height:12px!important}
+.btn{font-family:"Nunito Sans",system-ui,sans-serif!important;font-weight:800!important;font-size:1.1rem!important;border-radius:14px!important;
+ background:linear-gradient(180deg,#FFD24D,#FFC21A)!important;color:#1E293B!important;box-shadow:0 5px 0 #D99A00!important;transition:transform .1s,box-shadow .1s}
+.btn:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 #D99A00!important}
+#startBtn::after{content:" 🚀"}
+#nextBtn::after{content:" ➜"}
+.btn.ghost{background:#fff!important;color:#92400E!important;border:2px solid #FDE68A!important;box-shadow:0 4px 0 #FEF3C7!important}
+.top{font-weight:800;color:#1E293B!important}
+#qScore::before{content:"⭐ "}
+.bar{height:12px!important;background:rgba(255,255,255,.6)!important}
+.bar>i{background:linear-gradient(90deg,#FB923C,#F97316)!important;border-radius:99px}
+.tag{color:#B45309!important}
+.q{font-family:"Playfair Display",Georgia,serif;font-size:1.55rem!important;line-height:1.25;color:#1E1B4B}
+.opt{border:2px solid #FEF3C7!important;border-radius:16px!important;font-size:1.06rem!important;font-weight:600;transition:transform .12s;box-shadow:0 3px 0 #FEF3C7}
+.opt:hover:not(:disabled){transform:translateY(-2px);border-color:#FCD34D!important}
+.opt b{width:34px;height:34px;flex:0 0 34px!important;border-radius:10px!important;color:#fff;font-size:1rem!important}
+.opt:nth-child(1) b{background:#FB923C!important}
+.opt:nth-child(2) b{background:#2DD4BF!important}
+.opt:nth-child(3) b{background:#34D399!important}
+.opt:nth-child(4) b{background:#60A5FA!important}
+.opt.ok{border-color:#10B981!important;background:#ECFDF5!important;box-shadow:0 3px 0 #A7F3D0;animation:pop .35s}
+.opt.ok b{background:#10B981!important}
+.opt.bad{border-color:#F87171!important;background:#FEF2F2!important;box-shadow:0 3px 0 #FECACA;animation:shake .4s}
+.opt.bad b{background:#F87171!important}
+.fb{border-radius:14px!important;font-size:1.03rem!important}
+.fb.ok strong::before{content:"🎉 "}
+.fb.bad strong::before{content:"💪 "}
+h2{font-family:"Playfair Display",Georgia,serif!important;color:#1E1B4B}
+.score{background:linear-gradient(90deg,#F59E0B,#F97316,#EF4444);-webkit-background-clip:text;background-clip:text;color:transparent}
+#rMsg{font-weight:700;font-size:1.08rem}
+.brk div{border-radius:12px!important;background:#FFF8E1!important}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.confetti{position:fixed;top:-12px;width:10px;height:14px;border-radius:3px;pointer-events:none;z-index:99;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+.trophy{font-size:2.4rem;font-family:"Playfair Display",Georgia,serif;font-weight:800;color:#B45309;text-align:center;margin-bottom:6px;animation:pop .6s}
+</style>
+<script id="fun-js">
+(function(){
+  var cols=["#FFC93C","#FB923C","#34D399","#60A5FA","#F87171","#2DD4BF"];
+  function burst(n){for(var i=0;i<n;i++){var c=document.createElement("i");c.className="confetti";
+    c.style.left=Math.random()*100+"vw";c.style.background=cols[i%cols.length];
+    c.style.animationDuration=(1.2+Math.random()*1.4)+"s";c.style.animationDelay=(Math.random()*.25)+"s";
+    document.body.appendChild(c);setTimeout(function(x){return function(){x.remove()}}(c),3000);}}
+  var fb=document.getElementById("qFb");
+  if(fb)new MutationObserver(function(){if(fb.classList.contains("ok"))burst(28);}).observe(fb,{attributes:true,attributeFilter:["class"]});
+  var praise=["Yay! 🎉","Super! 🌟","Boom! 💥","Great job! 🥳","You rock! 🚀"];
+  var oops=["Almost! 💪","Nice try! 👍","Keep going! 🔥"];
+  if(fb)new MutationObserver(function(){var s=fb.querySelector("strong");if(!s||s.dataset.fun)return;
+    s.dataset.fun=1;var arr=fb.classList.contains("ok")?praise:oops;s.textContent=arr[Math.floor(Math.random()*arr.length)];}).observe(fb,{childList:true,subtree:true});
+  var res=document.getElementById("result");
+  if(res)new MutationObserver(function(){if(res.classList.contains("hidden"))return;
+    var p=parseInt((document.getElementById("rPct")||{}).textContent)||0;
+    var t=res.querySelector(".trophy");if(!t){t=document.createElement("div");t.className="trophy";var pn=res.querySelector(".panel");pn.insertBefore(t,pn.firstChild);}
+    t.textContent=p>=90?"🏆⭐⭐⭐":p>=70?"🥇⭐⭐":p>=50?"🥈⭐":"🌱 Keep going!";
+    if(p>=70)burst(80);}).observe(res,{attributes:true,attributeFilter:["class"]});
+})();
+</script>
+
+</body>
+</html>

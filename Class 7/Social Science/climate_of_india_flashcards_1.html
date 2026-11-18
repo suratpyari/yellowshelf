@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Climate of India — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --card:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-soft:#E3DAFB;
+  --short:#4FB3A9; --short-soft:#DDF3F0;
+  --long:#F2A541; --long-soft:#FDEFD9;
+  --ct:#6C8EE0; --ct-soft:#E1E9FB;
+  --ok:#3E9B6A; --ok-soft:#DFF3E7; --again:#D9725B; --again-soft:#FBE5DF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(2rem,6.5vw,2.8rem);font-weight:800}
+.sub{color:var(--muted);margin:4px 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:#fff;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;display:flex;gap:7px;align-items:center}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip small{color:var(--muted);font-weight:600}
+.bar-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 8px;font-weight:700;color:var(--muted);font-size:.92rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.scene{perspective:1400px}
+.card{position:relative;min-height:340px;cursor:pointer;transition:transform .5s;transform-style:preserve-3d;border:0;padding:0;width:100%;background:none;font:inherit;color:inherit;text-align:left;display:grid}
+.card.flip{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:24px;padding:22px 22px 20px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;border:2px solid var(--line)}
+.back{transform:rotateY(180deg)}
+.tagline{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.tag{font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.marks{font-weight:800;color:var(--muted);font-size:.9rem}
+.qnum{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:3rem;line-height:1;color:var(--accent-soft);margin-bottom:4px}
+.qtext{font-size:1.3rem;font-weight:700;flex:1}
+.hint{color:var(--muted);font-size:.88rem;margin-top:16px;text-align:center}
+.back h2{font-size:1.1rem;color:var(--muted);margin-bottom:8px}
+.back .qsmall{font-weight:700;font-size:.98rem;margin-bottom:12px}
+.back ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.back li::marker{color:var(--accent)}
+.controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{flex:1;min-width:120px;border:0;border-radius:16px;padding:14px 16px;font:inherit;font-weight:800;font-size:1rem;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--line)}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 4px 0 #5B3FB0}
+.btn.ok{background:var(--ok-soft);color:var(--ok);box-shadow:0 4px 0 #BFE3CD}
+.btn.again{background:var(--again-soft);color:var(--again);box-shadow:0 4px 0 #F2C9BE}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
+.nav .btn{flex:0 1 auto;font-size:.92rem;padding:10px 14px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.done{background:var(--card);border-radius:24px;padding:26px;border:2px solid var(--line);text-align:center}
+.big{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:clamp(3rem,13vw,4.6rem);line-height:1;color:var(--accent)}
+.hidden{display:none!important}
+.tiny{color:var(--muted);font-size:.82rem;margin-top:14px}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.bar>i{transition:none}}
+</style>
+<style id="yellow-theme">
+:root{--bg:#FFFBEB;--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--accent:#F5B400;--accent-ink:#1E293B;--accent-soft:#FFF4CC;--chip:#FFF4CC}
+body{position:relative}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:230px;z-index:-1;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
+  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+.sub{color:#5B4B1E!important}
+.chip[aria-pressed="true"]{background:#FFF4CC!important;border-color:#F5B400!important}
+#startBtn,#nextBtn,#retryWrongBtn,.btn.primary{background:linear-gradient(180deg,#FFD24D,#FFC21A)!important;color:#1E293B!important;box-shadow:0 4px 0 #D99A00!important}
+.bar{background:rgba(255,255,255,.7)!important}
+.bar>i{background:linear-gradient(90deg,#FB923C,#F97316)!important}
+.back li::marker{color:#F59E0B}
+.qnum{color:#FDE68A!important}
+.big{color:#F59E0B!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Climate of India</h1>
+  <p class="sub">Flashcards · short, long & critical-thinking questions. Answer out loud or on paper, then flip to check.</p>
+
+  <div class="chips" id="chips"></div>
+  <div class="chips" style="margin-top:8px" id="opts"></div>
+
+  <div id="deckView">
+    <div class="bar-row"><span id="count"></span><span id="tally"></span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scene">
+      <button class="card" id="card" aria-live="polite">
+        <div class="face front">
+          <div class="tagline"><span class="tag" id="fTag"></span><span class="marks" id="fMarks"></span></div>
+          <div class="qnum" id="fNum"></div>
+          <div class="qtext" id="fText"></div>
+          <div class="hint">Tap the card or press Space to see the answer</div>
+        </div>
+        <div class="face back">
+          <div class="tagline"><span class="tag" id="bTag"></span><span class="marks" id="bMarks"></span></div>
+          <h2>Key points</h2>
+          <div class="qsmall" id="bText"></div>
+          <ul id="bPts"></ul>
+        </div>
+      </button>
+    </div>
+    <div class="controls" id="flipCtl"><button class="btn primary" id="flipBtn">Show answer</button></div>
+    <div class="controls hidden" id="rateCtl">
+      <button class="btn again" id="againBtn">Need practice</button>
+      <button class="btn ok" id="okBtn">I knew it</button>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prevBtn">← Previous</button>
+      <button class="btn" id="skipBtn">Skip →</button>
+    </div>
+    <p class="tiny">Keys: Space = flip · ← → = move · K = knew it · P = need practice</p>
+  </div>
+
+  <div class="done hidden" id="doneView">
+    <h2 style="font-size:1.6rem">Round complete</h2>
+    <div class="big" id="dScore"></div>
+    <p id="dMsg"></p>
+    <div class="controls">
+      <button class="btn again" id="practiceBtn">Practise the tricky ones</button>
+      <button class="btn primary" id="restartBtn">Start again</button>
+    </div>
+  </div>
+</div>
+<script>
+const RAW={"short":[["Where does the word ‘climate’ come from, and what does it mean? What determines the climate of a place?",2,["From the Greek word klima, meaning ‘tilt’.","Climate is determined by the angle at which the Sun’s rays reach the Earth."]],["Distinguish between weather and climate.",2,["Weather is recorded daily with weather instruments.","Climate is the average weather of a larger area over a long period, worked out from 35–40 years of data."]],["Name the six ritus with their time periods.",3,["Vasanta (spring): mid-March to mid-May. Grishma (summer): mid-May to mid-July. Varsha (monsoon): mid-July to mid-September.","Sharad (autumn): mid-September to mid-November. Hemanta (pre-winter): mid-November to mid-January. Shishira (winter): mid-January to mid-March."]],["India’s northern half lies in the temperate zone. Why is India still said to have a tropical monsoon climate?",2,["Temperatures stay higher than in temperate latitudes all year. The average is 26 °C, with a range of about 6 °C.","Wind direction reverses with the seasons: onshore in summer, offshore in winter."]],["Define onshore and offshore winds. In which season does each blow over India?",2,["Onshore winds blow from sea to land. They are moisture-laden and blow during the summer monsoon.","Offshore winds blow from land to sea. They are mostly dry and blow in winter."]],["What is the normal lapse rate? Give an example.",2,["Temperature falls by about 1 °C for every 165 m rise in altitude.","Shimla is cooler than Ludhiana, though both are at the same latitude, because Shimla is higher."]],["Why does Mawsynram receive the highest rainfall in the world?",2,["Winds from the Bay of Bengal branch of the South-west monsoon get trapped in the mountains.","They are funnelled up through the Khasi Hills, cool, condense and shed their moisture on the windward side. Mawsynram receives about 1,187 cm a year."]],["Why does the Deccan Plateau receive scanty rainfall?",2,["It lies on the leeward side of the Western Ghats, in the rain shadow.","The Western Ghats stop the Arabian Sea branch of the South-west monsoon from reaching it."]],["What are westerly disturbances? How do they help farmers?",2,["They are shallow cyclonic storms from 35–50 °N that pick up moisture over the Mediterranean and Caspian Seas.","They bring winter rain and snow to North-west India, which helps bumper crops of wheat and barley in Punjab."]],["What is a microclimate? Give two examples.",2,["A microclimate is the climate of a small, specific area that differs from the surrounding general climate.","Examples: the Urban Heat Island (Delhi’s city centre), the forest microclimate (Sundarbans), south-facing Himalayan slopes, and coastal vs inland Mumbai."]],["What is the Urban Heat Island effect? What causes it?",2,["Cities form warmer microclimates than nearby rural areas.","It is caused by concrete, asphalt and reduced vegetation."]],["Name two festivals that welcome the monsoon and say where they are celebrated.",2,["Teej: Rajasthan, Uttar Pradesh and Bihar (July–August), celebrated mainly by women.","Varsha Mangal: parts of Maharashtra and Bengal."]],["What is meant by ‘monsoon failure’?",2,["Poor rainfall during the monsoon season.","Because rain is uneven and unpredictable, floods and droughts can happen at the same time in different parts of India."]],["Describe the eye of a cyclone.",2,["The eye is the calm centre of the cyclone, with very low pressure.","It has clearer skies, warmer temperatures and calm conditions."]],["Differentiate between a cyclone and an anticyclone.",3,["A cyclone forms around a low-pressure area. Its winds spiral inward, anticlockwise in the Northern Hemisphere, and bring storms and heavy rain.","An anticyclone forms around a high-pressure area. Its winds blow outward, clockwise in the Northern Hemisphere, and bring clear skies and fine weather."]],["What is a storm surge? Why is it dangerous?",2,["A storm surge is a rise in sea level caused by extreme surface winds, sometimes 3 m or more.","It causes the most damage in coastal areas, through flooding and salt water (salinisation) that makes land infertile."]],["Why do cyclones not form close to the Equator?",2,["They do not form within about 500 km of the Equator.","There the Coriolis force is too weak to start the spinning motion."]],["What is the NDRF? What does it do?",2,["The National Disaster Response Force is a specialised unit for natural and human-made disasters.","Its battalions are placed at 12 locations across India and carry out rescue and evacuation during cyclones, landslides and floods."]],["What is a landslide? Give any two causes.",2,["A landslide is the sudden movement of rocks or debris down a slope.","Causes include heavy rainfall, earthquakes, deforestation, construction, mining and glacial melting."]],["What are fossil fuels? How do they contribute to climate change?",2,["Fossil fuels (coal, petroleum, natural gas) formed from the remains of plants and animals buried for millions of years under heat and pressure.","Burning them raises the level of carbon dioxide in the air, which leads to global warming and climate change."]],["Differentiate between mitigation and adaptation, with one example each.",2,["Mitigation means reducing greenhouse gas emissions, for example shifting to solar and wind power.","Adaptation means preparing for climate impacts, for example climate-resilient crops or early warning systems."]],["What are jet streams? Name two local winds of India.",2,["Jet streams are high-speed upper-air winds, about 110 km/h in summer and 184 km/h in winter. They help cause the monsoon.","Local winds: mango showers and kalbaisakhi."]]],"long":[["Explain how latitude, altitude and distance from the sea affect the climate of a place. Give one Indian example for each.",5,["Latitude: temperature varies because the Earth is spherical and its tilted axis changes the angle of the Sun’s rays. It gets colder away from the Equator. Example: Cochin is warm all year, while Amritsar has warm summers and cold winters.","Altitude: temperature falls about 1 °C per 165 m (normal lapse rate). Example: Shimla is cooler than Ludhiana.","Distance from the sea: the sea stores moisture, and land and sea breezes give coastal places an equable climate. Places far inland have extreme climates. Example: Mumbai is moderate, while Nagpur has hotter summers and cooler winters."]],["Explain the role of the Himalayas and the Western Ghats in shaping India’s climate.",5,["The Himalayas act as a wall against cold winds from the north, so winters in the Northern Plains are milder.","The Himalayas also stop the summer monsoon winds from escaping India, making them shed their moisture over northern India.","The Western Ghats force the Arabian Sea branch to rise, giving heavy rain on the western (windward) slope.","The eastern (leeward) slope and the Deccan Plateau lie in the rain shadow and get scanty rain."]],["Describe the climatic diversity of India with examples of temperature and rainfall.",5,["Temperature: Drass (Ladakh) falls below −50 °C in winter, while Jaisalmer reaches about 50 °C in summer.","Rainfall: the Thar Desert gets about 10 cm a year, Meghalaya over 500 cm, and Mawsynram about 1,187 cm.","Snow: heavy snowfall in the Great Himalayas and Karakoram; none in the peninsula.","The south, near the Equator, is hot and wet all year. The interior and Northern Plains have a continental climate. Coastal Kerala and Tamil Nadu have an equable climate."]],["How does climate influence the Indian lifestyle? Describe any four harvest festivals.",5,["Most Indians depend on agriculture, and farmers wait for the monsoon to sow. Rain falls mostly from June to September, so irrigation is needed.","Makar Sankranti (January): the Sun begins its northward journey (Uttarayan). It marks the start of the harvest season.","Baisakhi (April, Punjab): harvest of the rabi crop. It is also the Punjabi New Year, celebrated with bhangra.","Pongal (January, Tamil Nadu): marks the end of the winter harvest and is named after a rice dish.","Onam (August–September, Kerala): rice harvest and King Mahabali’s homecoming, at the end of the South-west monsoon.","Lohri (Punjab, sugarcane harvest) and Magh Bihu (Assam, with Meji huts) are also acceptable."]],["How is a cyclone formed? Describe its parts.",5,["Warm tropical water (at least 26.5 °C) heats the air above it. The warm, moist air rises and creates a very low-pressure centre.","The rising air cools and condenses into towering cumulonimbus clouds. Winds spiral in, anticlockwise in the Northern Hemisphere, deflected by the Coriolis force.","Eye: very low pressure, clear skies, warmer and calm.","Vortex: dense cloud, violent winds, thunderstorms and torrential rain.","Edge: higher pressure, higher temperature, less cloud, wind and rain. The whole storm moves at about 25 km/h."]],["Describe the Odisha Super Cyclone of 1999 and its effects.",5,["It struck on 29 October 1999, coming from the Bay of Bengal with winds of 250–300 km/h, and hit about 200 km of Odisha’s coast.","Heavy rain fell for 3 days and flooded the rivers. Waves of 13–20 feet swept about 20 km inland, and 8 m tidal waves lashed the coast from Puri to Balasore.","Paddy, fruit and vegetables were ruined, thousands of cattle drowned, and salt water made farmland infertile.","Over 10,000 people died within 36 hours, and 18,000 villages in 6 districts and 28 coastal towns were affected."]],["What causes floods? Name the major flood-prone regions of India with one example each.",5,["Causes: heavy rainfall, river overflow, cyclones and storm surges, dam failure or release of water, urban flooding, and deforestation with poor land use.","Northern Plains (Ganga and Brahmaputra basins): Brahmaputra floods in Assam, Kosi floods in Bihar.","Eastern India: Cyclones Yaas and Amphan. Western India: the 2005 Mumbai floods.","Southern India: the Kerala floods of 2018 and 2019.","Himalayan and North-eastern regions: flash floods from melting glaciers and intense rain."]],["Explain the causes of landslides and forest fires, naming prone regions for each.",5,["Landslides are caused by heavy rain, earthquakes, deforestation, construction, mining and glacial melt.","Landslide-prone regions: the Himalayas (steep slopes, earthquakes), the North-eastern hills (loose soil), the Western Ghats (monsoon rain), the Eastern Ghats (mining, erosion), and Sikkim and Darjeeling (unstable slopes, construction).","Forest fires are caused by lightning or by humans (campfires, burning debris, deliberate fires), and spread with dry summers, droughts and strong winds.","Fire-prone regions: Central India (dry deciduous forests), the Western Himalayas (pine forests), the North-east (jhum farming), the South (dry spells, encroachment), and Rajasthan’s Aravallis and Gujarat (sparse vegetation)."]],["What are the causes and effects of climate change in India?",5,["Causes: burning fossil fuels, a large population, unpredictable weather and rapid urbanisation.","Effects: more frequent heatwaves in the north and centre (heatstroke, water shortages, energy demand), and an erratic monsoon with floods and droughts.","Himalayan glaciers are melting faster, threatening water in the Ganga and Brahmaputra.","Rising sea levels threaten Mumbai, Chennai and Kolkata. Species are at risk, and diseases like malaria and dengue are spreading."]],["Describe the multi-pronged approach India needs to fight climate change.",5,["Mitigation: cut emissions with solar, wind and hydro power, energy efficiency, afforestation and sustainable land use.","Adaptation: climate-resilient crops, better irrigation, early warning systems for floods, cyclones and heatwaves, and water conservation.","Community awareness and participation: involve local communities and respect traditional ecological knowledge.","Policy and international cooperation: the NAPCC, plus technology transfer, finance and knowledge-sharing with other countries."]],["How does poor rainfall affect India’s economy? Suggest ways to conserve water.",5,["Poor rainfall leads to drought and damages rice, wheat, pulses and oilseeds. Farmers earn less, food runs short, prices rise (inflation), and agro-based industries suffer.","In cities, rooftop rainwater can be collected, filtered and stored.","In villages, bunds and check-dams slow the flow of water and recharge wells.","Techniques that conserve soil and water also prevent soil erosion."]]],"ct":[["Imagine India had no Himalayas. Describe two ways its climate would be different. Would this be good or bad for farmers? Explain.",4,["Cold winds from Central Asia would reach the Northern Plains, making winters much more severe.","Monsoon winds could escape northwards, so northern India would get far less rain.","Mostly bad for farmers: less rain and harsher winters would mean poorer crops and less water in the rivers.","A strong answer also notes the rivers fed by Himalayan snow would be lost."]],["Mumbai and Nagpur lie at almost the same latitude. Your class is planning an outdoor sports day in May. Which city would you choose and why?",3,["Mumbai is the better choice: the sea moderates its temperature, so it is less extremely hot.","Nagpur is inland and continental, with very hot summers. The answer should mention maritime effect vs continental climate.","Accept Nagpur only if the student argues another reason well (for example Mumbai’s humidity)."]],["Your school wants to reduce the Urban Heat Island effect in its neighbourhood. Suggest three practical steps and explain how each helps.",3,["Plant trees or make green spaces, since vegetation cools the air.","Use reflective or green roofs and less concrete or asphalt, which absorb less heat.","Add water bodies or rain gardens, and encourage walking, cycling or public transport to cut heat and emissions."]],["Cyclones form more often in the Bay of Bengal than in the Arabian Sea. Think about the conditions needed for cyclones and suggest reasons.",3,["Cyclones need warm water of at least 26.5 °C. The Bay of Bengal is generally warmer.","It also receives remnants of storms from the Pacific, and its shape funnels them.","The Arabian Sea is relatively cooler. Reward reasoning that links to the conditions in the chapter."]],["‘Floods and droughts can occur in India at the same time.’ How is this possible? Suggest one solution that helps with both.",3,["Rain is unevenly distributed and unpredictable: some regions get excess rain while others get very little.","Rainwater harvesting, check-dams and reservoirs store excess water to reduce flooding and use it in dry periods.","Interlinking or storage schemes are also acceptable if explained."]],["Most Indian festivals are linked to harvests. If climate change makes the monsoon more erratic, how might this affect these festivals and the people who celebrate them?",3,["Harvests may fail or come late, so festivals could lose their meaning or be celebrated with less food or money.","Farmers’ incomes and food supply would be hit, and the cost of living could rise.","Traditions tied to seasons (Teej, Onam, Pongal) may drift from the natural calendar."]],["A coastal city like Chennai has limited money. Should it spend first on mitigation or adaptation? Justify your choice.",3,["Adaptation is the stronger case for an immediate threat: early warnings, flood drains, sea walls and cyclone shelters protect lives now.","Mitigation (renewables) helps globally over the long term.","Accept either answer if it is justified; the best answers suggest doing both."]],["A farmer wants to clear the forest on a hillside to get more land. As an advisor, explain the risks of doing this.",3,["Landslides: tree roots hold the soil, and without them slopes weaken.","Floods: the land absorbs less rain, so more water runs off.","Soil erosion, loss of the forest’s cool, humid microclimate, more CO₂ and climate change, and harm to wildlife."]],["The textbook says latitude is NOT a factor in creating a microclimate. Why do you think so?",2,["Latitude works over very large areas, so all places nearby share the same latitude.","Microclimates come from very local differences such as buildings, trees, water bodies and slopes, which can change within a few metres."]],["Look at the two pictures in the PICSTOP box (cracked dry land and a flooded street). Which disasters do they show? What problems can each cause for a family?",3,["Drought: crops fail, there is no drinking water, incomes fall, and food prices rise.","Flood: homes and property are damaged, people are displaced, and there is disease and loss of crops.","Both are linked to the uneven, unpredictable monsoon."]]]};
+const SECS=[
+ {id:"short",name:"Short answer",color:"var(--short)",soft:"var(--short-soft)",list:RAW.short},
+ {id:"long",name:"Long answer",color:"var(--long)",soft:"var(--long-soft)",list:RAW.long},
+ {id:"ct",name:"Critical thinking",color:"var(--ct)",soft:"var(--ct-soft)",list:RAW.ct}];
+const ALL=[];SECS.forEach(s=>s.list.forEach((q,i)=>ALL.push({s,n:i+1,q:q[0],m:q[1],pts:q[2]})));
+let sel=new Set(SECS.map(s=>s.id)), shuffleOn=false;
+let deck=[],idx=0,flipped=false,rated={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+function chips(){
+  const c=$("chips");c.innerHTML="";
+  const all=document.createElement("button");all.className="chip";all.setAttribute("aria-pressed",sel.size===3);
+  all.innerHTML=`All <small>${ALL.length}</small>`;all.onclick=()=>{sel=new Set(SECS.map(s=>s.id));chips();build();};c.appendChild(all);
+  SECS.forEach(s=>{const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",sel.size<3&&sel.has(s.id));
+    b.innerHTML=`<span class="dot" style="background:${s.color}"></span>${s.name} <small>${s.list.length}</small>`;
+    b.onclick=()=>{sel=new Set([s.id]);chips();build();};c.appendChild(b);});
+  const o=$("opts");o.innerHTML="";
+  const sh=document.createElement("button");sh.className="chip";sh.setAttribute("aria-pressed",shuffleOn);sh.textContent="🔀 Shuffle";
+  sh.onclick=()=>{shuffleOn=!shuffleOn;chips();build();};o.appendChild(sh);
+}
+function build(list){
+  deck=list||ALL.filter(c=>sel.has(c.s.id));if(shuffleOn||list)deck=shuffle(deck);
+  idx=0;rated={};$("doneView").classList.add("hidden");$("deckView").classList.remove("hidden");render();
+}
+function setFlip(v){flipped=v;$("card").classList.toggle("flip",v);
+  $("flipCtl").classList.toggle("hidden",v);$("rateCtl").classList.toggle("hidden",!v);}
+function render(){
+  const c=deck[idx];setFlip(false);
+  $("count").textContent=`Card ${idx+1} of ${deck.length}`;
+  const k=Object.values(rated).filter(v=>v).length,p=Object.values(rated).filter(v=>!v).length;
+  $("tally").textContent=`✓ ${k}   ↻ ${p}`;
+  $("bar").style.width=(Object.keys(rated).length/deck.length*100)+"%";
+  [["fTag","bTag"]].flat().forEach(id=>{const t=$(id);t.textContent=c.s.name;t.style.background=c.s.soft;t.style.color="var(--ink)";});
+  $("fMarks").textContent=$("bMarks").textContent=`${c.m} mark${c.m>1?"s":""}`;
+  $("fNum").textContent=String(idx+1).padStart(2,"0");$("fNum").style.color=c.s.soft;
+  $("fText").textContent=c.q;$("bText").textContent=c.q;
+  const ul=$("bPts");ul.innerHTML="";c.pts.forEach(p=>{const li=document.createElement("li");li.textContent=p;ul.appendChild(li);});
+  $("prevBtn").disabled=idx===0;
+  $("skipBtn").textContent=idx===deck.length-1?"Finish →":"Skip →";
+}
+function rate(v){rated[idx]=v;go(1);}
+function go(d){const n=idx+d;if(n<0)return;if(n>=deck.length){finish();return;}idx=n;render();}
+function finish(){
+  const tot=deck.length,k=Object.values(rated).filter(v=>v).length;
+  $("deckView").classList.add("hidden");$("doneView").classList.remove("hidden");
+  $("dScore").textContent=`${k}/${tot}`;
+  const miss=deck.filter((_,i)=>rated[i]!==true);
+  $("dMsg").textContent=miss.length?`${miss.length} card${miss.length>1?"s":""} to practise again (including any you skipped).`:"You knew every card — excellent!";
+  $("practiceBtn").classList.toggle("hidden",!miss.length);
+  $("practiceBtn").onclick=()=>build(miss);
+}
+$("card").onclick=()=>setFlip(!flipped);
+$("flipBtn").onclick=()=>setFlip(true);
+$("okBtn").onclick=()=>rate(true);
+$("againBtn").onclick=()=>rate(false);
+$("prevBtn").onclick=()=>go(-1);
+$("skipBtn").onclick=()=>go(1);
+$("restartBtn").onclick=()=>build();
+document.addEventListener("keydown",e=>{
+  if($("deckView").classList.contains("hidden"))return;
+  if(e.key===" "){e.preventDefault();setFlip(!flipped);}
+  else if(e.key==="ArrowRight")go(1);
+  else if(e.key==="ArrowLeft")go(-1);
+  else if(flipped&&(e.key==="k"||e.key==="K"))rate(true);
+  else if(flipped&&(e.key==="p"||e.key==="P"))rate(false);
+});
+chips();build();
+</script>
+</body>
+</html>
