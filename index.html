@@ -36,7 +36,7 @@ h1{font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight
 </head>
 <body>
 <div class="wrap">
-  <a class="brand" href="#/">📚 YELLOW SHELF</a>
+  <a class="brand" href="/yellowshelf/">📚 YELLOW SHELF</a>
   <h1 id="title">Loading…</h1>
   <div class="crumbs" id="crumbs"></div>
   <div id="view"></div>
@@ -51,6 +51,9 @@ let tree = null;
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const enc = p => p.split("/").map(encodeURIComponent).join("/");
+const BASE = "/yellowshelf/";
+const slug = s => s.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const link = names => BASE + names.map(slug).join("/") + (names.length ? "/" : "");
 const natural = (a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: "base"});
 
 function kind(name) {
@@ -91,26 +94,36 @@ async function load() {
 function count(node) { return node.files.length + Object.values(node.dirs).reduce((n, d) => n + count(d), 0); }
 
 function render() {
-  const parts = decodeURIComponent(location.hash.replace(/^#\/?/, "")).split("/").filter(Boolean);
+  // Old #/Class 7/... links: switch to the clean address.
+  if (location.hash.startsWith("#/")) {
+    const old = decodeURIComponent(location.hash.slice(2)).split("/").filter(Boolean);
+    history.replaceState(null, "", link(old));
+  }
+  const want = location.pathname.slice(BASE.length).split("/").filter(Boolean).map(s => slug(decodeURIComponent(s)));
+  const parts = [];
   let node = tree;
-  for (const p of parts) { node = node && node.dirs[p]; }
+  for (const w of want) {
+    const name = node && Object.keys(node.dirs).find(d => slug(d) === w);
+    node = name ? node.dirs[name] : null;
+    parts.push(name || w);
+  }
   const view = document.getElementById("view");
   document.getElementById("title").textContent = parts.length ? parts[parts.length - 1] : "Pick your class";
   document.getElementById("crumbs").innerHTML = parts.length
-    ? ['<a href="#/">Home</a>'].concat(parts.slice(0, -1).map((p, i) => `<a href="#/${enc(parts.slice(0, i + 1).join("/"))}">${esc(p)}</a>`)).join("  ›  ")
+    ? [`<a href="${BASE}">Home</a>`].concat(parts.slice(0, -1).map((p, i) => `<a href="${link(parts.slice(0, i + 1))}">${esc(p)}</a>`)).join("  ›  ")
     : "Choose a class to see its subjects and chapters.";
   document.title = (parts.length ? parts[parts.length - 1] + " · " : "") + "Yellow Shelf";
-  if (!node) { view.innerHTML = '<div class="msg">This folder is empty or was moved. <a href="#/">Go home</a></div>'; return; }
+  if (!node) { view.innerHTML = `<div class="msg">This folder is empty or was moved. <a href="${BASE}">Go home</a></div>`; return; }
   const dirs = Object.keys(node.dirs).sort(natural);
   const files = node.files.slice().sort((a, b) => kind(a.name).c - kind(b.name).c || natural(a.name, b.name));
   let html = "";
   dirs.forEach((d, i) => {
     const n = count(node.dirs[d]);
-    html += `<a class="card c${i % 6}" href="#/${enc(parts.concat(d).join("/"))}"><span class="ic">${folderIcon(parts.length)}</span><span><div class="t">${esc(d)}</div><div class="s">${n} item${n === 1 ? "" : "s"}</div></span></a>`;
+    html += `<a class="card c${i % 6}" href="${link(parts.concat(d))}"><span class="ic">${folderIcon(parts.length)}</span><span><div class="t">${esc(d)}</div><div class="s">${n} item${n === 1 ? "" : "s"}</div></span></a>`;
   });
   files.forEach(f => {
     const k = kind(f.name);
-    html += `<a class="card c${k.c}" href="${enc(f.path)}"><span class="ic">${k.ic}</span><span><div class="t">${esc(pretty(f.name))}</div>${pretty(f.name)===k.label?"":`<div class="s">${k.label}</div>`}</span></a>`;
+    html += `<a class="card c${k.c}" href="${BASE}${enc(f.path)}"><span class="ic">${k.ic}</span><span><div class="t">${esc(pretty(f.name))}</div>${pretty(f.name)===k.label?"":`<div class="s">${k.label}</div>`}</span></a>`;
   });
   view.innerHTML = html ? `<div class="grid">${html}</div>` : '<div class="msg">Nothing here yet.</div>';
 }
@@ -119,6 +132,15 @@ load().then(t => { tree = t; render(); }).catch(e => {
   document.getElementById("title").textContent = "Oops!";
   document.getElementById("view").innerHTML = `<div class="msg">${esc(e.message)}</div>`;
 });
+// Folder clicks change the address without reloading the page.
+document.addEventListener("click", e => {
+  const a = e.target.closest("a");
+  if (!a || !tree || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  const u = new URL(a.href, location.href);
+  if (u.origin !== location.origin || !u.pathname.endsWith("/") || !u.pathname.startsWith(BASE)) return;
+  e.preventDefault(); history.pushState(null, "", u.pathname); render(); scrollTo(0, 0);
+});
+window.addEventListener("popstate", () => tree && render());
 window.addEventListener("hashchange", () => tree && render());
 </script>
 </body>

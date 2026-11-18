@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yellow Shelf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--bg:#FFFBEB;--soft:#FFF4CC;--accent:#F5B400}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;min-height:100vh;position:relative}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:260px;z-index:-1;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
+ radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+ radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+ linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+.wrap{max-width:900px;margin:0 auto;padding:28px 18px 60px}
+.brand{font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.12em;color:#5B4B1E;text-decoration:none}
+h1{font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:700;letter-spacing:-.02em;font-size:clamp(2rem,6vw,3rem);line-height:1.1;margin:10px 0 4px}
+.crumbs{color:#5B4B1E;font-weight:700;font-size:.95rem;margin-bottom:30px;min-height:1.4em}
+.crumbs a{color:#5B4B1E;text-decoration:none;border-bottom:2px solid rgba(91,75,30,.25)}
+.crumbs a:hover{border-color:#5B4B1E}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{display:flex;align-items:center;gap:14px;background:#fff;border:2px solid var(--line);border-radius:20px;padding:18px 18px;text-decoration:none;color:var(--ink);box-shadow:0 5px 0 var(--line);transition:transform .12s,box-shadow .12s;min-height:84px}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--line)}
+.card:active{transform:translateY(2px);box-shadow:0 2px 0 var(--line)}
+.ic{flex:0 0 48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:26px}
+.t{font-weight:600;font-size:1.08rem;line-height:1.25}
+.s{color:var(--muted);font-size:.85rem;font-weight:600;margin-top:2px}
+.c0 .ic{background:#FFF4CC}.c1 .ic{background:#DFF6EC}.c2 .ic{background:#E0F0FF}.c3 .ic{background:#FFE8D6}.c4 .ic{background:#E6FAF7}.c5 .ic{background:#FDECEC}
+.msg{background:#fff;border:2px dashed var(--line);border-radius:18px;padding:22px;color:var(--muted);text-align:center}
+.foot{margin-top:34px;color:var(--muted);font-size:.8rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="brand" href="/yellowshelf/">📚 YELLOW SHELF</a>
+  <h1 id="title">Loading…</h1>
+  <div class="crumbs" id="crumbs"></div>
+  <div id="view"></div>
+  <div class="foot" id="foot"></div>
+</div>
+<script>
+// Lists every file in the GitHub repo and shows folders as Class → Subject → Chapter → files.
+const OWNER = "suratpyari", REPO = "yellowshelf", BRANCH = "main";
+const SKIP = /(^|\/)(\.|index\.html$|README|LICENSE|_config|404\.html$)/i;
+const IMG = /\.(png|jpe?g|gif|webp|svg|heic)$/i;
+let tree = null;
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const enc = p => p.split("/").map(encodeURIComponent).join("/");
+const BASE = "/yellowshelf/";
+const slug = s => s.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const link = names => BASE + names.map(slug).join("/") + (names.length ? "/" : "");
+const natural = (a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: "base"});
+
+function kind(name) {
+  const n = name.toLowerCase();
+  if (n.endsWith(".pdf")) return {ic: "📄", label: "PDF", c: 5};
+  if (IMG.test(n)) return {ic: "🖼️", label: "Picture", c: 2};
+  if (n.endsWith(".html") || n.endsWith(".htm")) {
+    if (n.includes("flashcard")) return {ic: "🃏", label: "Flashcards", c: 1};
+    if (n.includes("quiz")) return {ic: "🎯", label: "Quiz", c: 0};
+    return {ic: "🌐", label: "Page", c: 4};
+  }
+  return {ic: "📎", label: "File", c: 3};
+}
+function pretty(name) {
+  const k = kind(name), base = name.replace(/\.[^.]+$/, "");
+  if (k.label === "Quiz" && /^[\w-]*quiz$/i.test(base)) return "Quiz";
+  if (k.label === "Flashcards" && /^[\w-]*flashcards?$/i.test(base)) return "Flashcards";
+  return base.replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim().replace(/^./, c => c.toUpperCase());
+}
+const folderIcon = d => ["🎒","📗","📘","📙","📕","📒"][d] || "📁";
+
+async function load() {
+  const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`, {cache: "no-store"});
+  if (!r.ok) throw new Error(r.status === 403 ? "Too many visits this hour — try again in a few minutes." : "Could not load the shelf (" + r.status + ").");
+  const j = await r.json();
+  const root = {dirs: {}, files: []};
+  for (const it of j.tree) {
+    const parts = it.path.split("/");
+    const file = it.type === "blob" ? parts.pop() : null;
+    if (parts.some(p => p.startsWith("."))) continue;   // hidden folders
+    let node = root;
+    for (const p of parts) node = node.dirs[p] ||= {dirs: {}, files: []};
+    if (it.type === "tree") { node.dirs; continue; }
+    if (file && !SKIP.test(it.path)) node.files.push({name: file, path: it.path});
+  }
+  return root;
+}
+function count(node) { return node.files.length + Object.values(node.dirs).reduce((n, d) => n + count(d), 0); }
+
+function render() {
+  // Old #/Class 7/... links: switch to the clean address.
+  if (location.hash.startsWith("#/")) {
+    const old = decodeURIComponent(location.hash.slice(2)).split("/").filter(Boolean);
+    history.replaceState(null, "", link(old));
+  }
+  const want = location.pathname.slice(BASE.length).split("/").filter(Boolean).map(s => slug(decodeURIComponent(s)));
+  const parts = [];
+  let node = tree;
+  for (const w of want) {
+    const name = node && Object.keys(node.dirs).find(d => slug(d) === w);
+    node = name ? node.dirs[name] : null;
+    parts.push(name || w);
+  }
+  const view = document.getElementById("view");
+  document.getElementById("title").textContent = parts.length ? parts[parts.length - 1] : "Pick your class";
+  document.getElementById("crumbs").innerHTML = parts.length
+    ? [`<a href="${BASE}">Home</a>`].concat(parts.slice(0, -1).map((p, i) => `<a href="${link(parts.slice(0, i + 1))}">${esc(p)}</a>`)).join("  ›  ")
+    : "Choose a class to see its subjects and chapters.";
+  document.title = (parts.length ? parts[parts.length - 1] + " · " : "") + "Yellow Shelf";
+  if (!node) { view.innerHTML = `<div class="msg">This folder is empty or was moved. <a href="${BASE}">Go home</a></div>`; return; }
+  const dirs = Object.keys(node.dirs).sort(natural);
+  const files = node.files.slice().sort((a, b) => kind(a.name).c - kind(b.name).c || natural(a.name, b.name));
+  let html = "";
+  dirs.forEach((d, i) => {
+    const n = count(node.dirs[d]);
+    html += `<a class="card c${i % 6}" href="${link(parts.concat(d))}"><span class="ic">${folderIcon(parts.length)}</span><span><div class="t">${esc(d)}</div><div class="s">${n} item${n === 1 ? "" : "s"}</div></span></a>`;
+  });
+  files.forEach(f => {
+    const k = kind(f.name);
+    html += `<a class="card c${k.c}" href="${BASE}${enc(f.path)}"><span class="ic">${k.ic}</span><span><div class="t">${esc(pretty(f.name))}</div>${pretty(f.name)===k.label?"":`<div class="s">${k.label}</div>`}</span></a>`;
+  });
+  view.innerHTML = html ? `<div class="grid">${html}</div>` : '<div class="msg">Nothing here yet.</div>';
+}
+
+load().then(t => { tree = t; render(); }).catch(e => {
+  document.getElementById("title").textContent = "Oops!";
+  document.getElementById("view").innerHTML = `<div class="msg">${esc(e.message)}</div>`;
+});
+// Folder clicks change the address without reloading the page.
+document.addEventListener("click", e => {
+  const a = e.target.closest("a");
+  if (!a || !tree || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  const u = new URL(a.href, location.href);
+  if (u.origin !== location.origin || !u.pathname.endsWith("/") || !u.pathname.startsWith(BASE)) return;
+  e.preventDefault(); history.pushState(null, "", u.pathname); render(); scrollTo(0, 0);
+});
+window.addEventListener("popstate", () => tree && render());
+window.addEventListener("hashchange", () => tree && render());
+</script>
+</body>
+</html>
