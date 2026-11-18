@@ -115,7 +115,7 @@ function render() {
   document.title = (parts.length ? parts[parts.length - 1] + " · " : "") + "Yellow Shelf";
   if (!node) { view.innerHTML = `<div class="msg">This folder is empty or was moved. <a href="${BASE}">Go home</a></div>`; return; }
   const dirs = Object.keys(node.dirs).sort(natural);
-  const files = node.files.slice().sort((a, b) => kind(a.name).c - kind(b.name).c || natural(a.name, b.name));
+  const files = node.files.slice().sort((a, b) => natural(pretty(a.name), pretty(b.name)) || kind(a.name).c - kind(b.name).c || natural(a.name, b.name));
   let html = "";
   dirs.forEach((d, i) => {
     const n = count(node.dirs[d]);
