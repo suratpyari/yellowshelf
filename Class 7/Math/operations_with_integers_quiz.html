@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Operations with Integers — Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --surface:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-ink:#FFFFFF; --ok:#3E9B6A; --ok-bg:#DFF3E7; --bad:#D9725B; --bad-bg:#FBE5DF;
+  --chip:#F4F0FD;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:800}
+h2{font-size:1.5rem;font-weight:700}
+.sub{color:var(--muted);margin:6px 0 24px}
+.panel{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 5px 0 var(--line)}
+.label{font-weight:700;margin:20px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:.95rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:#E3DAFB}
+.chip small{color:var(--muted)}
+button{font:inherit}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:16px;box-shadow:0 4px 0 #5B3FB0;padding:14px 22px;font-weight:700;font-size:1.05rem;cursor:pointer}
+.btn.ghost{background:#fff;color:var(--ink);border:0;box-shadow:0 4px 0 var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;font-weight:600;color:var(--muted);font-size:.95rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;color:var(--muted)}
+.tag .dot{width:9px;height:9px;border-radius:50%}
+.q{font-size:1.25rem;font-weight:700;margin:10px 0 18px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;font-size:1rem}
+.opt b{flex:0 0 28px;height:28px;border-radius:8px;background:var(--chip);display:grid;place-items:center;font-size:.9rem}
+.opt:hover:not(:disabled){border-color:var(--muted)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok b{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad b{background:var(--bad);color:#fff}
+.fb{margin-top:16px;padding:12px 14px;border-radius:12px;font-size:.98rem;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border-left:5px solid var(--bad)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px}
+.score{font-family:"Baloo 2",system-ui,sans-serif;font-size:clamp(3.5rem,14vw,5.5rem);font-weight:800;line-height:1}
+.brk{display:grid;gap:8px;margin:18px 0}
+.brk div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:var(--chip);border-radius:10px;font-size:.95rem}
+.rev{border-top:1px solid var(--line);padding:14px 0}
+.rev p{margin:4px 0}
+.rev .y{color:var(--bad)} .rev .c{color:var(--ok);font-weight:700}
+.hidden{display:none!important}
+.hint{color:var(--muted);font-size:.85rem}
+.grid{display:grid;grid-template-columns:auto repeat(4,1fr);gap:4px;font-size:.8rem;margin-top:8px;overflow-x:auto}
+.grid span{background:var(--chip);padding:6px 8px;border-radius:6px}
+.grid .h{font-weight:700;background:transparent}
+@media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="home">
+  <h1>Operations with Integers</h1>
+  <p class="sub">RD Sharma Class 7, Chapter 4: every rule and example as multiple-choice questions.</p>
+  <div class="panel">
+    <div class="label" style="margin-top:0">Sections</div>
+    <div class="chips" id="chapChips"></div>
+    <div class="label">Number of questions</div>
+    <div class="chips" id="countChips"></div>
+    <div class="row" style="margin-top:24px">
+      <button class="btn" id="startBtn">Start quiz</button>
+      <span class="hint" id="poolInfo"></span>
+    </div>
+  </div>
+  <p class="hint" style="margin-top:14px">Tip: press 1–4 to pick an answer, Enter for the next question.</p>
+</section>
+
+<section id="quiz" class="hidden">
+  <div class="top"><span id="qCount"></span><span id="qScore"></span></div>
+  <div class="bar"><i id="qBar"></i></div>
+  <div class="panel">
+    <span class="tag" id="qTag"></span>
+    <div class="q" id="qText"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="fb" id="qFb"></div>
+    <div class="foot">
+      <button class="btn ghost" id="quitBtn">End quiz</button>
+      <button class="btn" id="nextBtn" disabled>Next</button>
+    </div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="panel">
+    <h2>Your score</h2>
+    <div class="row" style="align-items:baseline;margin-top:8px"><span class="score" id="rScore"></span><span id="rPct" style="font-weight:700;color:var(--muted)"></span></div>
+    <p id="rMsg" style="margin:8px 0 0"></p>
+    <div class="brk" id="rBrk"></div>
+    <div class="row">
+      <button class="btn" id="retryWrongBtn">Retry wrong answers</button>
+      <button class="btn ghost" id="homeBtn">New quiz</button>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:16px" id="revPanel">
+    <h2>Review mistakes</h2>
+    <div id="rRev"></div>
+  </div>
+</section>
+
+</div>
+<script>
+/* [question, [correct, wrong1, wrong2, wrong3], explanation] — options shuffled at runtime */
+const CH = [{"name": "Integers and ordering", "qs": [["The first and smallest natural number is:", ["1", "0", "−1", "2"], "Natural numbers start at 1."], ["The smallest whole number is:", ["0", "1", "−1", "There is none"], "Whole numbers are 0, 1, 2, 3, …"], ["True or False: 0 is a natural number.", ["False", "True"], "0 is a whole number but not a natural number."], ["Natural numbers along with zero are called:", ["Whole numbers", "Negative integers", "Fractions", "Opposites"], "Whole numbers = natural numbers + 0."], ["In the shopping mall lift, going two floors below the welcome lobby is written as:", ["−2", "+2", "0", "−−3"], "Floors below the ground are negative integers."], ["The welcome lobby (ground floor) is represented by:", ["0", "+1", "−1", "+0.5"], "The ground floor is 0."], ["Natural numbers 1, 2, 3, … are also called:", ["Positive integers", "Negative integers", "Opposites", "Fractions"], "Natural numbers are the positive integers."], ["The number 0 is:", ["Neither positive nor negative", "Positive", "Negative", "Both positive and negative"], "0 is simply an integer with no sign."], ["If a shopkeeper’s profit is a positive integer, his loss is:", ["A negative integer", "A positive integer", "Zero", "A fraction"], "Opposite situations use opposite signs."], ["Heights below sea level are represented by:", ["Negative integers", "Positive integers", "Zero", "Whole numbers"], "Above sea level is positive, below is negative."], ["The symbol ‘−’ is used to show:", ["Both negative integers and subtraction", "Only negative integers", "Only subtraction", "Only absolute value"], "The context tells which one is meant."], ["The opposite of 7 is:", ["−7", "7", "0", "1/7"], "An integer and its opposite are on opposite sides of 0."], ["−4 and 4 are each at what distance from zero?", ["4 units", "8 units", "0 units", "2 units"], "Opposites are at equal distances from 0."], ["Negative integers lie on which side of zero on the number line?", ["Left", "Right", "Above", "At zero"], "Positive integers are on the right, negative on the left."], ["Which statement is true?", ["Every positive integer is greater than every negative integer", "Every negative integer is greater than 0", "0 is less than every negative integer", "−1 is greater than 1"], "Every positive integer is to the right of every negative integer."], ["If a > b, then:", ["−a < −b", "−a > −b", "−a = −b", "a < b"], "The greater the number, the lesser its opposite."], ["Which is greater: −2 or −3?", ["−2", "−3", "Both are equal", "Cannot say"], "−2 is to the right of −3."], ["Which is smaller: −15 or −5?", ["−15", "−5", "Both equal", "Cannot say"], "−15 is to the left of −5."], ["Which is smaller: −356 or 318?", ["−356", "318", "Both equal", "Cannot say"], "Every negative integer is less than every positive integer."], ["−(−a) equals:", ["a", "−a", "0", "2a"], "The negative of a negative integer is a positive integer."], ["The negative of zero is:", ["0", "−1", "1", "Not defined"], "0 is the image of itself."], ["Using the number line, 4 more than 3 is:", ["7", "−1", "1", "−7"], "Start at 3 and move 4 units right."], ["Using the number line, 5 less than 2 is:", ["−3", "3", "7", "−7"], "Start at 2 and move 5 units left."], ["Using the number line, 8 more than −9 is:", ["−1", "−17", "1", "17"], "Start at −9 and move 8 units right."], ["Using the number line, 4 less than −3 is:", ["−7", "1", "−1", "7"], "Start at −3 and move 4 units left."], ["“5° below zero” as an integer is:", ["−5", "+5", "0", "−50"], "Below zero is negative."], ["“A deposit of ₹2500” as an integer is:", ["+2500", "−2500", "0", "−25"], "A deposit is positive."], ["The opposite of “increase in population” is:", ["Decrease in population", "Depositing money", "Going north", "Gaining weight"], "Opposite situations are opposites."], ["How many integers are there between −4 and 3?", ["6", "7", "5", "8"], "−3, −2, −1, 0, 1, 2."], ["The integers between −2 and 2 are:", ["−1, 0, 1", "−2, −1, 0, 1, 2", "−1, 1", "0 only"], "‘Between’ leaves out the end points."], ["Which is the correct increasing order?", ["−12, −9, −8, 0, 1, 5, 15", "0, 1, 5, 15, −8, −9, −12", "−8, −9, −12, 0, 1, 5, 15", "15, 5, 1, 0, −8, −9, −12"], "Smaller numbers are further to the left."], ["Which statement is false?", ["0 is the smallest positive integer", "0 is larger than every negative integer", "Every negative integer is less than every natural number", "A positive integer is greater than its opposite"], "0 is neither positive nor negative."]]}, {"name": "Absolute value of an integer", "qs": [["The absolute value of an integer is:", ["Its numerical value regardless of its sign", "Always its opposite", "Always negative", "Its successor"], "|a| ignores the sign."], ["On the number line, absolute value is the:", ["Distance of the integer from 0", "Distance from 1", "Position left of 0", "Sum of the integer and 0"], "Distance has no direction."], ["An absolute value can never be:", ["Negative", "Zero", "Positive", "A whole number"], "Distance is never negative."], ["|−7| equals:", ["7", "−7", "0", "14"], "Absolute value of a negative integer is the corresponding positive integer."], ["|0| equals:", ["0", "1", "−1", "Not defined"], "The absolute value of 0 is 0 itself."], ["|−32| equals:", ["32", "−32", "0", "64"], "|−32| = −(−32) = 32."], ["If a is negative, |a| equals:", ["−a", "a", "0", "a²"], "|a| = −a when a is negative."], ["If a > 3, then |a − 3| equals:", ["a − 3", "−(a − 3)", "3 − a − 3", "0"], "a − 3 is positive."], ["If a < 5, then |a − 5| equals:", ["−(a − 5)", "a − 5", "a + 5", "5"], "a − 5 is negative."], ["If a < 7, the absolute value of a − 7 is:", ["−(a − 7)", "a − 7", "a + 7", "7 − a − 7"], "a − 7 is negative."], ["If a > −4, the absolute value of a + 4 is:", ["a + 4", "−(a + 4)", "a − 4", "4"], "a + 4 is positive."], ["The absolute value of −|−5| is:", ["5", "−5", "0", "10"], "−|−5| = −5, and |−5| = 5."], ["|12 − 5| equals:", ["7", "17", "−7", "−17"], "|7| = 7."], ["|−248| equals:", ["248", "−248", "0", "124"], "Drop the sign."], ["Which is false?", ["|2 − 4| = |2| + |4|", "|4 + 2| = |4| + |2|", "|4 − 2| = |4| − |2|", "|(−2) + (−4)| = |−2| + |−4|"], "|2 − 4| = 2, but |2| + |4| = 6."], ["If x is a negative integer, then:", ["x + |x| = 0", "x − |x| = 0", "x + |x| = 2x", "x = |x|"], "|x| = −x, so x + (−x) = 0."], ["If x is a positive integer, then:", ["x − |x| = 0", "x + |x| = 0", "x + |x| = −2x", "x = −|x|"], "|x| = x for positive x."], ["If x is greater than 2, then |2 − x| =", ["x − 2", "2 − x", "2 + x", "−x − 2"], "2 − x is negative, so take its opposite."], ["9 + |−4| is equal to:", ["13", "5", "−13", "−5"], "|−4| = 4."], ["|−|−7| − 3| is equal to:", ["10", "−10", "4", "−4"], "−7 − 3 = −10, and |−10| = 10."], ["Integers whose absolute value is less than 5 are:", ["−4 to 4", "0 to 4", "−5 to 5", "1 to 4"], "−4, −3, −2, −1, 0, 1, 2, 3, 4."]]}, {"name": "Addition of integers", "qs": [["On the number line, to add a positive integer you move:", ["To the right", "To the left", "Up", "Nowhere"], "Positive addend → move right."], ["On the number line, to add a negative integer you move:", ["To the left", "To the right", "Up", "Nowhere"], "Negative addend → move left."], ["−3 + 4 =", ["1", "−7", "7", "−1"], "Start at −3, move 4 right."], ["4 + (−3) =", ["1", "7", "−1", "−7"], "Start at 4, move 3 left."], ["(−3) + (−4) =", ["−7", "7", "1", "−1"], "Start at −3, move 4 left."], ["(+3) + (−3) =", ["0", "6", "−6", "3"], "An integer and its opposite add to 0."], ["To add two integers with the same sign, we:", ["Add their absolute values and give the common sign", "Subtract absolute values", "Always make the answer positive", "Multiply them"], "Rule 1 for addition."], ["To add a positive and a negative integer, we:", ["Subtract their absolute values and give the sign of the larger absolute value", "Add absolute values", "Always make it negative", "Always make it positive"], "Rule 2 for addition."], ["(−5287) + (−2432) =", ["−7719", "7719", "−2855", "2855"], "Same signs: add, keep the minus sign."], ["(−523) + 937 =", ["414", "−414", "1460", "−1460"], "937 > 523, so the answer is positive."], ["(−4732) + 3258 =", ["−1474", "1474", "−7990", "7990"], "4732 > 3258, so the answer is negative."], ["(−47352) + 21943 =", ["−25409", "25409", "−69295", "69295"], "Subtract and keep the sign of −47352."], ["94358 + (−76823) =", ["17535", "−17535", "171181", "−171181"], "94358 has the larger absolute value."], ["−557 + 488 =", ["−69", "69", "−1045", "1045"], "557 − 488 = 69, sign of −557."], ["2547 + (−2548) =", ["−1", "1", "5095", "0"], "2548 − 2547 = 1, sign of −2548."], ["412 + (−98) + (−84) + (−7) + 35 =", ["258", "−258", "189", "447"], "447 − 189 = 258."], ["−21 + (−9) + 63 + (−22) + (−228) + 137 =", ["−80", "80", "200", "−280"], "200 − 280 = −80."], ["The property 5 + (−8) = (−8) + 5 shows:", ["Commutativity of addition", "Associativity", "Closure", "Additive identity"], "Changing the order doesn’t change the sum."], ["[(−9) + 3] + (−4) = (−9) + [3 + (−4)] shows:", ["Associativity of addition", "Commutativity", "Closure", "Additive inverse"], "Changing the grouping doesn’t change the sum."], ["“The sum of two integers is always an integer” is the:", ["Closure property", "Commutative property", "Identity property", "Inverse property"], "Property 1 of addition."], ["The additive identity for integers is:", ["0", "1", "−1", "There is none"], "a + 0 = a = 0 + a."], ["The additive inverse of −7 is:", ["7", "−7", "0", "1/7"], "(−7) + 7 = 0."], ["The additive inverse of 0 is:", ["0", "1", "−1", "Not defined"], "0 + 0 = 0."], ["The additive inverse of −176 is:", ["176", "−176", "−175", "177"], "−176 + 176 = 0."], ["The successor of an integer a is:", ["a + 1", "a − 1", "−a", "2a"], "Property 6."], ["The predecessor of 0 is:", ["−1", "1", "0", "There is none"], "0 − 1 = −1."], ["The successor of −42 is:", ["−41", "−43", "41", "43"], "−42 + 1 = −41."], ["The successor of −200 is:", ["−199", "−201", "199", "201"], "−200 + 1 = −199."], ["The predecessor of −125 is:", ["−126", "−124", "124", "126"], "−125 − 1 = −126."], ["The predecessor of 1000 is:", ["999", "1001", "−999", "−1001"], "1000 − 1 = 999."], ["If a > b, then for any integer c:", ["a + c > b + c", "a + c < b + c", "a + c = b + c", "a − c < b − c"], "Adding the same integer keeps the order."], ["True or False: The sum of two negative integers is a positive integer.", ["False", "True"], "It is a negative integer."], ["True or False: The sum of a negative and a positive integer is always negative.", ["False", "True"], "The sign follows the larger absolute value."], ["True or False: The sum of three different integers can never be zero.", ["False", "True"], "Example: −1 + 0 + 1 = 0."], ["Find x if x + 5 = 0.", ["−5", "5", "0", "10"], "−5 is the additive inverse of 5."], ["Find x if −3 + x = 0.", ["3", "−3", "0", "6"], "3 is the additive inverse of −3."], ["Find x if x + (−8) = 0.", ["8", "−8", "0", "16"], "8 + (−8) = 0."], ["Find x if x + 0 = 0.", ["0", "1", "−1", "Any integer"], "0 is the additive identity."]]}, {"name": "Subtraction of integers", "qs": [["To subtract b from a, we:", ["Add the additive inverse of b to a", "Add b to a", "Subtract a from b", "Multiply a by −b"], "a − b = a + (−b)."], ["a − (−b) equals:", ["a + b", "a − b", "−a − b", "b − a"], "Subtracting a negative is adding."], ["7 − (−4) =", ["11", "3", "−3", "−11"], "7 + 4 = 11."], ["−8 − 3 =", ["−11", "−5", "5", "11"], "−8 + (−3) = −11."], ["−5 − (−9) =", ["4", "−14", "14", "−4"], "−5 + 9 = 4."], ["4532 − (−1235) =", ["5767", "3297", "−5767", "−3297"], "4532 + 1235."], ["−1253 − (−789) =", ["−464", "464", "−2042", "2042"], "−1253 + 789."], ["−1247 − 3295 =", ["−4542", "4542", "2048", "−2048"], "−1247 + (−3295)."], ["0 − (−435) =", ["435", "−435", "0", "870"], "0 + 435."], ["−17 − (−13) =", ["−4", "−30", "4", "30"], "−17 + 13."], ["−7 − 8 − (−25) =", ["10", "−40", "40", "−10"], "−15 + 25."], ["50 − (−48) − (−2) − 110 =", ["−10", "10", "−110", "110"], "100 − 110."], ["−12 − [(−15) + (−2) + (−3)] =", ["8", "−32", "32", "−8"], "−12 − (−20) = 8."], ["Which property does subtraction of integers have?", ["Closure", "Commutativity", "Associativity", "A left identity"], "a − b is always an integer."], ["Why is subtraction not commutative?", ["a − b ≠ b − a, e.g. 2 − 3 ≠ 3 − 2", "a − b = b − a always", "Because 0 − 0 = 0", "Because the answer is not an integer"], "Changing the order changes the answer."], ["For subtraction, 0 is:", ["Only a right identity (a − 0 = a, but 0 − a ≠ a)", "Both left and right identity", "Not an identity at all", "Only a left identity"], "0 − a = −a."], ["If a > b, then:", ["a − c > b − c", "a − c < b − c", "a − c = b − c", "c − a > c − b"], "Subtracting the same integer keeps the order."], ["1 − 2 + 3 − 4 + … + 19 − 20 =", ["−10", "10", "−20", "0"], "Ten pairs of (−1)."], ["2 + (−2) + 2 + (−2) + … with 140 terms =", ["0", "2", "−2", "140"], "70 pairs, each pair = 0."], ["2 + (−2) + 2 + (−2) + … with 125 terms =", ["2", "0", "−2", "125"], "62 zero pairs, then one 2 left."], ["1 − 2 + 3 − 4 + … + 15 − 16 =", ["−8", "8", "−16", "0"], "Eight pairs of (−1)."], ["The sum of two integers is −396. If one is 64, the other is:", ["−460", "−332", "460", "332"], "−396 − 64."], ["The sum of two integers is 48. If one is −24, the other is:", ["72", "24", "−72", "−24"], "48 − (−24)."], ["The sum of two integers is 238. If one is −122, the other is:", ["360", "116", "−360", "−116"], "238 + 122."], ["The sum of two integers is −223. If one is 172, the other is:", ["−395", "−51", "395", "51"], "−223 − 172."], ["Subtracting the first integer from the second for (12, −5):", ["−17", "17", "7", "−7"], "−5 − 12."], ["Subtracting the first integer from the second for (1001, 101):", ["−900", "900", "1102", "−1102"], "101 − 1001."], ["Subtract the sum of −5020 and 2320 from −709:", ["1991", "−3409", "−1991", "3409"], "−709 − (−2700) = 1991."], ["If a Δ b = a − b − (−2), then 2 Δ 3 =", ["1", "−3", "3", "−1"], "2 − 3 + 2."], ["If a Δ b = a − b − (−2), then 3 Δ (−5) =", ["10", "−6", "6", "0"], "3 + 5 + 2."], ["If a Δ b = a − b − (−2), then (−4) Δ 3 =", ["−5", "−9", "9", "5"], "−4 − 3 + 2."], ["Delhi fell from 13°C to 6°C and Chennai from 18°C to 10°C. Which fall is greater?", ["Chennai (8°C)", "Delhi (7°C)", "Both equal", "Delhi (19°C)"], "18 − 10 = 8 > 13 − 6 = 7."], ["A tank at 205 m drops by 75 m, then rises by 20 m. The water level now is:", ["150 m", "110 m", "300 m", "260 m"], "205 − 75 + 20."], ["If a is the predecessor of b, then a − b =", ["−1", "1", "0", "2"], "a = b − 1."], ["If a is the successor of b, then a − b =", ["1", "−1", "0", "2"], "a = b + 1."], ["True or False: If a > b, then a − b is always a positive integer.", ["True", "False"], "a is to the right of b."], ["True or False: The additive inverse of a negative integer is negative.", ["False", "True"], "It is positive."], ["Fill in: −1256 + ___ = −742", ["514", "−514", "1998", "−1998"], "−742 + 1256."], ["Fill in: ___ − 1234 = −4539", ["−3305", "3305", "−5773", "5773"], "−4539 + 1234."], ["Fill in: −14 + ___ = 22", ["36", "8", "−8", "−36"], "22 + 14."]]}, {"name": "Multiplication of integers", "qs": [["The product of two integers of opposite signs is:", ["The additive inverse of the product of their absolute values", "The product of their absolute values", "Always positive", "Always zero"], "Rule 1: answer is negative."], ["The product of two integers with like signs is:", ["The product of their absolute values", "Its additive inverse", "Always negative", "Always zero"], "Rule 2: answer is positive."], ["7 × (−4) =", ["−28", "28", "−11", "3"], "Unlike signs → negative."], ["(−8) × (−13) =", ["104", "−104", "−21", "21"], "Like signs → positive."], ["(−115) × 8 =", ["−920", "920", "−107", "123"], "Unlike signs → negative."], ["9 × (−3) × (−6) =", ["162", "−162", "−18", "18"], "Two negatives → positive."], ["(−12) × (−13) × (−5) =", ["−780", "780", "−30", "30"], "Three negatives → negative."], ["(−1) × (−2) × (−3) × (−4) × (−5) =", ["−120", "120", "−15", "15"], "Five negatives (odd) → negative."], ["(−3) × (−6) × (−9) × (−12) =", ["1944", "−1944", "−30", "30"], "Four negatives (even) → positive."], ["(−1) × (−1) × … taken 50 times =", ["1", "−1", "50", "−50"], "Even number of negatives → 1."], ["(−1) × (−1) × … taken 151 times =", ["−1", "1", "151", "−151"], "Odd number of negatives → −1."], ["A product of integers is negative when the number of negative factors is:", ["Odd", "Even", "Zero", "Always"], "Property 10."], ["7 × (−6) = (−6) × 7 = −42 shows:", ["Commutativity of multiplication", "Associativity", "Distributivity", "Closure"], "Order doesn’t change the product."], ["a × (b + c) = a × b + a × c is the:", ["Distributive property", "Associative property", "Commutative property", "Identity property"], "Multiplication distributes over addition."], ["A direct consequence of distributivity is:", ["a × (b − c) = a × b − a × c", "a × (b − c) = a × b + a × c", "a − (b × c) = a × b − c", "a × b − c = a × (b − c)"], "Distributivity over subtraction."], ["The multiplicative identity for integers is:", ["1", "0", "−1", "There is none"], "a × 1 = a = 1 × a."], ["The multiplicative inverse of −6 is:", ["−1/6", "1/6", "6", "−6"], "−6 × (−1/6) = 1."], ["For any integer a, a × 0 =", ["0", "a", "1", "−a"], "Property of zero."], ["For any integer a, a × (−1) =", ["−a", "a", "1", "0"], "Multiplying by −1 gives the additive inverse."], ["If a > b and c is negative, then:", ["a × c < b × c", "a × c > b × c", "a × c = b × c", "a < b"], "Multiplying by a negative reverses the order."], ["If a > b and c is positive, then:", ["a × c > b × c", "a × c < b × c", "a × c = b × c", "a × c = 0"], "Multiplying by a positive keeps the order."], ["15625 × (−2) + (−15625) × 98 =", ["−1562500", "1562500", "−1531250", "1531250"], "(−15625) × (2 + 98)."], ["18946 × 99 − (−18946) =", ["1894600", "1875654", "−1894600", "18946"], "18946 × (99 + 1)."], ["1569 × 887 − 569 × 887 =", ["887000", "−887000", "1000", "88700"], "(1569 − 569) × 887."], ["1487 × 327 + (−487) × 327 =", ["327000", "−327000", "1000", "32700"], "(1487 − 487) × 327."], ["Given 458 × (−975) = −446550, then 457 × (−975) =", ["−445575", "−447525", "445575", "−446550"], "−446550 − (−975) = −445575."], ["Given 458 × (−975) = −446550, then 459 × (−975) =", ["−447525", "−445575", "447525", "−446550"], "−446550 + (−975)."], ["Given (−548) × 972 = −532656, then (−547) × 972 =", ["−531684", "−533628", "531684", "−532108"], "Add 972 to −532656."], ["A shopkeeper earns ₹9 profit per article and sells 17 articles. His profit is:", ["₹153", "₹26", "₹8", "₹170"], "17 × 9."], ["Yashvi starts with 30 and subtracts 7 five times. She reaches:", ["−5", "5", "−35", "23"], "30 − 35."], ["A room at 80°C is cooled by 5°C per hour. After 10 hours it is:", ["30°C", "50°C", "−30°C", "75°C"], "80 − 50."], ["Test: +5 per correct, −2 per wrong. Rohit has 12 correct, 8 wrong. His score is:", ["44", "60", "76", "−16"], "60 + (−16)."], ["The sign of the product of 8 negative integers and 1 positive integer is:", ["Positive", "Negative", "Zero", "Cannot say"], "Even number of negatives."], ["The sign of the product of 199 negative integers and 10 positive integers is:", ["Negative", "Positive", "Zero", "Cannot say"], "Odd number of negatives."], ["Which is greater: (8 + 9) × 10 or 8 + 9 × 10?", ["(8 + 9) × 10", "8 + 9 × 10", "Both equal", "Cannot say"], "170 > 98."], ["Which is greater: [(−2) − 5] × (−6) or (−2) − 5 × (−6)?", ["[(−2) − 5] × (−6)", "(−2) − 5 × (−6)", "Both equal", "Cannot say"], "42 > 28."], ["If a × (−1) = −30, then a is:", ["Positive (30)", "Negative (−30)", "Zero", "1"], "30 × (−1) = −30."], ["The integer whose product with −1 is −225 is:", ["225", "−225", "−1", "1"], "225 × (−1) = −225."], ["True or False: Of two integers, if one is negative, their product must be positive.", ["False", "True"], "One negative factor gives a negative product."], ["True or False: The product of a negative and a positive integer may be zero.", ["False", "True"], "It is always negative."], ["Arushi starts with 23 and subtracts 5 ten times. She gets:", ["−27", "27", "−50", "73"], "23 − 50."], ["A dealer buys 128 pens at ₹25 and sells at ₹30 each. His profit is:", ["₹640", "₹128", "₹3840", "₹5"], "128 × 5."], ["Test of 20 questions: +5 correct, −2 wrong, −1 unanswered. Romit: 12 correct, 5 wrong, 3 unanswered. His score is:", ["47", "60", "50", "57"], "60 − 10 − 3."], ["A milkman earns ₹25 per litre sold and loses ₹30 per litre unsold. He sells 20 L and has 5 L left. Result:", ["Profit of ₹350", "Loss of ₹350", "Profit of ₹500", "Loss of ₹150"], "500 − 150."], ["8°C now, dropping 5°C each hour. After 4 hours it is:", ["8 + 4 × (−5) = −12°C", "8 − 4 = 4°C", "8 + 20 = 28°C", "−20°C"], "8 − 20 = −12."], ["Three consecutive integers with product −6 are:", ["−3, −2, −1", "1, 2, 3", "−1, 0, 1", "−2, −1, 0"], "(−3)(−2)(−1) = −6."], ["Three consecutive integers with product 120 are:", ["4, 5, 6", "3, 4, 5", "5, 6, 7", "2, 3, 4"], "4 × 5 × 6 = 120."], ["Given 207 × (−33 + 7) = −5382, then −207 × (33 − 7) =", ["−5382", "5382", "−207", "26"], "Both equal −207 × 26."]]}, {"name": "Division of integers", "qs": [["Division is the inverse process of:", ["Multiplication", "Addition", "Subtraction", "Absolute value"], "36 ÷ (−9) asks what times −9 gives 36."], ["36 ÷ (−9) =", ["−4", "4", "−27", "27"], "−4 × −9 = 36."], ["(−35) ÷ (−7) =", ["5", "−5", "−28", "28"], "5 × (−7) = −35."], ["The number which divides is called the:", ["Divisor", "Dividend", "Quotient", "Remainder"], "Definition."], ["The number to be divided is called the:", ["Dividend", "Divisor", "Quotient", "Factor"], "Definition."], ["The result of division is called the:", ["Quotient", "Dividend", "Divisor", "Product"], "Definition."], ["The quotient of two negative integers is:", ["Positive", "Negative", "Zero", "Not defined"], "Rule 1: like signs."], ["The quotient of a positive and a negative integer is:", ["Negative", "Positive", "Zero", "Not defined"], "Rule 2: unlike signs."], ["(−104) ÷ (−13) =", ["8", "−8", "−91", "117"], "Like signs → positive."], ["(−84) ÷ 12 =", ["−7", "7", "−96", "72"], "Unlike signs → negative."], ["144 ÷ (−16) =", ["−9", "9", "128", "−160"], "Unlike signs → negative."], ["324 ÷ (−27) =", ["−12", "12", "−297", "−351"], "Unlike signs → negative."], ["(−1728) ÷ 12 =", ["−144", "144", "−1716", "−1740"], "Unlike signs → negative."], ["(−15625) ÷ (−125) =", ["125", "−125", "15500", "−15500"], "Like signs → positive."], ["30000 ÷ (−100) =", ["−300", "300", "−3000", "3000"], "Unlike signs → negative."], ["Why is division of integers not closed?", ["a ÷ b is not always an integer, e.g. 15 ÷ 4", "Because 0 ÷ 5 = 0", "Because 14 ÷ 14 = 1", "Because a ÷ 1 = a"], "Property (i) of division."], ["For a non-zero integer a, a ÷ a =", ["1", "0", "a", "−1"], "e.g. (−11) ÷ (−11) = 1."], ["For every integer a, a ÷ 1 =", ["a", "1", "0", "−a"], "e.g. (−7) ÷ 1 = −7."], ["If a is a non-zero integer, 0 ÷ a =", ["0", "a", "1", "Not meaningful"], "e.g. 0 ÷ (−6) = 0."], ["6 ÷ 0 is:", ["Not meaningful", "0", "6", "1"], "Division by zero is not meaningful."], ["Which is true?", ["0 ÷ (−7) = 0", "−15 ÷ 0 = 0", "0 ÷ 0 = 0", "(−8) ÷ (−1) = −8"], "0 divided by a non-zero integer is 0."], ["For non-zero a, b, c: (a ÷ b) ÷ c ≠ a ÷ (b ÷ c), unless:", ["c = 1", "c = 0", "a = 0", "b = c"], "Division is not associative."], ["If a = −16, b = 8, c = −2, then (a ÷ b) ÷ c =", ["1", "4", "−1", "−4"], "(−2) ÷ (−2) = 1."], ["If a = −16, b = 8, c = −2, then a ÷ (b ÷ c) =", ["4", "1", "−4", "−1"], "−16 ÷ (−4) = 4."], ["If a > b and c is negative, then:", ["a ÷ c < b ÷ c", "a ÷ c > b ÷ c", "a ÷ c = b ÷ c", "a < b"], "Dividing by a negative reverses the order."], ["[32 + 2 × 17 + (−6)] ÷ 15 =", ["4", "−4", "60", "15"], "(32 + 34 − 6) ÷ 15 = 60 ÷ 15."], ["||−17| + 17| ÷ ||−25| − 42| =", ["2", "−2", "34", "17"], "34 ÷ 17."], ["{36 ÷ (−9)} ÷ {(−24) ÷ 6} =", ["1", "−1", "4", "−4"], "(−4) ÷ (−4)."], ["Mount Abu: 12°C at noon, dropping 4°C per hour. How long to reach 4°C?", ["2 hours", "3 hours", "8 hours", "4 hours"], "Drop of 8°C ÷ 4°C per hour."], ["Mount Abu: 12°C at noon, dropping 4°C per hour. Temperature at midnight:", ["−36°C", "−48°C", "36°C", "4°C"], "12 − (12 × 4)."], ["An elevator goes from 10 m above ground to −350 m at 6 m/min. Time taken:", ["1 hour", "58 min", "50 min", "2 hours"], "360 ÷ 6 = 60 min."], ["+5 per correct, −2 per wrong. Rekha got 10 correct and scored 30. Wrong answers:", ["10", "20", "5", "15"], "(50 − 30) ÷ 2."], ["Profit ₹8 per white cement bag, loss ₹5 per grey bag. Sold 3000 white and 5000 grey. Result:", ["Loss of ₹1000", "Profit of ₹1000", "No profit no loss", "Loss of ₹25000"], "24000 − 25000."], ["Same company sells 6400 grey bags. White bags needed for no profit, no loss:", ["4000", "3200", "6400", "5000"], "6400 × 5 ÷ 8."], ["(−729) ÷ (−27) =", ["27", "−27", "702", "−756"], "Like signs → positive."], ["17654 ÷ (−17654) =", ["−1", "1", "0", "−17654"], "Unlike signs → −1."], ["0 ÷ (−135) =", ["0", "−135", "1", "Not meaningful"], "0 divided by non-zero is 0."], ["Fill in: 296 ÷ ___ = −148", ["−2", "2", "−148", "148"], "296 ÷ (−2)."], ["Fill in: ___ ÷ 567 = −1", ["−567", "567", "−1", "1"], "−567 ÷ 567."], ["Fill in: ___ ÷ 12 = −11", ["−132", "132", "−1", "23"], "−11 × 12."], ["(32 × (−18)) ÷ (−36) =", ["16", "−16", "4/81", "−576"], "−576 ÷ −36."], ["(280 × (−7)) ÷ ((−8) × (−35)) =", ["−7", "7", "−280", "1960"], "−1960 ÷ 280."], ["Raman takes 128 minutes to trek 16 km. Time for 1 km:", ["8 minutes", "16 minutes", "112 minutes", "6 minutes"], "128 ÷ 16."], ["The product of two integers is 195. If one is −15, the other is:", ["−13", "13", "180", "−180"], "195 ÷ (−15)."], ["The product of two integers is 72. If one is −9, the other is:", ["−8", "8", "81", "63"], "72 ÷ (−9)."], ["+3 per correct, −2 per wrong. Ishita has 12 correct and scored 20. Wrong attempts:", ["8", "16", "4", "10"], "(36 − 20) ÷ 2."], ["4 packs of 120 stamps shared among 30 students. Each gets:", ["16", "4", "120", "24"], "480 ÷ 30."], ["The largest number dividing 64 and 72 leaving remainders 12 and 7 is:", ["13", "17", "14", "18"], "It divides 52 and 65 exactly."]]}, {"name": "Magic grid of integers", "qs": [["In the magic grid, each cell holds:", ["The product of its row and column border integers", "The sum of its row and column numbers", "Any random integer", "The difference of border numbers"], "Each cell = row number × column number."], ["Top: 2, −3, 5, 4. Left: 4, 2, −6, −3. The cell in row 2, column 3 is:", ["10", "7", "−10", "8"], "2 × 5."], ["After circling a number in the grid, you:", ["Strike out its row and column", "Strike out only its row", "Add it to the next number", "Divide it by 2"], "Step II."], ["You keep circling until:", ["There are no unstruck numbers", "You circle 2 numbers", "The sum is 0", "You reach a negative number"], "Step IV."], ["The product of circled numbers always equals:", ["The product of all border integers", "The sum of border integers", "0", "The largest cell"], "Every choice gives the same product."], ["For border numbers 2, −3, 5, 4 and 4, 2, −6, −3, the magic product is:", ["−17280", "17280", "−1728", "1728"], "−120 × 144 = −17280."]]}];
+const PAL=["#4FB3A9","#7C5CD6","#F2A541","#6C8EE0","#E58FAE","#6A994E","#E07A5F","#3D9BD1"];
+CH.forEach((c,i)=>{if(!c.color)c.color=PAL[i%PAL.length];if(!c.id)c.id="s"+i;});
+const COUNTS=[10,25,50,"All"];
+let selChaps=new Set(CH.map(c=>c.id)), selCount=25;
+let deck=[],idx=0,score=0,answered=false,wrong=[],results={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderHome(){
+  const cc=$("chapChips");cc.innerHTML="";
+  const total=CH.reduce((n,c)=>n+c.qs.length,0);
+  const all=document.createElement("button");all.className="chip";
+  all.setAttribute("aria-pressed",selChaps.size===CH.length);
+  all.innerHTML=`All sections <small>${total}</small>`;
+  all.onclick=()=>{selChaps=selChaps.size===CH.length?new Set():new Set(CH.map(c=>c.id));renderHome();};
+  cc.appendChild(all);
+  CH.forEach(c=>{const b=document.createElement("button");b.className="chip";
+    b.setAttribute("aria-pressed",selChaps.has(c.id));
+    b.innerHTML=`<span class="dot" style="background:${c.color}"></span>${esc(c.name)} <small>${c.qs.length}</small>`;
+    b.onclick=()=>{selChaps.has(c.id)?selChaps.delete(c.id):selChaps.add(c.id);renderHome();};
+    cc.appendChild(b);});
+  const kc=$("countChips");kc.innerHTML="";
+  COUNTS.forEach(n=>{const b=document.createElement("button");b.className="chip";
+    b.setAttribute("aria-pressed",selCount===n);b.textContent=n;
+    b.onclick=()=>{selCount=n;renderHome();};kc.appendChild(b);});
+  const pool=CH.filter(c=>selChaps.has(c.id)).reduce((n,c)=>n+c.qs.length,0);
+  $("poolInfo").textContent=pool?`${pool} questions available`:"Pick at least one section";
+  $("startBtn").disabled=!pool;
+}
+const build=list=>list.map(({c,q})=>({c,text:q[0],exp:q[2],opts:shuffle(q[1].map((t,i)=>({t,ok:i===0})))}));
+function start(list){deck=list;idx=0;score=0;wrong=[];results={};show("quiz");renderQ();}
+function startFromHome(){
+  let pool=[];CH.filter(c=>selChaps.has(c.id)).forEach(c=>c.qs.forEach(q=>pool.push({c,q})));
+  pool=shuffle(pool);if(selCount!=="All")pool=pool.slice(0,selCount);
+  start(build(pool));
+}
+function show(id){["home","quiz","result"].forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0);}
+function renderQ(){
+  answered=false;const d=deck[idx];
+  $("qCount").textContent=`Question ${idx+1} of ${deck.length}`;
+  $("qScore").textContent=`Score ${score}`;
+  $("qBar").style.width=(idx/deck.length*100)+"%";
+  $("qTag").innerHTML=`<span class="dot" style="background:${d.c.color}"></span>${esc(d.c.name)}`;
+  $("qText").textContent=d.text;
+  const o=$("qOpts");o.innerHTML="";
+  d.opts.forEach((op,i)=>{const b=document.createElement("button");b.className="opt";
+    b.innerHTML=`<b>${"ABCD"[i]}</b><span>${esc(op.t)}</span>`;b.onclick=()=>pick(i);o.appendChild(b);});
+  $("qFb").className="fb";$("qFb").textContent="";
+  $("nextBtn").disabled=true;$("nextBtn").textContent=idx===deck.length-1?"See score":"Next";
+  o.firstChild.focus({preventScroll:true});
+}
+function pick(i){
+  if(answered)return;answered=true;
+  const d=deck[idx],btns=[...$("qOpts").children],ok=d.opts[i].ok;
+  btns.forEach((b,j)=>{b.disabled=true;if(d.opts[j].ok)b.classList.add("ok");});
+  const r=results[d.c.id]||(results[d.c.id]={c:d.c,right:0,total:0});r.total++;
+  const fb=$("qFb"),ans=d.opts.find(x=>x.ok).t;
+  if(ok){score++;r.right++;fb.className="fb show ok";fb.innerHTML=`<strong>Correct.</strong> ${esc(d.exp)}`;}
+  else{btns[i].classList.add("bad");wrong.push({d,picked:d.opts[i].t});
+    fb.className="fb show bad";fb.innerHTML=`<strong>Not quite.</strong> Answer: ${esc(ans)}. ${esc(d.exp)}`;}
+  $("qScore").textContent=`Score ${score}`;
+  $("nextBtn").disabled=false;$("nextBtn").focus({preventScroll:true});
+}
+function next(){if(!answered)return;idx++;idx<deck.length?renderQ():finish();}
+function finish(){
+  const n=Object.values(results).reduce((s,r)=>s+r.total,0);
+  show("result");
+  $("rScore").textContent=`${score}/${n}`;
+  const pct=n?Math.round(score/n*100):0;$("rPct").textContent=`${pct}%`;
+  $("rMsg").textContent=!n?"No questions answered.":pct>=90?"Excellent — you know this very well.":pct>=70?"Good work. Review the mistakes below to close the gaps.":pct>=50?"Fair. Go through the mistakes, then retry them.":"Re-read the lesson, then retry the wrong answers.";
+  $("rBrk").innerHTML=Object.values(results).map(r=>`<div><span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${r.c.color};margin-right:8px"></span>${esc(r.c.name)}</span><strong>${r.right}/${r.total}</strong></div>`).join("");
+  $("retryWrongBtn").classList.toggle("hidden",!wrong.length);
+  $("revPanel").classList.toggle("hidden",!wrong.length);
+  $("rRev").innerHTML=wrong.map(w=>`<div class="rev"><p><strong>${esc(w.d.text)}</strong></p><p class="y">Your answer: ${esc(w.picked)}</p><p class="c">Correct: ${esc(w.d.opts.find(x=>x.ok).t)}</p><p class="hint">${esc(w.d.exp)}</p></div>`).join("");
+}
+$("startBtn").onclick=startFromHome;
+$("nextBtn").onclick=next;
+$("quitBtn").onclick=finish;
+$("homeBtn").onclick=()=>{show("home");renderHome();};
+$("retryWrongBtn").onclick=()=>start(shuffle(wrong.map(w=>({...w.d,opts:shuffle(w.d.opts)}))));
+document.addEventListener("keydown",e=>{
+  if($("quiz").classList.contains("hidden"))return;
+  const k=parseInt(e.key,10);
+  if(k>=1&&k<=4&&!answered&&deck[idx].opts[k-1])pick(k-1);
+  else if(e.key==="Enter"&&answered){e.preventDefault();next();}
+});
+renderHome();
+</script>
+</body>
+</html>

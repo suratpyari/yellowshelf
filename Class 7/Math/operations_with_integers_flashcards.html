@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Operations with Integers — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --card:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-soft:#E3DAFB;
+  --short:#4FB3A9; --short-soft:#DDF3F0;
+  --long:#F2A541; --long-soft:#FDEFD9;
+  --ct:#6C8EE0; --ct-soft:#E1E9FB;
+  --ok:#3E9B6A; --ok-soft:#DFF3E7; --again:#D9725B; --again-soft:#FBE5DF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(2rem,6.5vw,2.8rem);font-weight:800}
+.sub{color:var(--muted);margin:4px 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:#fff;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;display:flex;gap:7px;align-items:center}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip small{color:var(--muted);font-weight:600}
+.bar-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 8px;font-weight:700;color:var(--muted);font-size:.92rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.scene{perspective:1400px}
+.card{position:relative;min-height:340px;cursor:pointer;transition:transform .5s;transform-style:preserve-3d;border:0;padding:0;width:100%;background:none;font:inherit;color:inherit;text-align:left;display:grid}
+.card.flip{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:24px;padding:22px 22px 20px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;border:2px solid var(--line)}
+.back{transform:rotateY(180deg)}
+.tagline{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.tag{font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.marks{font-weight:800;color:var(--muted);font-size:.9rem}
+.qnum{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:3rem;line-height:1;color:var(--accent-soft);margin-bottom:4px}
+.qtext{font-size:1.3rem;font-weight:700;flex:1}
+.hint{color:var(--muted);font-size:.88rem;margin-top:16px;text-align:center}
+.back h2{font-size:1.1rem;color:var(--muted);margin-bottom:8px}
+.back .qsmall{font-weight:700;font-size:.98rem;margin-bottom:12px}
+.back ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.back li::marker{color:var(--accent)}
+.controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{flex:1;min-width:120px;border:0;border-radius:16px;padding:14px 16px;font:inherit;font-weight:800;font-size:1rem;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--line)}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 4px 0 #5B3FB0}
+.btn.ok{background:var(--ok-soft);color:var(--ok);box-shadow:0 4px 0 #BFE3CD}
+.btn.again{background:var(--again-soft);color:var(--again);box-shadow:0 4px 0 #F2C9BE}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
+.nav .btn{flex:0 1 auto;font-size:.92rem;padding:10px 14px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.done{background:var(--card);border-radius:24px;padding:26px;border:2px solid var(--line);text-align:center}
+.big{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:clamp(3rem,13vw,4.6rem);line-height:1;color:var(--accent)}
+.hidden{display:none!important}
+.tiny{color:var(--muted);font-size:.82rem;margin-top:14px}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.bar>i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Operations with Integers</h1>
+  <p class="sub">Flashcards · short, long &amp; critical-thinking questions. Answer out loud or on paper, then flip to check.</p>
+
+  <div class="chips" id="chips"></div>
+  <div class="chips" style="margin-top:8px" id="opts"></div>
+
+  <div id="deckView">
+    <div class="bar-row"><span id="count"></span><span id="tally"></span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scene">
+      <button class="card" id="card" aria-live="polite">
+        <div class="face front">
+          <div class="tagline"><span class="tag" id="fTag"></span><span class="marks" id="fMarks"></span></div>
+          <div class="qnum" id="fNum"></div>
+          <div class="qtext" id="fText"></div>
+          <div class="hint">Tap the card or press Space to see the answer</div>
+        </div>
+        <div class="face back">
+          <div class="tagline"><span class="tag" id="bTag"></span><span class="marks" id="bMarks"></span></div>
+          <h2>Key points</h2>
+          <div class="qsmall" id="bText"></div>
+          <ul id="bPts"></ul>
+        </div>
+      </button>
+    </div>
+    <div class="controls" id="flipCtl"><button class="btn primary" id="flipBtn">Show answer</button></div>
+    <div class="controls hidden" id="rateCtl">
+      <button class="btn again" id="againBtn">Need practice</button>
+      <button class="btn ok" id="okBtn">I knew it</button>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prevBtn">← Previous</button>
+      <button class="btn" id="skipBtn">Skip →</button>
+    </div>
+    <p class="tiny">Keys: Space = flip · ← → = move · K = knew it · P = need practice</p>
+  </div>
+
+  <div class="done hidden" id="doneView">
+    <h2 style="font-size:1.6rem">Round complete</h2>
+    <div class="big" id="dScore"></div>
+    <p id="dMsg"></p>
+    <div class="controls">
+      <button class="btn again" id="practiceBtn">Practise the tricky ones</button>
+      <button class="btn primary" id="restartBtn">Start again</button>
+    </div>
+  </div>
+</div>
+<script>
+const RAW={"short": [["What are integers? Give two examples of each kind.", 2, ["…, −3, −2, −1, 0, 1, 2, 3, …", "Positive integers: 1, 2, 3 …; negative: −1, −2, −3 …", "0 is neither positive nor negative."]], ["What are opposites? Give an example.", 2, ["Integers at equal distance from 0 on opposite sides.", "Example: 4 and −4."]], ["Define the absolute value of an integer. Find |−7| and |0|.", 2, ["Numerical value of an integer regardless of its sign; denoted |a|.", "|−7| = 7, |0| = 0."]], ["Write |a| for a positive, zero and negative a.", 2, ["|a| = a if a is positive or zero.", "|a| = −a if a is negative."]], ["Which is greater, −2 or −3? Give a reason.", 2, ["−2 > −3.", "−2 lies to the right of −3 on the number line."]], ["State the rule for adding two integers with unlike signs.", 2, ["Find the difference of their absolute values.", "Give the sign of the addend with the greater absolute value."]], ["State the rule for subtracting integers. Find 7 − (−4).", 2, ["a − b = a + (−b): add the additive inverse.", "7 + 4 = 11."]], ["Is subtraction of integers commutative? Give an example.", 2, ["No: a − b ≠ b − a.", "2 − 3 = −1, but 3 − 2 = 1."]], ["Why is 0 called the additive identity?", 2, ["a + 0 = a = 0 + a for every integer a."]], ["What is an additive inverse? Write the additive inverse of −176 and of 0.", 2, ["a + (−a) = 0; a and −a are additive inverses.", "−176 → 176; 0 → 0."]], ["Write the successor and predecessor of −42.", 2, ["Successor: −41.", "Predecessor: −43."]], ["State the closure property of multiplication with an example.", 2, ["The product of two integers is always an integer.", "3 × (−5) = −15, an integer."]], ["What is the sign of the product of 8 negative integers and 1 positive integer? Why?", 2, ["Positive.", "Even number of negative factors gives a positive product."]], ["Find (−1) × (−1) × … taken 151 times.", 2, ["−1.", "151 is odd, so the product is negative."]], ["What are the multiplicative inverses of 6 and −6?", 2, ["1/6 and −1/6.", "a × 1/a = 1."]], ["Define dividend, divisor and quotient.", 2, ["Dividend: number to be divided.", "Divisor: number which divides.", "Quotient: result of division."]], ["Is division of integers closed? Give an example.", 2, ["No.", "15 ÷ 4 is not an integer."]], ["Write the values: 0 ÷ 8, (−7) ÷ 1, (−11) ÷ (−11), 6 ÷ 0.", 3, ["0 ÷ 8 = 0", "(−7) ÷ 1 = −7", "(−11) ÷ (−11) = 1", "6 ÷ 0 is not meaningful."]], ["The product of two integers is 195. If one is −15, find the other.", 2, ["195 ÷ (−15) = −13."]], ["The sum of two integers is −396. If one is 64, find the other.", 2, ["−396 − 64 = −460."]], ["If a × (−1) = −30, is a positive or negative?", 2, ["a = 30, so a is positive."]], ["Find the value of 1 − 2 + 3 − 4 + … + 19 − 20.", 2, ["Pair the terms: (1 − 2) + (3 − 4) + …", "10 pairs of (−1) = −10."]]], "long": [["Show on a number line: 3 + 4, −3 + 4, 4 + (−3) and (−3) + (−4).", 5, ["Positive addend: move right; negative addend: move left.", "3 + 4: from 3, 4 right → 7.", "−3 + 4: from −3, 4 right → 1.", "4 + (−3): from 4, 3 left → 1.", "(−3) + (−4): from −3, 4 left → −7."]], ["State and verify five properties of addition of integers.", 5, ["Closure: 5 + (−9) = −4, an integer.", "Commutative: 5 + (−8) = (−8) + 5 = −3.", "Associative: [(−9) + 3] + (−4) = (−9) + [3 + (−4)] = −10.", "Identity: 8 + 0 = 8.", "Inverse: (−7) + 7 = 0."]], ["State the properties of subtraction of integers with examples.", 5, ["Closure: a − b is an integer.", "Not commutative: 2 − 3 ≠ 3 − 2.", "0 is a right identity only: a − 0 = a, but 0 − a ≠ a.", "If a > b, then a − c > b − c."]], ["Explain the properties of multiplication of integers with examples.", 5, ["Closure, commutative: 7 × (−6) = (−6) × 7 = −42.", "Associative: (a × b) × c = a × (b × c).", "Distributive: a(b + c) = ab + ac.", "Identity 1; a × 0 = 0; a × (−1) = −a.", "Inverse of 6 is 1/6 (not an integer)."]], ["State the rules and properties of division of integers with examples.", 5, ["Like signs → positive: (−104) ÷ (−13) = 8.", "Unlike signs → negative: (−84) ÷ 12 = −7.", "Not closed: 15 ÷ 4.", "a ÷ a = 1, a ÷ 1 = a, 0 ÷ a = 0; a ÷ 0 not meaningful.", "Not associative: (−16 ÷ 8) ÷ (−2) = 1 but −16 ÷ (8 ÷ (−2)) = 4."]], ["Simplify 412 + (−98) + (−84) + (−7) + 35 using the steps for mixed signs.", 5, ["Plus terms: 412 + 35 = 447.", "Minus terms: 98 + 84 + 7 = 189.", "Difference: 447 − 189 = 258.", "Sign of larger absolute value: +258."]], ["Use distributivity to find 15625 × (−2) + (−15625) × 98 and 18946 × 99 − (−18946).", 5, ["(−15625) × (2 + 98) = (−15625) × 100 = −1562500.", "18946 × 99 + 18946 × 1 = 18946 × 100 = 1894600."]], ["Mount Abu: 12°C at noon, dropping 4°C per hour until midnight. Find the time to reach 4°C and the midnight temperature.", 5, ["Drop needed: 12 − 4 = 8°C.", "Time: 8 ÷ 4 = 2 hours.", "Noon to midnight: 12 hours.", "Total drop: 12 × 4 = 48°C.", "Midnight: 12 − 48 = −36°C."]], ["A cement company earns ₹8 per white bag and loses ₹5 per grey bag. (i) It sells 3000 white and 5000 grey bags; profit or loss? (ii) It sells 6400 grey bags; how many white bags for no profit, no loss?", 5, ["(i) Profit 3000 × 8 = ₹24000; loss 5000 × 5 = ₹25000.", "Loss of ₹1000.", "(ii) Loss 6400 × 5 = ₹32000.", "White bags = 32000 ÷ 8 = 4000."]], ["Explain the magic grid game and why the product is always the same.", 5, ["Each cell = row border integer × column border integer.", "Circle a number; strike its row and column; repeat; multiply circled numbers.", "Each circled number uses one row and one column number exactly once.", "So the product = product of all border integers (e.g. −17280)."]]], "ct": [["Rohit says, “The sum of a negative and a positive integer is always negative.” Correct him with an example.", 3, ["He is wrong.", "−3 + 4 = 1 is positive.", "The sign follows the larger absolute value."]], ["Is |a + b| always equal to |a| + |b|? Use examples.", 3, ["Not always.", "|4 + 2| = |4| + |2| = 6 (same signs).", "|2 − 4| = 2, but |2| + |4| = 6 (unlike signs)."]], ["Why is −2 greater than −3, even though 2 is less than 3?", 3, ["−2 lies to the right of −3.", "The greater the number, the lesser its opposite: 3 > 2 so −3 < −2."]], ["Explain why the product of an even number of negative integers is positive.", 3, ["(−1) × (−1) = 1.", "Negatives pair up, each pair is positive.", "With an odd number, one negative is left over."]], ["Test: +5 correct, −2 wrong, 0 unattempted. Would you guess a question you are unsure about? Give reasons.", 3, ["A wrong guess costs 2 marks; a right one gains 5.", "If fairly sure, guessing can help; if blind, it may lower the score.", "Any well-reasoned view is accepted."]], ["Can three different integers add up to zero? Give two examples.", 2, ["Yes.", "−1 + 0 + 1 = 0", "2 + 3 + (−5) = 0"]], ["In the magic grid, what happens if one border number is 0?", 3, ["One row or column becomes all zeros.", "Every set of circled numbers includes one of them.", "So the magic product is always 0."]], ["A room at 80°C cools by 5°C every hour. When will it reach 0°C? What will it be after 20 hours?", 3, ["80 ÷ 5 = 16 hours to reach 0°C.", "After 20 hours: 80 + 20 × (−5) = −20°C."]], ["The cement company sells 6400 grey bags. Suggest how many white bags it must sell to make a profit.", 3, ["No profit no loss at 4000 white bags.", "More than 4000 white bags gives a profit.", "Reasonable answers accepted."]]]};
+const SECS=[
+ {id:"short",name:"Short answer",color:"var(--short)",soft:"var(--short-soft)",list:RAW.short||[]},
+ {id:"long",name:"Long answer",color:"var(--long)",soft:"var(--long-soft)",list:RAW.long||[]},
+ {id:"ct",name:"Critical thinking",color:"var(--ct)",soft:"var(--ct-soft)",list:RAW.ct||[]}].filter(s=>s.list.length);
+const ALL=[];SECS.forEach(s=>s.list.forEach((q,i)=>ALL.push({s,n:i+1,q:q[0],m:q[1],pts:q[2]})));
+let sel=new Set(SECS.map(s=>s.id)), shuffleOn=false;
+let deck=[],idx=0,flipped=false,rated={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+function chips(){
+  const c=$("chips");c.innerHTML="";
+  const all=document.createElement("button");all.className="chip";all.setAttribute("aria-pressed",sel.size===SECS.length);
+  all.innerHTML=`All <small>${ALL.length}</small>`;all.onclick=()=>{sel=new Set(SECS.map(s=>s.id));chips();build();};c.appendChild(all);
+  SECS.forEach(s=>{const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",sel.size<SECS.length&&sel.has(s.id));
+    b.innerHTML=`<span class="dot" style="background:${s.color}"></span>${s.name} <small>${s.list.length}</small>`;
+    b.onclick=()=>{sel=new Set([s.id]);chips();build();};c.appendChild(b);});
+  const o=$("opts");o.innerHTML="";
+  const sh=document.createElement("button");sh.className="chip";sh.setAttribute("aria-pressed",shuffleOn);sh.textContent="🔀 Shuffle";
+  sh.onclick=()=>{shuffleOn=!shuffleOn;chips();build();};o.appendChild(sh);
+}
+function build(list){
+  deck=list||ALL.filter(c=>sel.has(c.s.id));if(shuffleOn||list)deck=shuffle(deck);
+  idx=0;rated={};$("doneView").classList.add("hidden");$("deckView").classList.remove("hidden");render();
+}
+function setFlip(v){flipped=v;$("card").classList.toggle("flip",v);
+  $("flipCtl").classList.toggle("hidden",v);$("rateCtl").classList.toggle("hidden",!v);}
+function render(){
+  const c=deck[idx];setFlip(false);
+  $("count").textContent=`Card ${idx+1} of ${deck.length}`;
+  const k=Object.values(rated).filter(v=>v).length,p=Object.values(rated).filter(v=>!v).length;
+  $("tally").textContent=`✓ ${k}   ↻ ${p}`;
+  $("bar").style.width=(Object.keys(rated).length/deck.length*100)+"%";
+  [["fTag","bTag"]].flat().forEach(id=>{const t=$(id);t.textContent=c.s.name;t.style.background=c.s.soft;t.style.color="var(--ink)";});
+  $("fMarks").textContent=$("bMarks").textContent=`${c.m} mark${c.m>1?"s":""}`;
+  $("fNum").textContent=String(idx+1).padStart(2,"0");$("fNum").style.color=c.s.soft;
+  $("fText").textContent=c.q;$("bText").textContent=c.q;
+  const ul=$("bPts");ul.innerHTML="";c.pts.forEach(p=>{const li=document.createElement("li");li.textContent=p;ul.appendChild(li);});
+  $("prevBtn").disabled=idx===0;
+  $("skipBtn").textContent=idx===deck.length-1?"Finish →":"Skip →";
+}
+function rate(v){rated[idx]=v;go(1);}
+function go(d){const n=idx+d;if(n<0)return;if(n>=deck.length){finish();return;}idx=n;render();}
+function finish(){
+  const tot=deck.length,k=Object.values(rated).filter(v=>v).length;
+  $("deckView").classList.add("hidden");$("doneView").classList.remove("hidden");
+  $("dScore").textContent=`${k}/${tot}`;
+  const miss=deck.filter((_,i)=>rated[i]!==true);
+  $("dMsg").textContent=miss.length?`${miss.length} card${miss.length>1?"s":""} to practise again (including any you skipped).`:"You knew every card — excellent!";
+  $("practiceBtn").classList.toggle("hidden",!miss.length);
+  $("practiceBtn").onclick=()=>build(miss);
+}
+$("card").onclick=()=>setFlip(!flipped);
+$("flipBtn").onclick=()=>setFlip(true);
+$("okBtn").onclick=()=>rate(true);
+$("againBtn").onclick=()=>rate(false);
+$("prevBtn").onclick=()=>go(-1);
+$("skipBtn").onclick=()=>go(1);
+$("restartBtn").onclick=()=>build();
+document.addEventListener("keydown",e=>{
+  if($("deckView").classList.contains("hidden"))return;
+  if(e.key===" "){e.preventDefault();setFlip(!flipped);}
+  else if(e.key==="ArrowRight")go(1);
+  else if(e.key==="ArrowLeft")go(-1);
+  else if(flipped&&(e.key==="k"||e.key==="K"))rate(true);
+  else if(flipped&&(e.key==="p"||e.key==="P"))rate(false);
+});
+chips();build();
+</script>
+</body>
+</html>
