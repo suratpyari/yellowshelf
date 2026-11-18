@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Class 7 SST &amp; GK — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --card:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-soft:#E3DAFB;
+  --short:#4FB3A9; --short-soft:#DDF3F0;
+  --long:#F2A541; --long-soft:#FDEFD9;
+  --ct:#6C8EE0; --ct-soft:#E1E9FB;
+  --ok:#3E9B6A; --ok-soft:#DFF3E7; --again:#D9725B; --again-soft:#FBE5DF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:Inter,"Trebuchet MS",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(2rem,6.5vw,2.8rem);font-weight:800}
+.sub{color:var(--muted);margin:4px 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:#fff;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;display:flex;gap:7px;align-items:center}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip small{color:var(--muted);font-weight:600}
+.bar-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 8px;font-weight:700;color:var(--muted);font-size:.92rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.scene{perspective:1400px}
+.card{position:relative;min-height:340px;cursor:pointer;transition:transform .5s;transform-style:preserve-3d;border:0;padding:0;width:100%;background:none;font:inherit;color:inherit;text-align:left;display:grid}
+.card.flip{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:24px;padding:22px 22px 20px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;border:2px solid var(--line)}
+.back{transform:rotateY(180deg)}
+.tagline{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.tag{font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.marks{font-weight:800;color:var(--muted);font-size:.9rem}
+.qnum{font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:3rem;line-height:1;color:var(--accent-soft);margin-bottom:4px}
+.qtext{font-size:1.3rem;font-weight:700;flex:1}
+.hint{color:var(--muted);font-size:.88rem;margin-top:16px;text-align:center}
+.back h2{font-size:1.1rem;color:var(--muted);margin-bottom:8px}
+.back .qsmall{font-weight:700;font-size:.98rem;margin-bottom:12px}
+.back ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.back li::marker{color:var(--accent)}
+.controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{flex:1;min-width:120px;border:0;border-radius:16px;padding:14px 16px;font:inherit;font-weight:800;font-size:1rem;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--line)}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 4px 0 #5B3FB0}
+.btn.ok{background:var(--ok-soft);color:var(--ok);box-shadow:0 4px 0 #BFE3CD}
+.btn.again{background:var(--again-soft);color:var(--again);box-shadow:0 4px 0 #F2C9BE}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
+.nav .btn{flex:0 1 auto;font-size:.92rem;padding:10px 14px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.done{background:var(--card);border-radius:24px;padding:26px;border:2px solid var(--line);text-align:center}
+.big{font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:clamp(3rem,13vw,4.6rem);line-height:1;color:var(--accent)}
+.hidden{display:none!important}
+.tiny{color:var(--muted);font-size:.82rem;margin-top:14px}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.bar>i{transition:none}}
+</style>
+<style id="yellow-theme">
+:root{--bg:#FFFBEB;--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--accent:#F5B400;--accent-ink:#1E293B;--accent-soft:#FFF4CC;--chip:#FFF4CC}
+body{position:relative}
+h1{font-weight:700;letter-spacing:-.02em}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:230px;z-index:-1;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
+  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+.sub{color:#5B4B1E!important}
+.chip[aria-pressed="true"]{background:#FFF4CC!important;border-color:#F5B400!important}
+#startBtn,#nextBtn,#retryWrongBtn,.btn.primary{background:linear-gradient(180deg,#FFD24D,#FFC21A)!important;color:#1E293B!important;box-shadow:0 4px 0 #D99A00!important}
+.bar{background:rgba(255,255,255,.7)!important}
+.bar>i{background:linear-gradient(90deg,#FB923C,#F97316)!important}
+.back li::marker{color:#F59E0B}
+.qnum{color:#FDE68A!important}
+.big{color:#F59E0B!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Class 7 SST &amp; GK</h1>
+  <p class="sub">Flashcards · Asia, Constitution, Political System, Heritage, Rivers &amp; Current Affairs. Answer out loud or on paper, then flip to check.</p>
+
+  <div class="chips" id="chips"></div>
+  <div class="chips" style="margin-top:8px" id="opts"></div>
+
+  <div id="deckView">
+    <div class="bar-row"><span id="count"></span><span id="tally"></span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scene">
+      <button class="card" id="card" aria-live="polite">
+        <div class="face front">
+          <div class="tagline"><span class="tag" id="fTag"></span><span class="marks" id="fMarks"></span></div>
+          <div class="qnum" id="fNum"></div>
+          <div class="qtext" id="fText"></div>
+          <div class="hint">Tap the card or press Space to see the answer</div>
+        </div>
+        <div class="face back">
+          <div class="tagline"><span class="tag" id="bTag"></span><span class="marks" id="bMarks"></span></div>
+          <h2>Key points</h2>
+          <div class="qsmall" id="bText"></div>
+          <ul id="bPts"></ul>
+        </div>
+      </button>
+    </div>
+    <div class="controls" id="flipCtl"><button class="btn primary" id="flipBtn">Show answer</button></div>
+    <div class="controls hidden" id="rateCtl">
+      <button class="btn again" id="againBtn">Need practice</button>
+      <button class="btn ok" id="okBtn">I knew it</button>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prevBtn">← Previous</button>
+      <button class="btn" id="skipBtn">Skip →</button>
+    </div>
+    <p class="tiny">Keys: Space = flip · ← → = move · K = knew it · P = need practice</p>
+  </div>
+
+  <div class="done hidden" id="doneView">
+    <h2 style="font-size:1.6rem">Round complete</h2>
+    <div class="big" id="dScore"></div>
+    <p id="dMsg"></p>
+    <div class="controls">
+      <button class="btn again" id="practiceBtn">Practise the tricky ones</button>
+      <button class="btn primary" id="restartBtn">Start again</button>
+    </div>
+  </div>
+</div>
+<script>
+const RAW={"short": [["Why is the Pamir Knot called the “Roof of the World”?", 2, ["Many of Asia’s highest mountain ranges meet there.", "Ranges such as the Himalayas, Karakoram, Hindu Kush, Kunlun Shan and Tian Shan spread out from it."]], ["Name the four features that separate Asia from Europe. What are the two continents called together?", 2, ["Ural Mountains, Caspian Sea, Caucasus Mountains and Black Sea.", "Together they are called Eurasia."]], ["Give two reasons why river plains are densely populated. Name one such plain in Asia.", 2, ["Fertile alluvial soil, plenty of water and flat land make farming, building and transport easy.", "Examples: Indo-Gangetic Plain, Great Plain of China, Mesopotamian Plain."]], ["Why is the Huang He called “China’s Sorrow”? What does it carry?", 2, ["Its floods are very destructive.", "It carries yellow soil called loess and flows into the Bohai Sea."]], ["Why are the Ob, Yenisei and Lena less useful for transport?", 2, ["They flow through cold Siberia into the Arctic Ocean.", "They stay frozen for many months of the year."]], ["What is special about the Caspian Sea, Lake Baikal and the Dead Sea?", 3, ["Caspian Sea: largest lake in the world by area.", "Lake Baikal (Russia): deepest lake in the world.", "Dead Sea (Israel–Jordan): its shore is the lowest point on land; the water is so salty people float."]], ["What is a Constitution?", 2, ["The supreme law of a country; every law must follow it.", "It lays down how the government is formed, its powers, and citizens’ rights and duties."]], ["Give the dates when the Constitution was adopted and when it came into force. How is each day celebrated?", 2, ["Adopted 26 November 1949 — Constitution Day (Samvidhan Divas).", "Came into force 26 January 1950 — Republic Day."]], ["What is the Preamble, and why is it called the “soul” of the Constitution?", 2, ["It is the introduction to the Constitution.", "It states the source (the people), the aims (justice, liberty, equality, fraternity) and the nature of the Indian State."]], ["Explain the meaning of ‘Sovereign’ and ‘Republic’.", 2, ["Sovereign: India makes its own decisions; no outside power controls it.", "Republic: the Head of State (President) is elected, not a king or queen."]], ["What is the Right to Constitutional Remedies? Why did Dr Ambedkar call it the “heart and soul” of the Constitution?", 2, ["Article 32: a citizen can go to the Supreme Court or a High Court if a Fundamental Right is violated.", "Without it, the other rights could not be protected or enforced."]], ["Write any four Fundamental Duties of an Indian citizen.", 2, ["Respect the Constitution, National Flag and National Anthem; protect the sovereignty, unity and integrity of India.", "Protect the natural environment; develop a scientific temper; safeguard public property; strive for excellence (any four)."]], ["What is Universal Adult Franchise?", 2, ["Every citizen aged 18 or above can vote, regardless of religion, caste, sex, wealth or education.", "The voting age was reduced from 21 to 18 by the 61st Amendment (1988)."]], ["Name the three organs of government and the job of each.", 3, ["Legislature (Parliament) makes laws.", "Executive (President, PM, Council of Ministers) carries out laws.", "Judiciary (Supreme Court, High Courts) interprets laws and gives justice."]], ["Why is the Rajya Sabha called a permanent house?", 2, ["It is never dissolved.", "Members serve 6 years and one-third of them retire every 2 years."]], ["What are NOTA and VVPAT?", 2, ["NOTA (“None of the Above”, 2013): lets a voter reject all candidates.", "VVPAT: a paper slip that lets the voter check the vote recorded on the EVM."]], ["What is the Model Code of Conduct? Why is indelible ink used in elections?", 2, ["Model Code of Conduct: rules parties and candidates must follow during elections.", "Indelible ink is put on the voter’s finger to prevent double voting."]], ["Differentiate between the ruling party and the opposition.", 2, ["Ruling party: party or alliance with a majority that forms the government (NDA, led by BJP).", "Opposition: parties not in government that question and check it (INDIA bloc, led by Congress)."]], ["Name the three styles of temple architecture and one feature of each.", 3, ["Nagara (North India): curved, beehive-like shikhara.", "Dravida (South India): pyramid-shaped vimana and huge gopurams.", "Vesara (Deccan): a mix of Nagara and Dravida."]], ["Why is the Konark Sun Temple special?", 2, ["Built by Narasimhadeva I (Eastern Ganga dynasty), 13th century, in Odisha.", "Shaped like the chariot of the Sun God with 24 carved wheels; called the Black Pagoda."]], ["Why are Lothal and Dholavira important?", 2, ["Harappan (Indus Valley) sites in Gujarat with planned cities and water reservoirs.", "Lothal had a dockyard; Dholavira became a UNESCO site in 2021."]], ["Why do peninsular rivers carry less water in summer than Himalayan rivers?", 2, ["Peninsular rivers are mostly rain-fed.", "Himalayan rivers are fed by both rain and melting snow."]], ["Why is the Kaveri almost perennial?", 2, ["Its upper part (Karnataka) gets rain from the South-West monsoon.", "Its lower part (Tamil Nadu) gets rain from the North-East monsoon."]], ["What is the Grand Anicut?", 2, ["An ancient dam (Kallanai) on the Kaveri built by Chola king Karikala about 2,000 years ago.", "One of the oldest water-regulating structures still in use."]], ["What is the KG Delta and why is it important?", 2, ["The Krishna and Godavari deltas join to form it — the “Rice Bowl of Andhra Pradesh”.", "The KG basin is also rich in natural gas and oil."]], ["How did Kerala get its new name, and under which Article can a state’s name be changed?", 2, ["Kerala was renamed “Keralam” on 25 August 2026 by the Kerala (Alteration of Name) Act, 2026.", "Parliament can change a state’s name under Article 3 (e.g. Orissa → Odisha 2011)."]], ["Write two facts about India’s win at the T20 World Cup 2026.", 2, ["India beat New Zealand by 96 runs in the final at Ahmedabad on 8 March 2026.", "Third title (2007, 2024, 2026) — first team to defend it; captain Suryakumar Yadav."]]], "long": [["Describe the major mountain ranges of Asia, naming where each is found and one key fact.", 5, ["Himalayas (India, Nepal, Bhutan, China, Pakistan): youngest, highest fold mountains; Everest 8,849 m.", "Karakoram: K2, 8,611 m. Hindu Kush: Afghanistan–Pakistan, extends south-west from the Pamir Knot.", "Kunlun Shan: northern edge of Tibetan Plateau. Tian Shan: “Heavenly Mountains”. Altai: Central Asia.", "Zagros & Elburz surround the Iranian Plateau; the old Urals form the Europe–Asia boundary."]], ["Write a note on the plateaus and deserts of Asia.", 5, ["Plateaus: Tibet (highest and largest, ~4,500 m), Deccan (old hard rocks, minerals), Iranian, Anatolian (Turkey), Arabian (very dry), Mongolian and Yunnan.", "Deserts: Arabian (Rub’ al Khali — Empty Quarter), Gobi (cold, rocky), Thar (Great Indian Desert), Taklamakan (Xinjiang), Karakum (“Black Sand”), Syrian (rocky)."]], ["Describe the important rivers of Asia and the civilisations or features linked with them.", 5, ["Yangtze: longest in Asia (~6,300 km), Three Gorges Dam. Huang He: loess, “China’s Sorrow”.", "Ganga + Brahmaputra (Tsangpo in Tibet): Sundarbans delta. Indus: Harappan civilisation.", "Tigris & Euphrates: Mesopotamian civilisation, into the Persian Gulf. Mekong: South-East Asia.", "Ob, Yenisei, Lena: Siberia → Arctic Ocean, frozen for months."]], ["Describe how the Indian Constitution was made.", 5, ["Written by the Constituent Assembly; first met 9 December 1946; President Dr Rajendra Prasad.", "Drafting Committee chaired by Dr B.R. Ambedkar, Father of the Constitution.", "Took 2 years, 11 months, 18 days; adopted 26 Nov 1949, in force 26 Jan 1950.", "Handwritten by Prem Behari Narain Raizada, decorated by Nandalal Bose; longest written constitution."]], ["Explain the six Fundamental Rights with their Articles.", 5, ["Equality (14–18): equal before law, no discrimination, untouchability abolished (Art. 17).", "Freedom (19–22): speech, assembly, movement, profession; life and liberty (Art. 21); education 6–14 (Art. 21A).", "Against Exploitation (23–24): no forced labour or trafficking; no child below 14 in dangerous work.", "Freedom of Religion (25–28); Cultural & Educational (29–30) for minorities; Constitutional Remedies (32)."]], ["Describe any five key features of the Indian Constitution.", 5, ["Lengthiest written constitution (395 → ~470 articles); borrowed from UK, USA, Ireland, USSR, Canada.", "Both rigid and flexible (Art. 368); federal with a strong Centre (Union, State, Concurrent Lists).", "Parliamentary government; independent judiciary (Supreme Court as guardian); single citizenship.", "Universal Adult Franchise (18+); secular State; Directive Principles (Part IV); emergency provisions."]], ["Compare the Lok Sabha and the Rajya Sabha.", 5, ["Lok Sabha: House of the People; max 550 (543 elected); elected directly; 5-year term; min age 25; Speaker presides; Money Bills start here.", "Rajya Sabha: Council of States; max 250 (12 nominated); elected indirectly by MLAs; permanent, 6-year terms, one-third retire every 2 years; min age 30; Vice-President is Chairman; represents states."]], ["Explain how a Bill becomes a law, and describe how elections are conducted in India.", 5, ["Bill introduced in either House → debated and passed → other House passes → President’s assent → Act.", "Election Commission (Art. 324, set up 25 Jan 1950) conducts elections; voting age 18; Lok Sabha every 5 years (last 2024).", "EVMs with VVPAT; NOTA since 2013; indelible ink; Model Code of Conduct; constituencies, some reserved for SC/ST."]], ["Describe any five famous ancient temples of India with their builders and special features.", 5, ["Brihadeeswarar, Thanjavur: Rajaraja Chola I, granite vimana. Konark: Narasimhadeva I, chariot with 24 wheels.", "Kailasa, Ellora: Krishna I, carved from a single rock. Shore Temple: Pallava Narasimhavarman II, on the seashore.", "Meenakshi, Madurai: gopurams. Jagannath, Puri: Rath Yatra. Dilwara: Jain marble carving.", "Ramappa: named after sculptor; Hoysala: star-shaped base; Mahabodhi: Buddha’s enlightenment (any five)."]], ["Why should we protect our heritage? Describe four historical sites of India.", 5, ["Heritage tells our history and culture, attracts tourists, gives jobs and belongs to future generations; ASI protects monuments; it is a Fundamental Duty.", "Sites: Sanchi Stupa (Ashoka, toranas), Ajanta (paintings), Nalanda (ancient university), Qutub Minar & Iron Pillar.", "Taj Mahal (Shah Jahan for Mumtaz Mahal), Red Fort (Independence Day flag), Golconda (diamonds, acoustics) — any four."]], ["Compare the Godavari, Krishna and Kaveri.", 5, ["Origin: Godavari — Trimbakeshwar (Nashik); Krishna — Mahabaleshwar; Kaveri — Talakaveri (Kodagu).", "Length: 1,465 km, 1,400 km, 800 km. All flow east into the Bay of Bengal.", "States: Godavari — Maharashtra, Telangana, AP; Krishna — + Karnataka; Kaveri — Karnataka, TN.", "Projects: Polavaram; Nagarjuna Sagar, Srisailam; KRS, Mettur, Grand Anicut."]], ["Explain the importance of the Kaveri river.", 5, ["Almost perennial — fed by both monsoons; irrigates the Thanjavur delta, the “Rice Bowl of Tamil Nadu”.", "Shivanasamudra Falls had one of Asia’s first hydroelectric plants (1902); Hogenakkal Falls.", "KRS Dam (Brindavan Gardens), Mettur Dam, ancient Grand Anicut by Karikala.", "River islands Srirangapatna, Shivanasamudra, Srirangam; Kaveri water dispute — CWMA set up in 2018."]], ["Write a note on India’s achievements in sports in 2026.", 5, ["T20 World Cup: beat New Zealand by 96 runs in Ahmedabad; third title, first to defend; Bumrah, Samson.", "Commonwealth Games, Glasgow: 4th, 39 medals (13 gold); Mirabai Chanu’s third straight gold.", "Asian Games, Aichi–Nagoya: 4th, 85 medals (21 gold) — second-best ever; men’s hockey gold (beat Malaysia 5–1); women’s cricket gold."]]], "ct": [["Imagine India had no Fundamental Rights. How might ordinary people’s lives be different? Give two examples.", 3, ["The government could misuse power — e.g. stop people speaking freely or practising religion.", "Discrimination or child labour might not be illegal; people could not go to court for protection.", "Any well-reasoned examples are accepted."]], ["Fundamental Duties are not enforceable by courts. Do you think they should be? Give reasons.", 3, ["Yes: it could make people protect public property and the environment more seriously.", "No: duties depend on good citizenship; punishing them is hard to measure and could be misused.", "Accept either view if it is justified."]], ["Why do you think the Constitution makers chose a “secular” State for India?", 3, ["India has many religions; treating all equally keeps unity and peace.", "No religion is favoured, so every citizen feels equal — links to fraternity and equality.", "Any well-reasoned answer is accepted."]], ["Your friend says, “My one vote doesn’t matter.” How would you convince them to vote?", 3, ["Democracy means people choose their government; many elections are decided by small margins.", "Voting is how citizens hold leaders accountable; NOTA lets you show you don’t approve of anyone.", "Accept any persuasive, well-reasoned argument."]], ["Why do you think Money Bills can be introduced only in the Lok Sabha and not in the Rajya Sabha?", 3, ["Lok Sabha members are elected directly by the people.", "Decisions about the people’s money (taxes, spending) should come from those directly chosen by them; the government must have its majority there."]], ["Some old monuments are damaged by people writing on walls and littering. Suggest three ways students can help protect our heritage.", 3, ["Don’t write on walls or litter; follow rules at sites and tell others to do the same.", "Spread awareness through school projects, posters or social media.", "Visit and learn about sites; report damage to ASI or authorities. It is also a Fundamental Duty."]], ["The Kaveri flows through Karnataka and Tamil Nadu, and both states need its water. If you were a judge, how would you share it fairly?", 4, ["Consider each state’s needs — farmland, drinking water, population — and rainfall in good and bad years.", "Share more in good monsoon years, cut fairly in dry years; save water with better irrigation.", "Use an independent body (like the Cauvery Water Management Authority, 2018). Accept any fair, reasoned plan."]], ["Why do you think so many ancient civilisations (Harappan, Mesopotamian, Chinese) grew along rivers?", 3, ["Rivers gave water for drinking and farming, and fertile alluvial soil.", "Rivers were routes for trade and transport, so towns and cities grew there."]], ["Plains in Asia are crowded while deserts and high mountains are thinly populated. Explain why, using examples.", 3, ["Plains (Indo-Gangetic, North China) have fertile soil, water and flat land for farming and building.", "Deserts (Thar, Gobi) lack water; mountains (Himalayas) are cold, steep and hard to farm or travel."]], ["India now has the BRICS chairship and hosted a global AI summit. Why is it useful for a country to host such meetings?", 3, ["It lets the country lead discussions and shape decisions on important issues.", "It builds friendships, trade and investment, and shows the world the country’s strengths.", "Any well-reasoned answer is accepted."]]]};
+const SECS=[
+ {id:"short",name:"Short answer",color:"var(--short)",soft:"var(--short-soft)",list:RAW.short||[]},
+ {id:"long",name:"Long answer",color:"var(--long)",soft:"var(--long-soft)",list:RAW.long||[]},
+ {id:"ct",name:"Critical thinking",color:"var(--ct)",soft:"var(--ct-soft)",list:RAW.ct||[]}].filter(s=>s.list.length);
+const ALL=[];SECS.forEach(s=>s.list.forEach((q,i)=>ALL.push({s,n:i+1,q:q[0],m:q[1],pts:q[2]})));
+let sel=new Set(SECS.map(s=>s.id)), shuffleOn=false;
+let deck=[],idx=0,flipped=false,rated={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+function chips(){
+  const c=$("chips");c.innerHTML="";
+  const all=document.createElement("button");all.className="chip";all.setAttribute("aria-pressed",sel.size===SECS.length);
+  all.innerHTML=`All <small>${ALL.length}</small>`;all.onclick=()=>{sel=new Set(SECS.map(s=>s.id));chips();build();};c.appendChild(all);
+  SECS.forEach(s=>{const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",sel.size<SECS.length&&sel.has(s.id));
+    b.innerHTML=`<span class="dot" style="background:${s.color}"></span>${s.name} <small>${s.list.length}</small>`;
+    b.onclick=()=>{sel=new Set([s.id]);chips();build();};c.appendChild(b);});
+  const o=$("opts");o.innerHTML="";
+  const sh=document.createElement("button");sh.className="chip";sh.setAttribute("aria-pressed",shuffleOn);sh.textContent="🔀 Shuffle";
+  sh.onclick=()=>{shuffleOn=!shuffleOn;chips();build();};o.appendChild(sh);
+}
+function build(list){
+  deck=list||ALL.filter(c=>sel.has(c.s.id));if(shuffleOn||list)deck=shuffle(deck);
+  idx=0;rated={};$("doneView").classList.add("hidden");$("deckView").classList.remove("hidden");render();
+}
+function setFlip(v){flipped=v;$("card").classList.toggle("flip",v);
+  $("flipCtl").classList.toggle("hidden",v);$("rateCtl").classList.toggle("hidden",!v);}
+function render(){
+  const c=deck[idx];setFlip(false);
+  $("count").textContent=`Card ${idx+1} of ${deck.length}`;
+  const k=Object.values(rated).filter(v=>v).length,p=Object.values(rated).filter(v=>!v).length;
+  $("tally").textContent=`✓ ${k}   ↻ ${p}`;
+  $("bar").style.width=(Object.keys(rated).length/deck.length*100)+"%";
+  [["fTag","bTag"]].flat().forEach(id=>{const t=$(id);t.textContent=c.s.name;t.style.background=c.s.soft;t.style.color="var(--ink)";});
+  $("fMarks").textContent=$("bMarks").textContent=`${c.m} mark${c.m>1?"s":""}`;
+  $("fNum").textContent=String(idx+1).padStart(2,"0");$("fNum").style.color=c.s.soft;
+  $("fText").textContent=c.q;$("bText").textContent=c.q;
+  const ul=$("bPts");ul.innerHTML="";c.pts.forEach(p=>{const li=document.createElement("li");li.textContent=p;ul.appendChild(li);});
+  $("prevBtn").disabled=idx===0;
+  $("skipBtn").textContent=idx===deck.length-1?"Finish →":"Skip →";
+}
+function rate(v){rated[idx]=v;go(1);}
+function go(d){const n=idx+d;if(n<0)return;if(n>=deck.length){finish();return;}idx=n;render();}
+function finish(){
+  const tot=deck.length,k=Object.values(rated).filter(v=>v).length;
+  $("deckView").classList.add("hidden");$("doneView").classList.remove("hidden");
+  $("dScore").textContent=`${k}/${tot}`;
+  const miss=deck.filter((_,i)=>rated[i]!==true);
+  $("dMsg").textContent=miss.length?`${miss.length} card${miss.length>1?"s":""} to practise again (including any you skipped).`:"You knew every card — excellent!";
+  $("practiceBtn").classList.toggle("hidden",!miss.length);
+  $("practiceBtn").onclick=()=>build(miss);
+}
+$("card").onclick=()=>setFlip(!flipped);
+$("flipBtn").onclick=()=>setFlip(true);
+$("okBtn").onclick=()=>rate(true);
+$("againBtn").onclick=()=>rate(false);
+$("prevBtn").onclick=()=>go(-1);
+$("skipBtn").onclick=()=>go(1);
+$("restartBtn").onclick=()=>build();
+document.addEventListener("keydown",e=>{
+  if($("deckView").classList.contains("hidden"))return;
+  if(e.key===" "){e.preventDefault();setFlip(!flipped);}
+  else if(e.key==="ArrowRight")go(1);
+  else if(e.key==="ArrowLeft")go(-1);
+  else if(flipped&&(e.key==="k"||e.key==="K"))rate(true);
+  else if(flipped&&(e.key==="p"||e.key==="P"))rate(false);
+});
+chips();build();
+</script>
+</body>
+</html>
