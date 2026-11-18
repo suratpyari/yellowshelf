@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Articles: A, An and The — Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --surface:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-ink:#FFFFFF; --ok:#3E9B6A; --ok-bg:#DFF3E7; --bad:#D9725B; --bad-bg:#FBE5DF;
+  --chip:#F4F0FD;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:Inter,"Trebuchet MS",system-ui,sans-serif;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:800}
+h2{font-size:1.5rem;font-weight:700}
+.sub{color:var(--muted);margin:6px 0 24px}
+.panel{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 5px 0 var(--line)}
+.label{font-weight:700;margin:20px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:.95rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:#E3DAFB}
+.chip small{color:var(--muted)}
+button{font:inherit}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:16px;box-shadow:0 4px 0 #5B3FB0;padding:14px 22px;font-weight:700;font-size:1.05rem;cursor:pointer}
+.btn.ghost{background:#fff;color:var(--ink);border:0;box-shadow:0 4px 0 var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;font-weight:600;color:var(--muted);font-size:.95rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;color:var(--muted)}
+.tag .dot{width:9px;height:9px;border-radius:50%}
+.q{font-size:1.25rem;font-weight:700;margin:10px 0 18px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;font-size:1rem}
+.opt b{flex:0 0 28px;height:28px;border-radius:8px;background:var(--chip);display:grid;place-items:center;font-size:.9rem}
+.opt:hover:not(:disabled){border-color:var(--muted)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok b{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad b{background:var(--bad);color:#fff}
+.fb{margin-top:16px;padding:12px 14px;border-radius:12px;font-size:.98rem;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border-left:5px solid var(--bad)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px}
+.score{font-family:Inter,system-ui,sans-serif;font-size:clamp(3.5rem,14vw,5.5rem);font-weight:800;line-height:1}
+.brk{display:grid;gap:8px;margin:18px 0}
+.brk div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:var(--chip);border-radius:10px;font-size:.95rem}
+.rev{border-top:1px solid var(--line);padding:14px 0}
+.rev p{margin:4px 0}
+.rev .y{color:var(--bad)} .rev .c{color:var(--ok);font-weight:700}
+.hidden{display:none!important}
+.hint{color:var(--muted);font-size:.85rem}
+.grid{display:grid;grid-template-columns:auto repeat(4,1fr);gap:4px;font-size:.8rem;margin-top:8px;overflow-x:auto}
+.grid span{background:var(--chip);padding:6px 8px;border-radius:6px}
+.grid .h{font-weight:700;background:transparent}
+@media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+</style>
+<style id="yellow-theme">
+:root{--bg:#FFFBEB;--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--accent:#F5B400;--accent-ink:#1E293B;--accent-soft:#FFF4CC;--chip:#FFF4CC}
+body{position:relative}
+h1{font-weight:700;letter-spacing:-.02em}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:230px;z-index:-1;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
+  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+.sub{color:#5B4B1E!important}
+.chip[aria-pressed="true"]{background:#FFF4CC!important;border-color:#F5B400!important}
+#startBtn,#nextBtn,#retryWrongBtn,.btn.primary{background:linear-gradient(180deg,#FFD24D,#FFC21A)!important;color:#1E293B!important;box-shadow:0 4px 0 #D99A00!important}
+.bar{background:rgba(255,255,255,.7)!important}
+.bar>i{background:linear-gradient(90deg,#FB923C,#F97316)!important}
+.back li::marker{color:#F59E0B}
+.qnum{color:#FDE68A!important}
+.big{color:#F59E0B!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="home">
+  <h1>Articles: A, An and The</h1>
+  <p class="sub">Every question from the Grade 4 articles worksheet (Parts A–F), as multiple-choice questions.</p>
+  <div class="panel">
+    <div class="label" style="margin-top:0">Sections</div>
+    <div class="chips" id="chapChips"></div>
+    <div class="label">Number of questions</div>
+    <div class="chips" id="countChips"></div>
+    <div class="row" style="margin-top:24px">
+      <button class="btn" id="startBtn">Start quiz</button>
+      <span class="hint" id="poolInfo"></span>
+    </div>
+  </div>
+  <p class="hint" style="margin-top:14px">Tip: press 1–4 to pick an answer, Enter for the next question.</p>
+</section>
+
+<section id="quiz" class="hidden">
+  <div class="top"><span id="qCount"></span><span id="qScore"></span></div>
+  <div class="bar"><i id="qBar"></i></div>
+  <div class="panel">
+    <span class="tag" id="qTag"></span>
+    <div class="q" id="qText"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="fb" id="qFb"></div>
+    <div class="foot">
+      <button class="btn ghost" id="quitBtn">End quiz</button>
+      <button class="btn" id="nextBtn" disabled>Next</button>
+    </div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="panel">
+    <h2>Your score</h2>
+    <div class="row" style="align-items:baseline;margin-top:8px"><span class="score" id="rScore"></span><span id="rPct" style="font-weight:700;color:var(--muted)"></span></div>
+    <p id="rMsg" style="margin:8px 0 0"></p>
+    <div class="brk" id="rBrk"></div>
+    <div class="row">
+      <button class="btn" id="retryWrongBtn">Retry wrong answers</button>
+      <button class="btn ghost" id="homeBtn">New quiz</button>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:16px" id="revPanel">
+    <h2>Review mistakes</h2>
+    <div id="rRev"></div>
+  </div>
+</section>
+
+</div>
+<script>
+/* [question, [correct, wrong1, wrong2, wrong3], explanation] — options shuffled at runtime */
+const CH = [{"name": "Rules to remember", "qs": [["We use “a” before words that begin with a:", ["Consonant sound", "Vowel sound", "Capital letter"], "Use “a” before consonant sounds, e.g. a cat."], ["We use “an” before words that begin with a:", ["Vowel sound", "Consonant sound", "Silent letter only"], "Use “an” before vowel sounds, e.g. an apple, an hour."], ["We use “the” for something:", ["Specific or unique", "Any one thing", "Only plural things"], "“the” is for something specific or unique, e.g. the Sun, the Taj Mahal."], ["How many articles are there in English?", ["Three", "Two", "Four"], "a, an and the."], ["True or False: “an hour” is correct because the “h” is silent.", ["True", "False"], "Hour sounds like “our”, a vowel sound."], ["True or False: “an university” is correct.", ["False", "True"], "University starts with a “yoo” sound, so “a university”."], ["Which one is correct?", ["a uniform", "an uniform"], "Uniform starts with a “yoo” sound — a consonant sound."], ["Which one is correct?", ["an umbrella", "a umbrella"], "Umbrella starts with an “uh” vowel sound."], ["Which one is correct?", ["a European country", "an European country"], "European starts with a “yoo” sound."], ["Which one is correct?", ["an honest boy", "a honest boy"], "The “h” in honest is silent."]]}, {"name": "A. Fill in the blanks", "qs": [["Fill in: I saw _____ elephant at the zoo.", ["an", "a"], "“elephant” begins with a vowel sound (e)."], ["Fill in: She is reading _____ interesting book.", ["an", "a"], "“interesting” begins with a vowel sound (i)."], ["Fill in: _____ Sun rises in the east.", ["The", "A", "An"], "There is only one Sun, so we use “the”."], ["Fill in: Rahul has _____ blue bicycle.", ["a", "an"], "“blue” begins with a consonant sound (b)."], ["Fill in: My father bought _____ umbrella.", ["an", "a"], "“umbrella” begins with a vowel sound (u)."], ["Fill in: We visited _____ Red Fort last Sunday.", ["the", "a", "an"], "The Red Fort is a famous, one-of-a-kind monument."], ["Fill in: There is _____ owl sitting on the tree.", ["an", "a"], "“owl” begins with a vowel sound (o)."], ["Fill in: I ate _____ banana after lunch.", ["a", "an"], "“banana” begins with a consonant sound (b)."], ["Fill in: _____ moon looks beautiful tonight.", ["The", "A", "An"], "There is only one moon, so we use “the”."], ["Fill in: He is _____ honest boy.", ["an", "a"], "The “h” in honest is silent; it starts with the vowel sound “o”."], ["Fill in: She wants to become _____ doctor.", ["a", "an"], "“doctor” begins with a consonant sound (d)."], ["Fill in: I saw _____ eagle flying high.", ["an", "a"], "“eagle” begins with a vowel sound (e)."], ["Fill in: Please close _____ door.", ["the", "a", "an"], "A specific door (the one in this room), so “the”."], ["Fill in: We live in _____ beautiful house.", ["a", "an"], "“beautiful” begins with a consonant sound (b)."], ["Fill in: He is eating _____ apple.", ["an", "a"], "“apple” begins with a vowel sound (a)."]]}, {"name": "B. Choose the correct article", "qs": [["Choose: _____ orange is rich in Vitamin C.", ["An", "A"], "“orange” begins with a vowel sound (o)."], ["Choose: _____ Ganga is a holy river.", ["The", "A"], "Names of rivers take “the”."], ["Choose: _____ Earth moves around the Sun.", ["The", "An"], "There is only one Earth, so “the”."], ["Choose: _____ uniform is compulsory in our school.", ["A", "An"], "“uniform” starts with a “yoo” sound, a consonant sound, so “a”."], ["Choose: _____ Taj Mahal is in Agra.", ["The", "A"], "The Taj Mahal is a famous, one-of-a-kind monument."], ["Choose: _____ aeroplane flies in the sky.", ["An", "A"], "“aeroplane” begins with a vowel sound (ae)."], ["Choose: _____ stars shine at night.", ["The", "A"], "“stars” is plural, so “a” can’t be used; we mean the stars in the sky."], ["Choose: _____ European country.", ["A", "An"], "“European” starts with a “yoo” sound, a consonant sound, so “a”."], ["Choose: _____ hour has sixty minutes.", ["An", "A"], "The “h” in hour is silent; it starts with the vowel sound “ow”."], ["Choose: _____ principal addressed the students.", ["The", "A"], "A specific person — the principal of our school."]]}, {"name": "C. Correct the sentences", "qs": [["Correct this sentence: “I have pet dog.”", ["I have a pet dog.", "I have an pet dog.", "I have pet a dog."], "One pet dog → “a” before the consonant sound “p”."], ["Correct this sentence: “She bought an new dress.”", ["She bought a new dress.", "She bought the an new dress.", "She bought new an dress."], "“new” starts with a consonant sound, so “a”, not “an”."], ["Correct this sentence: “Sun is very hot.”", ["The Sun is very hot.", "A Sun is very hot.", "An Sun is very hot."], "There is only one Sun, so “The Sun”."], ["Correct this sentence: “He is a intelligent student.”", ["He is an intelligent student.", "He is the a intelligent student.", "He is intelligent a student."], "“intelligent” starts with a vowel sound, so “an”."], ["Correct this sentence: “We saw elephant in the forest.”", ["We saw an elephant in the forest.", "We saw a elephant in the forest.", "We saw elephant an in the forest."], "“elephant” starts with a vowel sound, so “an”."], ["Correct this sentence: “My mother is an teacher.”", ["My mother is a teacher.", "My mother is teacher.", "My mother is an a teacher."], "“teacher” starts with a consonant sound, so “a”."], ["Correct this sentence: “I saw a moon last night.”", ["I saw the moon last night.", "I saw an moon last night.", "I saw moon last night."], "There is only one moon, so “the moon”."], ["Correct this sentence: “He wants to eat orange.”", ["He wants to eat an orange.", "He wants to eat a orange.", "He wants an to eat orange."], "“orange” starts with a vowel sound, so “an”."], ["Correct this sentence: “Giraffe has a long neck.”", ["A giraffe has a long neck.", "An giraffe has a long neck.", "Giraffe has an long neck."], "“giraffe” starts with a consonant sound, so “A giraffe” (“The giraffe” is also fine)."], ["Correct this sentence: “This is an useful book.”", ["This is a useful book.", "This is useful an book.", "This is an a useful book."], "“useful” starts with a “yoo” sound, a consonant sound, so “a”."]]}, {"name": "D. Complete the paragraph", "qs": [["Paragraph: Yesterday, I went to _____ park with my family. (We know which park — our nearby one.)", ["the", "an"], "A park we already know about, so “the”."], ["Paragraph: I saw _____ old man sitting under a tree.", ["an", "a"], "“old” begins with a vowel sound."], ["Paragraph: He was sitting under _____ tree.", ["a", "an"], "“tree” begins with a consonant sound."], ["Paragraph: He was reading _____ newspaper.", ["a", "an"], "“newspaper” begins with a consonant sound."], ["Paragraph: Nearby, _____ little girl was playing.", ["a", "an"], "“little” begins with a consonant sound."], ["Paragraph: She was playing with _____ ball.", ["a", "an"], "“ball” begins with a consonant sound."], ["Paragraph: Suddenly, we saw _____ butterfly.", ["a", "an"], "“butterfly” begins with a consonant sound."], ["Paragraph: It was sitting on _____ flower.", ["a", "an"], "“flower” begins with a consonant sound."], ["Paragraph: It was _____ beautiful sight.", ["a", "an"], "“beautiful” begins with a consonant sound."], ["Paragraph: We spent _____ hour in the park.", ["an", "a"], "Silent “h” — “hour” begins with a vowel sound."]]}, {"name": "E. Underline the articles", "qs": [["Which words are the articles? “The cat is sleeping on a mat.”", ["The, a", "The, cat", "a, mat", "is, on"], "The articles are The, a."], ["Which words are the articles? “An ant is carrying a grain.”", ["An, a", "An, ant", "ant, grain", "is, a"], "The articles are An, a."], ["Which words are the articles? “I saw a rainbow in the sky.”", ["a, the", "I, a", "saw, the", "rainbow, sky"], "The articles are a, the."], ["Which words are the articles? “The children are playing with a ball.”", ["The, a", "The, with", "children, ball", "are, a"], "The articles are The, a."], ["Which words are the articles? “An aeroplane flew over the house.”", ["An, the", "An, over", "aeroplane, house", "flew, the"], "The articles are An, the."]]}, {"name": "F. Challenge yourself", "qs": [["Challenge: He is _____ honest man.", ["an", "a", "the"], "Silent “h”: honest starts with a vowel sound."], ["Challenge: She studies in _____ university.", ["a", "an", "the"], "“university” starts with a “yoo” sound — a consonant sound."], ["Challenge: I waited for _____ hour.", ["an", "a", "the"], "Silent “h”: hour starts with a vowel sound."], ["Challenge: This is _____ best painting in the competition.", ["the", "a", "an"], "“best” means only one is the best, so “the”."], ["Challenge: My brother wants to become _____ engineer.", ["an", "a", "the"], "“engineer” starts with a vowel sound."]]}];
+const PAL=["#4FB3A9","#F59E0B","#F2A541","#6C8EE0","#14B8A6","#6A994E","#E07A5F","#3D9BD1"];
+CH.forEach((c,i)=>{if(!c.color)c.color=PAL[i%PAL.length];if(!c.id)c.id="s"+i;});
+const COUNTS=[10,25,50,"All"];
+let selChaps=new Set(CH.map(c=>c.id)), selCount=25;
+let deck=[],idx=0,score=0,answered=false,wrong=[],results={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderHome(){
+  const cc=$("chapChips");cc.innerHTML="";
+  const total=CH.reduce((n,c)=>n+c.qs.length,0);
+  const all=document.createElement("button");all.className="chip";
+  all.setAttribute("aria-pressed",selChaps.size===CH.length);
+  all.innerHTML=`All sections <small>${total}</small>`;
+  all.onclick=()=>{selChaps=selChaps.size===CH.length?new Set():new Set(CH.map(c=>c.id));renderHome();};
+  cc.appendChild(all);
+  CH.forEach(c=>{const b=document.createElement("button");b.className="chip";
+    b.setAttribute("aria-pressed",selChaps.has(c.id));
+    b.innerHTML=`<span class="dot" style="background:${c.color}"></span>${esc(c.name)} <small>${c.qs.length}</small>`;
+    b.onclick=()=>{selChaps.has(c.id)?selChaps.delete(c.id):selChaps.add(c.id);renderHome();};
+    cc.appendChild(b);});
+  const kc=$("countChips");kc.innerHTML="";
+  COUNTS.forEach(n=>{const b=document.createElement("button");b.className="chip";
+    b.setAttribute("aria-pressed",selCount===n);b.textContent=n;
+    b.onclick=()=>{selCount=n;renderHome();};kc.appendChild(b);});
+  const pool=CH.filter(c=>selChaps.has(c.id)).reduce((n,c)=>n+c.qs.length,0);
+  $("poolInfo").textContent=pool?`${pool} questions available`:"Pick at least one section";
+  $("startBtn").disabled=!pool;
+}
+const build=list=>list.map(({c,q})=>({c,text:q[0],exp:q[2],opts:shuffle(q[1].map((t,i)=>({t,ok:i===0})))}));
+function start(list){deck=list;idx=0;score=0;wrong=[];results={};show("quiz");renderQ();}
+function startFromHome(){
+  let pool=[];CH.filter(c=>selChaps.has(c.id)).forEach(c=>c.qs.forEach(q=>pool.push({c,q})));
+  pool=shuffle(pool);if(selCount!=="All")pool=pool.slice(0,selCount);
+  start(build(pool));
+}
+function show(id){["home","quiz","result"].forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0);}
+function renderQ(){
+  answered=false;const d=deck[idx];
+  $("qCount").textContent=`Question ${idx+1} of ${deck.length}`;
+  $("qScore").textContent=`Score ${score}`;
+  $("qBar").style.width=(idx/deck.length*100)+"%";
+  $("qTag").innerHTML=`<span class="dot" style="background:${d.c.color}"></span>${esc(d.c.name)}`;
+  $("qText").textContent=d.text;
+  const o=$("qOpts");o.innerHTML="";
+  d.opts.forEach((op,i)=>{const b=document.createElement("button");b.className="opt";
+    b.innerHTML=`<b>${"ABCD"[i]}</b><span>${esc(op.t)}</span>`;b.onclick=()=>pick(i);o.appendChild(b);});
+  $("qFb").className="fb";$("qFb").textContent="";
+  $("nextBtn").disabled=true;$("nextBtn").textContent=idx===deck.length-1?"See score":"Next";
+  o.firstChild.focus({preventScroll:true});
+}
+function pick(i){
+  if(answered)return;answered=true;
+  const d=deck[idx],btns=[...$("qOpts").children],ok=d.opts[i].ok;
+  btns.forEach((b,j)=>{b.disabled=true;if(d.opts[j].ok)b.classList.add("ok");});
+  const r=results[d.c.id]||(results[d.c.id]={c:d.c,right:0,total:0});r.total++;
+  const fb=$("qFb"),ans=d.opts.find(x=>x.ok).t;
+  if(ok){score++;r.right++;fb.className="fb show ok";fb.innerHTML=`<strong>Correct.</strong> ${esc(d.exp)}`;}
+  else{btns[i].classList.add("bad");wrong.push({d,picked:d.opts[i].t});
+    fb.className="fb show bad";fb.innerHTML=`<strong>Not quite.</strong> Answer: ${esc(ans)}. ${esc(d.exp)}`;}
+  $("qScore").textContent=`Score ${score}`;
+  $("nextBtn").disabled=false;$("nextBtn").focus({preventScroll:true});
+}
+function next(){if(!answered)return;idx++;idx<deck.length?renderQ():finish();}
+function finish(){
+  const n=Object.values(results).reduce((s,r)=>s+r.total,0);
+  show("result");
+  $("rScore").textContent=`${score}/${n}`;
+  const pct=n?Math.round(score/n*100):0;$("rPct").textContent=`${pct}%`;
+  $("rMsg").textContent=!n?"No questions answered.":pct>=90?"Excellent — you know this very well.":pct>=70?"Good work. Review the mistakes below to close the gaps.":pct>=50?"Fair. Go through the mistakes, then retry them.":"Re-read the lesson, then retry the wrong answers.";
+  $("rBrk").innerHTML=Object.values(results).map(r=>`<div><span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${r.c.color};margin-right:8px"></span>${esc(r.c.name)}</span><strong>${r.right}/${r.total}</strong></div>`).join("");
+  $("retryWrongBtn").classList.toggle("hidden",!wrong.length);
+  $("revPanel").classList.toggle("hidden",!wrong.length);
+  $("rRev").innerHTML=wrong.map(w=>`<div class="rev"><p><strong>${esc(w.d.text)}</strong></p><p class="y">Your answer: ${esc(w.picked)}</p><p class="c">Correct: ${esc(w.d.opts.find(x=>x.ok).t)}</p><p class="hint">${esc(w.d.exp)}</p></div>`).join("");
+}
+$("startBtn").onclick=startFromHome;
+$("nextBtn").onclick=next;
+$("quitBtn").onclick=finish;
+$("homeBtn").onclick=()=>{show("home");renderHome();};
+$("retryWrongBtn").onclick=()=>start(shuffle(wrong.map(w=>({...w.d,opts:shuffle(w.d.opts)}))));
+document.addEventListener("keydown",e=>{
+  if($("quiz").classList.contains("hidden"))return;
+  const k=parseInt(e.key,10);
+  if(k>=1&&k<=4&&!answered&&deck[idx].opts[k-1])pick(k-1);
+  else if(e.key==="Enter"&&answered){e.preventDefault();next();}
+});
+renderHome();
+</script>
+</body>
+</html>
