@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Geometric Twins — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --card:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-soft:#E3DAFB;
+  --short:#4FB3A9; --short-soft:#DDF3F0;
+  --long:#F2A541; --long-soft:#FDEFD9;
+  --ct:#6C8EE0; --ct-soft:#E1E9FB;
+  --ok:#3E9B6A; --ok-soft:#DFF3E7; --again:#D9725B; --again-soft:#FBE5DF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:Inter,"Trebuchet MS",system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:clamp(2rem,6.5vw,2.8rem);font-weight:800}
+.sub{color:var(--muted);margin:4px 0 18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:#fff;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:.92rem;font-weight:600;cursor:pointer;display:flex;gap:7px;align-items:center}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.chip small{color:var(--muted);font-weight:600}
+.bar-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 8px;font-weight:700;color:var(--muted);font-size:.92rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:16px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.scene{perspective:1400px}
+.card{position:relative;min-height:340px;cursor:pointer;transition:transform .5s;transform-style:preserve-3d;border:0;padding:0;width:100%;background:none;font:inherit;color:inherit;text-align:left;display:grid}
+.card.flip{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:24px;padding:22px 22px 20px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;border:2px solid var(--line)}
+.back{transform:rotateY(180deg)}
+.tagline{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.tag{font-size:.8rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.marks{font-weight:800;color:var(--muted);font-size:.9rem}
+.qnum{font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:3rem;line-height:1;color:var(--accent-soft);margin-bottom:4px}
+.qtext{font-size:1.3rem;font-weight:700;flex:1}
+.hint{color:var(--muted);font-size:.88rem;margin-top:16px;text-align:center}
+.back h2{font-size:1.1rem;color:var(--muted);margin-bottom:8px}
+.back .qsmall{font-weight:700;font-size:.98rem;margin-bottom:12px}
+.back ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.back li::marker{color:var(--accent)}
+.controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{flex:1;min-width:120px;border:0;border-radius:16px;padding:14px 16px;font:inherit;font-weight:800;font-size:1rem;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--line)}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 4px 0 #5B3FB0}
+.btn.ok{background:var(--ok-soft);color:var(--ok);box-shadow:0 4px 0 #BFE3CD}
+.btn.again{background:var(--again-soft);color:var(--again);box-shadow:0 4px 0 #F2C9BE}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:12px}
+.nav .btn{flex:0 1 auto;font-size:.92rem;padding:10px 14px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.done{background:var(--card);border-radius:24px;padding:26px;border:2px solid var(--line);text-align:center}
+.big{font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:clamp(3rem,13vw,4.6rem);line-height:1;color:var(--accent)}
+.hidden{display:none!important}
+.tiny{color:var(--muted);font-size:.82rem;margin-top:14px}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.bar>i{transition:none}}
+</style>
+<style id="yellow-theme">
+:root{--bg:#FFFBEB;--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--accent:#F5B400;--accent-ink:#1E293B;--accent-soft:#FFF4CC;--chip:#FFF4CC}
+body{position:relative}
+h1{font-weight:700;letter-spacing:-.02em}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:230px;z-index:-1;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
+  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+.sub{color:#5B4B1E!important}
+.chip[aria-pressed="true"]{background:#FFF4CC!important;border-color:#F5B400!important}
+#startBtn,#nextBtn,#retryWrongBtn,.btn.primary{background:linear-gradient(180deg,#FFD24D,#FFC21A)!important;color:#1E293B!important;box-shadow:0 4px 0 #D99A00!important}
+.bar{background:rgba(255,255,255,.7)!important}
+.bar>i{background:linear-gradient(90deg,#FB923C,#F97316)!important}
+.back li::marker{color:#F59E0B}
+.qnum{color:#FDE68A!important}
+.big{color:#F59E0B!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Geometric Twins</h1>
+  <p class="sub">Class 7 Mathematics · Short, long and critical-thinking questions from the supplied pages</p>
+
+  <div class="chips" id="chips"></div>
+  <div class="chips" style="margin-top:8px" id="opts"></div>
+
+  <div id="deckView">
+    <div class="bar-row"><span id="count"></span><span id="tally"></span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="scene">
+      <button class="card" id="card" aria-live="polite">
+        <div class="face front">
+          <div class="tagline"><span class="tag" id="fTag"></span><span class="marks" id="fMarks"></span></div>
+          <div class="qnum" id="fNum"></div>
+          <div class="qtext" id="fText"></div>
+          <div class="hint">Tap the card or press Space to see the answer</div>
+        </div>
+        <div class="face back">
+          <div class="tagline"><span class="tag" id="bTag"></span><span class="marks" id="bMarks"></span></div>
+          <h2>Key points</h2>
+          <div class="qsmall" id="bText"></div>
+          <ul id="bPts"></ul>
+        </div>
+      </button>
+    </div>
+    <div class="controls" id="flipCtl"><button class="btn primary" id="flipBtn">Show answer</button></div>
+    <div class="controls hidden" id="rateCtl">
+      <button class="btn again" id="againBtn">Need practice</button>
+      <button class="btn ok" id="okBtn">I knew it</button>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prevBtn">← Previous</button>
+      <button class="btn" id="skipBtn">Skip →</button>
+    </div>
+    <p class="tiny">Keys: Space = flip · ← → = move · K = knew it · P = need practice</p>
+  </div>
+
+  <div class="done hidden" id="doneView">
+    <h2 style="font-size:1.6rem">Round complete</h2>
+    <div class="big" id="dScore"></div>
+    <p id="dMsg"></p>
+    <div class="controls">
+      <button class="btn again" id="practiceBtn">Practise the tricky ones</button>
+      <button class="btn primary" id="restartBtn">Start again</button>
+    </div>
+  </div>
+</div>
+<script>
+const RAW={"short": [["State what it means for two triangles to be congruent.", 2, ["They have the same size and shape."]], ["What does SSA stand for? Does the SSA condition always guarantee congruence?", 2, ["SSA means Side Side Angle.", "The SSA condition does not always guarantee congruence."]], ["Expand RHS and name the three parts compared in this condition.", 3, ["RHS means Right Hypotenuse Side.", "The triangles have equal right angles.", "Their hypotenuses and one other corresponding side are equal."]], ["List the five conditions sufficient to guarantee congruence given in the chapter.", 3, ["SSS condition.", "SAS condition and ASA condition.", "AAS condition and RHS condition."]], ["What is the difference between ASA and AAS?", 2, ["Both use two equal angles and one equal side.", "In ASA, the side is included between the two angles.", "In AAS, the side is not included between the two angles."]], ["In the midpoint diagram, why are AO = OD and BO = OC?", 2, ["O is the midpoint of AD, so AO = OD.", "O is the midpoint of BC, so BO = OC."]], ["Why are ∠AOB and ∠DOC equal?", 2, ["They are vertically opposite angles.", "Vertically opposite angles are equal."]], ["What is meant by the hypotenuse of a right-angled triangle?", 2, ["It is the side opposite the right angle."]], ["Define an isosceles triangle and state the angle property discussed.", 2, ["An isosceles triangle has two equal sides.", "Angles opposite equal sides are equal."]], ["Define an equilateral triangle.", 2, ["An equilateral triangle has all three sides equal."]], ["What is the sum of the three angles of a triangle?", 1, ["180°."]], ["What is each angle of an equilateral triangle? Show the calculation.", 2, ["All three angles are equal.", "3 × angle = 180°, so each angle is 60°."]], ["In the page 15 example, calculate ∠B when ∠A = 35° and ∠C = 75°.", 2, ["∠B + 35° + 75° = 180°.", "∠B = 180° − 110° = 70°."]], ["In the circle question, why are AB and AC equal?", 2, ["A is the centre of the circle.", "AB and AC are radii of the same circle, so they are equal."]], ["What do equal line marks on segments indicate in the page 21 diagram?", 2, ["Segments with one mark are equal to one another.", "Segments with two marks are equal to one another; the same convention continues for further marks."]], ["In the page 14 exercise, triangles ABC and DBC have equal angles at B and C, and BC is common. Which congruence condition applies?", 2, ["BC is the common side.", "The equal angles are at the two ends of BC, so BC is the included side.", "The triangles are congruent by ASA."]], ["In the page 20 first exercise, identify the corresponding vertices and state the congruence condition.", 3, ["B corresponds to Z because both angles are 47°.", "A corresponds to X and C corresponds to Y.", "AB = XZ, BC = ZY and the included angles are equal, so SAS applies."]], ["In the page 20 crossing-lines exercise, state the equal sides and angle used to prove the triangles congruent.", 3, ["AO = OD because O is the midpoint of AD.", "BO = OC because O is the midpoint of BC.", "∠AOB = ∠DOC because they are vertically opposite angles."]]], "long": [["Explain how the midpoint diagram proves △AOB ≅ △DOC.", 5, ["AO = OD because O is the midpoint of AD.", "BO = OC because O is the midpoint of BC.", "∠AOB = ∠DOC because they are vertically opposite angles.", "The SAS condition is satisfied.", "Therefore △AOB ≅ △DOC."]], ["Explain the RHS condition for congruence.", 5, ["The triangles must be right-angled.", "Their right angles are equal.", "Their hypotenuses are equal.", "One other corresponding side is equal.", "Then the triangles are congruent by RHS."]], ["Show how the base angles of an isosceles triangle are found when AB = AC and ∠A = 80°.", 5, ["AB = AC, so the angles opposite them are equal: ∠B = ∠C.", "The angles of a triangle add to 180°.", "∠B + ∠C = 180° − 80° = 100°.", "The two equal angles share 100°.", "∠B = ∠C = 50°."]], ["Explain why each angle of an equilateral triangle is 60°.", 5, ["All three sides are equal.", "Angles opposite equal sides are equal, so all three angles are equal.", "The angles of a triangle add to 180°.", "Three equal angles add to 180°.", "Each angle is 180° ÷ 3 = 60°."]], ["Describe the construction of the right-angled triangle PQR shown on page 16.", 5, ["Draw QR of length 4 cm.", "Draw a line perpendicular to QR from Q.", "With centre R, draw an arc of radius 5 cm.", "Let P be the point where the arc meets the perpendicular line.", "△PQR is the required triangle."]]], "ct": [["A student says that two triangles must be congruent whenever two sides and any one angle are equal. Is this always correct? Explain.", 3, ["No. This is the SSA condition when the angle is not included between the two sides.", "The chapter shows that SSA does not always guarantee congruence.", "A special right-triangle case, RHS, does guarantee congruence when its conditions are met."]], ["A triangle has two equal sides. What can you conclude about its angles, and what extra information would let you calculate their exact measures?", 3, ["The angles opposite the equal sides are equal.", "The three angles add to 180°.", "A given angle, such as the vertex angle, allows the other two equal angles to be calculated."]], ["A classmate claims that an equilateral triangle has three 90° angles because all its angles are equal. How would you correct the claim using the chapter's reasoning?", 3, ["The angles of a triangle add to 180°, not 270°.", "The three equal angles must share 180° equally.", "Each angle is 60°."]], ["The centre A of a circle is joined to two points B and C on its circumference. If ∠BAC = 120°, explain how to find ∠B and ∠C.", 3, ["AB and AC are radii of the same circle, so AB = AC.", "Therefore the angles opposite them, ∠B and ∠C, are equal.", "They add to 60°, so each is 30°."]], ["A square is divided by a diagonal. Explain why its two triangular halves are congruent and why the same halves can be named in a different order.", 3, ["The square has equal sides and the diagonal is common to both triangles.", "The triangles are congruent by SSS.", "Changing the order in the congruence statement changes the correspondence of vertices, not the triangles themselves."]], ["In the page 20 crossing-lines figure, explain how the midpoint information can help show that AB is parallel to CD.", 3, ["Use AO = OD and BO = OC from the midpoint information.", "Use the vertically opposite angles at O to prove the two triangles congruent by SAS.", "Corresponding angles are then equal; these can be used as alternate angles to conclude AB is parallel to CD."]]]};
+const SECS=[
+ {id:"short",name:"Short answer",color:"var(--short)",soft:"var(--short-soft)",list:RAW.short||[]},
+ {id:"long",name:"Long answer",color:"var(--long)",soft:"var(--long-soft)",list:RAW.long||[]},
+ {id:"ct",name:"Critical thinking",color:"var(--ct)",soft:"var(--ct-soft)",list:RAW.ct||[]}].filter(s=>s.list.length);
+const ALL=[];SECS.forEach(s=>s.list.forEach((q,i)=>ALL.push({s,n:i+1,q:q[0],m:q[1],pts:q[2]})));
+let sel=new Set(SECS.map(s=>s.id)), shuffleOn=false;
+let deck=[],idx=0,flipped=false,rated={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+function chips(){
+  const c=$("chips");c.innerHTML="";
+  const all=document.createElement("button");all.className="chip";all.setAttribute("aria-pressed",sel.size===SECS.length);
+  all.innerHTML=`All <small>${ALL.length}</small>`;all.onclick=()=>{sel=new Set(SECS.map(s=>s.id));chips();build();};c.appendChild(all);
+  SECS.forEach(s=>{const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",sel.size<SECS.length&&sel.has(s.id));
+    b.innerHTML=`<span class="dot" style="background:${s.color}"></span>${s.name} <small>${s.list.length}</small>`;
+    b.onclick=()=>{sel=new Set([s.id]);chips();build();};c.appendChild(b);});
+  const o=$("opts");o.innerHTML="";
+  const sh=document.createElement("button");sh.className="chip";sh.setAttribute("aria-pressed",shuffleOn);sh.textContent="🔀 Shuffle";
+  sh.onclick=()=>{shuffleOn=!shuffleOn;chips();build();};o.appendChild(sh);
+}
+function build(list){
+  deck=list||ALL.filter(c=>sel.has(c.s.id));if(shuffleOn||list)deck=shuffle(deck);
+  idx=0;rated={};$("doneView").classList.add("hidden");$("deckView").classList.remove("hidden");render();
+}
+function setFlip(v){flipped=v;$("card").classList.toggle("flip",v);
+  $("flipCtl").classList.toggle("hidden",v);$("rateCtl").classList.toggle("hidden",!v);}
+function render(){
+  const c=deck[idx];setFlip(false);
+  $("count").textContent=`Card ${idx+1} of ${deck.length}`;
+  const k=Object.values(rated).filter(v=>v).length,p=Object.values(rated).filter(v=>!v).length;
+  $("tally").textContent=`✓ ${k}   ↻ ${p}`;
+  $("bar").style.width=(Object.keys(rated).length/deck.length*100)+"%";
+  [["fTag","bTag"]].flat().forEach(id=>{const t=$(id);t.textContent=c.s.name;t.style.background=c.s.soft;t.style.color="var(--ink)";});
+  $("fMarks").textContent=$("bMarks").textContent=`${c.m} mark${c.m>1?"s":""}`;
+  $("fNum").textContent=String(idx+1).padStart(2,"0");$("fNum").style.color=c.s.soft;
+  $("fText").textContent=c.q;$("bText").textContent=c.q;
+  const ul=$("bPts");ul.innerHTML="";c.pts.forEach(p=>{const li=document.createElement("li");li.textContent=p;ul.appendChild(li);});
+  $("prevBtn").disabled=idx===0;
+  $("skipBtn").textContent=idx===deck.length-1?"Finish →":"Skip →";
+}
+function rate(v){rated[idx]=v;go(1);}
+function go(d){const n=idx+d;if(n<0)return;if(n>=deck.length){finish();return;}idx=n;render();}
+function finish(){
+  const tot=deck.length,k=Object.values(rated).filter(v=>v).length;
+  $("deckView").classList.add("hidden");$("doneView").classList.remove("hidden");
+  $("dScore").textContent=`${k}/${tot}`;
+  const miss=deck.filter((_,i)=>rated[i]!==true);
+  $("dMsg").textContent=miss.length?`${miss.length} card${miss.length>1?"s":""} to practise again (including any you skipped).`:"You knew every card — excellent!";
+  $("practiceBtn").classList.toggle("hidden",!miss.length);
+  $("practiceBtn").onclick=()=>build(miss);
+}
+$("card").onclick=()=>setFlip(!flipped);
+$("flipBtn").onclick=()=>setFlip(true);
+$("okBtn").onclick=()=>rate(true);
+$("againBtn").onclick=()=>rate(false);
+$("prevBtn").onclick=()=>go(-1);
+$("skipBtn").onclick=()=>go(1);
+$("restartBtn").onclick=()=>build();
+document.addEventListener("keydown",e=>{
+  if($("deckView").classList.contains("hidden"))return;
+  if(e.key===" "){e.preventDefault();setFlip(!flipped);}
+  else if(e.key==="ArrowRight")go(1);
+  else if(e.key==="ArrowLeft")go(-1);
+  else if(flipped&&(e.key==="k"||e.key==="K"))rate(true);
+  else if(flipped&&(e.key==="p"||e.key==="P"))rate(false);
+});
+chips();build();
+</script>
+</body>
+</html>

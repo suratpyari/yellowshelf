@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Geometric Twins — Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#EDE7FB; --surface:#FFFFFF; --ink:#2E2350; --muted:#6B6290; --line:#D9CFF3;
+  --accent:#7C5CD6; --accent-ink:#FFFFFF; --ok:#3E9B6A; --ok-bg:#DFF3E7; --bad:#D9725B; --bad-bg:#FBE5DF;
+  --chip:#F4F0FD;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1,h2{font-family:Inter,"Trebuchet MS",system-ui,sans-serif;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:800}
+h2{font-size:1.5rem;font-weight:700}
+.sub{color:var(--muted);margin:6px 0 24px}
+.panel{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 5px 0 var(--line)}
+.label{font-weight:700;margin:20px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid transparent;background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:.95rem;cursor:pointer;display:flex;align-items:center;gap:8px}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:#E3DAFB}
+.chip small{color:var(--muted)}
+button{font:inherit}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:16px;box-shadow:0 4px 0 #5B3FB0;padding:14px 22px;font-weight:700;font-size:1.05rem;cursor:pointer}
+.btn.ghost{background:#fff;color:var(--ink);border:0;box-shadow:0 4px 0 var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;font-weight:600;color:var(--muted);font-size:.95rem}
+.bar{height:8px;background:#fff;border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;color:var(--muted)}
+.tag .dot{width:9px;height:9px;border-radius:50%}
+.q{font-size:1.25rem;font-weight:700;margin:10px 0 18px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;font-size:1rem}
+.opt b{flex:0 0 28px;height:28px;border-radius:8px;background:var(--chip);display:grid;place-items:center;font-size:.9rem}
+.opt:hover:not(:disabled){border-color:var(--muted)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok b{background:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad b{background:var(--bad);color:#fff}
+.fb{margin-top:16px;padding:12px 14px;border-radius:12px;font-size:.98rem;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.bad{background:var(--bad-bg);border-left:5px solid var(--bad)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px}
+.score{font-family:Inter,system-ui,sans-serif;font-size:clamp(3.5rem,14vw,5.5rem);font-weight:800;line-height:1}
+.brk{display:grid;gap:8px;margin:18px 0}
+.brk div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:var(--chip);border-radius:10px;font-size:.95rem}
+.rev{border-top:1px solid var(--line);padding:14px 0}
+.rev p{margin:4px 0}
+.rev .y{color:var(--bad)} .rev .c{color:var(--ok);font-weight:700}
+.hidden{display:none!important}
+.hint{color:var(--muted);font-size:.85rem}
+.grid{display:grid;grid-template-columns:auto repeat(4,1fr);gap:4px;font-size:.8rem;margin-top:8px;overflow-x:auto}
+.grid span{background:var(--chip);padding:6px 8px;border-radius:6px}
+.grid .h{font-weight:700;background:transparent}
+@media (prefers-reduced-motion:reduce){.bar>i{transition:none}}
+</style>
+<style id="yellow-theme">
+:root{--bg:#FFFBEB;--ink:#1E293B;--muted:#78716C;--line:#FDE68A;--accent:#F5B400;--accent-ink:#1E293B;--accent-soft:#FFF4CC;--chip:#FFF4CC}
+body{position:relative}
+h1{font-weight:700;letter-spacing:-.02em}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:230px;z-index:-1;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20viewBox%3D%220%200%201440%20110%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%2060C160%2020%20260%2020%20380%2050s200%2050%20340%2020%20240-70%20400-40%20230%2060%20320%2040V110H0Z%22%20fill%3D%22%23FFFBEB%22/%3E%3C/svg%3E") bottom/100% 60px no-repeat,
+  radial-gradient(circle at 10% 25%,rgba(255,255,255,.35) 0 28px,transparent 29px),
+  radial-gradient(circle at 88% 30%,rgba(255,255,255,.3) 0 40px,transparent 41px),
+  linear-gradient(120deg,#FFC93C 0%,#FFD866 50%,#FFB938 100%)}
+.sub{color:#5B4B1E!important}
+.chip[aria-pressed="true"]{background:#FFF4CC!important;border-color:#F5B400!important}
+#startBtn,#nextBtn,#retryWrongBtn,.btn.primary{background:linear-gradient(180deg,#FFD24D,#FFC21A)!important;color:#1E293B!important;box-shadow:0 4px 0 #D99A00!important}
+.bar{background:rgba(255,255,255,.7)!important}
+.bar>i{background:linear-gradient(90deg,#FB923C,#F97316)!important}
+.back li::marker{color:#F59E0B}
+.qnum{color:#FDE68A!important}
+.big{color:#F59E0B!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="home">
+  <h1>Geometric Twins</h1>
+  <p class="sub">Class 7 Mathematics · Congruence, isosceles and equilateral triangles</p>
+  <div class="panel">
+    <div class="label" style="margin-top:0">Sections</div>
+    <div class="chips" id="chapChips"></div>
+    <div class="label">Number of questions</div>
+    <div class="chips" id="countChips"></div>
+    <div class="row" style="margin-top:24px">
+      <button class="btn" id="startBtn">Start quiz</button>
+      <span class="hint" id="poolInfo"></span>
+    </div>
+  </div>
+  <p class="hint" style="margin-top:14px">Tip: press 1–4 to pick an answer, Enter for the next question.</p>
+</section>
+
+<section id="quiz" class="hidden">
+  <div class="top"><span id="qCount"></span><span id="qScore"></span></div>
+  <div class="bar"><i id="qBar"></i></div>
+  <div class="panel">
+    <span class="tag" id="qTag"></span>
+    <div class="q" id="qText"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="fb" id="qFb"></div>
+    <div class="foot">
+      <button class="btn ghost" id="quitBtn">End quiz</button>
+      <button class="btn" id="nextBtn" disabled>Next</button>
+    </div>
+  </div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="panel">
+    <h2>Your score</h2>
+    <div class="row" style="align-items:baseline;margin-top:8px"><span class="score" id="rScore"></span><span id="rPct" style="font-weight:700;color:var(--muted)"></span></div>
+    <p id="rMsg" style="margin:8px 0 0"></p>
+    <div class="brk" id="rBrk"></div>
+    <div class="row">
+      <button class="btn" id="retryWrongBtn">Retry wrong answers</button>
+      <button class="btn ghost" id="homeBtn">New quiz</button>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:16px" id="revPanel">
+    <h2>Review mistakes</h2>
+    <div id="rRev"></div>
+  </div>
+</section>
+
+</div>
+<script>
+/* [question, [correct, wrong1, wrong2, wrong3], explanation] — options shuffled at runtime */
+const CH = [{"name": "Congruence and the SSA Condition", "qs": [["Which statement describes congruent triangles?", ["They have the same size and shape", "They have only equal areas", "They have only equal perimeters", "They have one equal angle"], "Congruent triangles have the same size and shape."], ["Which condition is discussed as not guaranteeing congruence in general?", ["SSA (Side Side Angle)", "SSS (Side Side Side)", "SAS (Side Angle Side)", "ASA (Angle Side Angle)"], "The SSA condition does not guarantee congruence in general."], ["In the SSA condition, the given angle is between which sides?", ["It is not necessarily the included angle", "It is always between the two given sides", "It is opposite the shorter side", "It is a right angle"], "SSA gives two sides and an angle that is not necessarily included between them."], ["Which special case of two sides and an angle does guarantee congruence for right-angled triangles?", ["RHS", "SSA", "AAA", "ASS"], "RHS is the special right-triangle condition discussed."], ["What does RHS stand for?", ["Right Hypotenuse Side", "Right Height Side", "Radius Hypotenuse Side", "Right Horizontal Side"], "RHS stands for Right Hypotenuse Side."], ["In a right-angled triangle, what is the hypotenuse?", ["The side opposite the right angle", "The shortest side", "A side next to the right angle", "The side that is always vertical"], "The side opposite the right angle is called the hypotenuse."], ["Which list contains the congruence conditions stated in the chapter?", ["SSS, SAS, ASA, AAS and RHS", "SSA, AAA, AAS and perimeter", "SSS, AAA and SSA only", "SAS, SSA and equal area"], "The chapter lists SSS, SAS, ASA, AAS and RHS as sufficient conditions."], ["If two triangles have two equal sides and the included angle equal, which condition applies?", ["SAS", "SSA", "AAS", "RHS"], "SAS means two sides and the included angle are equal."], ["If two angles and the included side are equal in two triangles, which condition applies?", ["ASA", "AAS", "SSS", "SSA"], "ASA means Angle Side Angle, with the side included between the two angles."], ["If two angles and a non-included side are equal, which condition applies?", ["AAS", "ASA", "SAS", "RHS"], "AAS means Angle Angle Side, where the side is not included between the two angles."], ["What is the key warning about SSA?", ["It does not always guarantee congruence", "It always guarantees congruence", "It applies only to equilateral triangles", "It requires a right angle"], "The chapter shows that SSA can produce non-congruent triangles."], ["In the construction on page 16, what length is drawn for base QR?", ["4 cm", "3 cm", "5 cm", "6 cm"], "Step 1 says to draw QR of length 4 cm."], ["In the construction on page 16, what radius is used for the arc from R?", ["5 cm", "4 cm", "3 cm", "6 cm"], "Step 3 says to draw an arc of radius 5 cm from R."], ["What is the right angle in triangle PQR in the construction?", ["∠Q = 90°", "∠P = 90°", "∠R = 90°", "All three angles are 90°"], "The diagram marks the right angle at Q."]]}, {"name": "SAS, ASA and Corresponding Parts", "qs": [["In the midpoint diagram, which equality is given because O is the midpoint of AD?", ["AO = OD", "AO = AB", "OD = OC", "AO = OC"], "O is the midpoint of AD, so AO = OD."], ["In the same diagram, which equality is given because O is the midpoint of BC?", ["BO = OC", "BO = AO", "OC = OD", "BC = AD"], "O is the midpoint of BC, so BO = OC."], ["Which pair of angles are vertically opposite in the midpoint diagram?", ["∠AOB and ∠DOC", "∠AOB and ∠ABO", "∠AOB and ∠OCD", "∠ABO and ∠ODC"], "∠AOB and ∠DOC are vertically opposite angles."], ["Which congruence condition proves the two triangles in the midpoint diagram congruent?", ["SAS", "SSS", "ASA", "RHS"], "Two corresponding sides and the included vertically opposite angle are equal, so SAS applies."], ["Which congruence statement is given for the midpoint diagram?", ["△AOB ≅ △DOC", "△AOB ≅ △COD", "△AOB ≅ △ODC", "△AOB ≅ △CDO"], "The corresponding vertices are A with D, O with O, and B with C."], ["In △AOB ≅ △DOC, which side corresponds to AB?", ["DC", "DO", "OC", "OD"], "AB and DC are corresponding sides when the triangles are superimposed."], ["When two triangles are congruent, what does CPCT mean in this context?", ["Corresponding parts of congruent triangles are equal", "All points in circles are equal", "Corresponding perimeters are twice equal", "Congruent triangles have equal diagonals"], "The chapter uses corresponding parts that overlap when triangles are superimposed."], ["In the page 13 pair of triangles, the given equal sides are which?", ["AB = CD", "AB = BC", "CD = AD", "AC = BD"], "The exercise states AB = CD and AB is parallel to CD."], ["When parallel lines are cut by a transversal, which angles are stated to be equal?", ["Alternate angles", "Vertically opposite angles only", "Reflex angles", "Adjacent angles"], "The hint says alternate angles are equal when the lines are parallel."], ["In the page 14 figure, what is common to triangles ABC and DBC?", ["BC", "AB", "CD", "AC"], "BC is the shared side of the two triangles."], ["If two pairs of corresponding angles and a corresponding side are equal, what must be checked to name ASA?", ["Whether the side is included between the two angles", "Whether the triangles are right-angled", "Whether all three sides are equal", "Whether the side is the hypotenuse"], "ASA uses the included side; AAS uses a non-included side."], ["In the page 15 example, what is the given measure of ∠A and ∠X?", ["35°", "70°", "75°", "40°"], "Both top angles are marked 35°."], ["In the page 15 example, what is the given measure of ∠C and ∠Z?", ["75°", "35°", "70°", "105°"], "The two lower-right angles are marked 75°."], ["In the page 15 example, what is the length of BC and YZ?", ["4 cm", "5 cm", "6 cm", "7 cm"], "Both corresponding bases are labelled 4 cm."], ["In the page 14 exercise comparing △ABC and △DBC, which side is common to both triangles?", ["BC", "AB", "CD", "AD"], "BC is the side shared by △ABC and △DBC."], ["In that page 14 exercise, the angles at B and C are given equal in the two triangles. With BC as the included side, which condition establishes congruence?", ["ASA", "SSS", "RHS", "SSA"], "The two angles and the included common side BC satisfy ASA."], ["In the page 20 exercise, which two sides are labelled 7 cm and 5 cm in △ABC?", ["AB = 7 cm and BC = 5 cm", "AC = 7 cm and AB = 5 cm", "AB = 7 cm and AC = 5 cm", "BC = 7 cm and AC = 5 cm"], "The diagram labels AB as 7 cm and BC as 5 cm."], ["What is the marked angle in △ABC and △XYZ in the page 20 exercise?", ["47°", "35°", "75°", "30°"], "The corresponding marked angles at B and Z are 47°."], ["Which congruence condition applies to the two triangles in the page 20 first exercise?", ["SAS", "ASA", "AAS", "RHS"], "Two corresponding sides and the included angle are equal, so SAS applies."], ["In the page 20 first exercise, which vertex in △ABC corresponds to Z?", ["B", "A", "C", "X"], "The marked 47° angle at B corresponds to the marked 47° angle at Z."], ["In the page 20 crossing-lines exercise, why are ∠AOB and ∠DOC equal?", ["They are vertically opposite angles", "They are alternate angles", "They are right angles", "They are corresponding angles"], "The angles formed opposite each other by two intersecting lines are vertically opposite."], ["In the page 20 crossing-lines exercise, what does the midpoint information give?", ["AO = OD and BO = OC", "AO = BO and CO = DO", "AB = CD only", "AC = BD only"], "O is the midpoint of AD and BC, so AO = OD and BO = OC."]]}, {"name": "Angles in Isosceles and Equilateral Triangles", "qs": [["What is an isosceles triangle in the chapter's example?", ["A triangle with AB = AC", "A triangle with all sides unequal", "A triangle with all angles 90°", "A triangle with AB = BC = AC"], "The example states that △ABC is isosceles with AB = AC."], ["In an isosceles triangle, what can be said about the angles opposite the equal sides?", ["They are equal", "They add to 90°", "They are both right angles", "They are always 60°"], "Angles opposite equal sides are equal."], ["If AB = AC and ∠A = 80°, what is each of ∠B and ∠C?", ["50°", "40°", "80°", "100°"], "The base angles are equal and together measure 100°, so each is 50°."], ["In the construction for the isosceles triangle, what is drawn from A to BC?", ["An altitude", "A median from B", "A circle", "A parallel line"], "The instruction says to construct the altitude from A to BC."], ["What is an equilateral triangle?", ["A triangle with all sides equal", "A triangle with exactly two equal sides", "A triangle with one right angle", "A triangle with all angles unequal"], "The chapter defines an equilateral triangle as one in which all sides are equal."], ["In an equilateral triangle, how are the three angles related?", ["All three angles are equal", "Only two angles are equal", "One angle is twice another", "All three angles are right angles"], "The chapter deduces that all three angles of an equilateral triangle are equal."], ["What is the sum of the interior angles of a triangle?", ["180°", "90°", "270°", "360°"], "The chapter uses the fact that the three angles of a triangle add up to 180°."], ["What is each angle of an equilateral triangle?", ["60°", "45°", "90°", "120°"], "Three equal angles add to 180°, so each is 60°."], ["If two sides AB and BC of a triangle are equal, which angles are equal?", ["∠A and ∠C", "∠A and ∠B", "∠B and ∠C", "No angles are necessarily equal"], "Angles opposite equal sides AB and BC are ∠C and ∠A."], ["Which fact is used to find the base angles when ∠A = 80° in an isosceles triangle?", ["Angles opposite equal sides are equal", "All angles in a triangle are equal", "Alternate angles are equal", "A right angle is 90°"], "AB = AC makes the opposite base angles ∠B and ∠C equal."]]}, {"name": "Right Triangles and RHS", "qs": [["In the right-triangle construction example, what are the given lengths?", ["QR = 4 cm and PR = 5 cm", "QR = 5 cm and PR = 4 cm", "PQ = 4 cm and QR = 5 cm", "PQ = 5 cm and PR = 4 cm"], "The rough diagram labels QR as 4 cm and PR as 5 cm."], ["Which angle is 90° in △PQR?", ["∠Q", "∠P", "∠R", "None"], "The right-angle marker is at Q."], ["What three corresponding parts are used in RHS?", ["A right angle, hypotenuse and one other side", "Three sides", "Two angles and a side", "Two sides and the included angle"], "RHS uses the right angle, the hypotenuse and one other side."], ["Which side is opposite the right angle in △PQR?", ["PR", "PQ", "QR", "No side"], "PR is opposite ∠Q, the right angle, so it is the hypotenuse."], ["In the isosceles triangle proof, what is common to △ADB and △ADC?", ["AD", "AB", "AC", "BC"], "AD is the common side of the two triangles."], ["In that proof, what equal angles are obtained from the construction?", ["∠ADB = ∠ADC = 90°", "∠BAD = ∠DAC = 90°", "∠ABD = ∠ACD = 90°", "All six angles are 90°"], "AD is constructed as an altitude, making both angles at D right angles."], ["If AB = AC, AD is common, and both angles at D are right angles, which condition proves △ADB ≅ △ADC?", ["RHS", "SSA", "ASA", "AAS"], "The triangles satisfy the RHS condition."], ["What conclusion follows from △ADB ≅ △ADC?", ["∠B = ∠C", "AB = BC", "∠A = 90°", "BC = AD"], "Corresponding parts of congruent triangles are equal, so ∠B = ∠C."]]}, {"name": "Figure It Out and Applications", "qs": [["A square ABCD is divided by diagonal AC. Which triangles are compared?", ["△ABC and △ADC", "△ABD and △BCD", "△ABC and △CDA only", "△ABD and △ACD"], "The exercise asks to show △ABC ≅ △ADC."], ["Why are △ABC and △ADC congruent in the square?", ["The square has equal corresponding sides and AC is common", "They have only one equal angle", "They have equal areas only", "They have no corresponding sides"], "The square's sides are equal and AC is a common side, giving SSS."], ["Is △ABC also congruent to △CDA?", ["Yes, with a different correspondence order", "No, because the order is different", "Only if AC is a right angle", "The question says they are not congruent"], "The exercise asks about a second correspondence; the same two halves can be matched with the vertex order C-D-A."], ["If A is the centre of a circle and ∠BAC = 120°, what are AB and AC?", ["Radii, so AB = AC", "Diameters, so AB = AC", "Chords of different lengths", "Tangents"], "A is the centre, so AB and AC are radii of the same circle and are equal."], ["In the circle question, what is the sum of ∠B and ∠C?", ["60°", "120°", "180°", "240°"], "The angles of triangle ABC add to 180°; subtracting 120° leaves 60°."], ["What are ∠B and ∠C in the circle question?", ["30° each", "60° each", "45° each", "120° each"], "AB = AC, so ∠B = ∠C; their sum is 60°, so each is 30°."], ["Which real-life examples of congruent triangles are shown on the page?", ["Louvre Museum, Egyptian Pyramid of Giza, dome design and rangoli design", "Only bridges and roads", "Only circles and squares", "Only trees and flowers"], "The page illustrates congruent triangles in these four designs and structures."], ["Which structure is captioned as being in Paris?", ["World-famous Louvre Museum", "Egyptian Pyramid of Giza", "Dome design", "Rangoli design"], "The caption identifies the Louvre Museum in Paris."], ["Which picture is captioned as a rangoli design?", ["The coloured geometric pattern", "The pyramid", "The dome", "The Louvre"], "The coloured geometric pattern is captioned 'Rangoli design'."], ["According to the page 21 instruction, what do single and double line marks indicate?", ["Segments with the same number of marks are equal", "Every segment is equal", "Only horizontal segments are equal", "Marks show angle size"], "The convention says segments marked with one stroke are equal to each other, and those with two strokes are equal to each other, etc."]]}];
+const PAL=["#4FB3A9","#F59E0B","#F2A541","#6C8EE0","#14B8A6","#6A994E","#E07A5F","#3D9BD1"];
+CH.forEach((c,i)=>{if(!c.color)c.color=PAL[i%PAL.length];if(!c.id)c.id="s"+i;});
+const COUNTS=[10,25,50,"All"];
+let selChaps=new Set(CH.map(c=>c.id)), selCount=25;
+let deck=[],idx=0,score=0,answered=false,wrong=[],results={};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderHome(){
+  const cc=$("chapChips");cc.innerHTML="";
+  const total=CH.reduce((n,c)=>n+c.qs.length,0);
+  const all=document.createElement("button");all.className="chip";
+  all.setAttribute("aria-pressed",selChaps.size===CH.length);
+  all.innerHTML=`All sections <small>${total}</small>`;
+  all.onclick=()=>{selChaps=selChaps.size===CH.length?new Set():new Set(CH.map(c=>c.id));renderHome();};
+  cc.appendChild(all);
+  CH.forEach(c=>{const b=document.createElement("button");b.className="chip";
+    b.setAttribute("aria-pressed",selChaps.has(c.id));
+    b.innerHTML=`<span class="dot" style="background:${c.color}"></span>${esc(c.name)} <small>${c.qs.length}</small>`;
+    b.onclick=()=>{selChaps.has(c.id)?selChaps.delete(c.id):selChaps.add(c.id);renderHome();};
+    cc.appendChild(b);});
+  const kc=$("countChips");kc.innerHTML="";
+  COUNTS.forEach(n=>{const b=document.createElement("button");b.className="chip";
+    b.setAttribute("aria-pressed",selCount===n);b.textContent=n;
+    b.onclick=()=>{selCount=n;renderHome();};kc.appendChild(b);});
+  const pool=CH.filter(c=>selChaps.has(c.id)).reduce((n,c)=>n+c.qs.length,0);
+  $("poolInfo").textContent=pool?`${pool} questions available`:"Pick at least one section";
+  $("startBtn").disabled=!pool;
+}
+const build=list=>list.map(({c,q})=>({c,text:q[0],exp:q[2],opts:shuffle(q[1].map((t,i)=>({t,ok:i===0})))}));
+function start(list){deck=list;idx=0;score=0;wrong=[];results={};show("quiz");renderQ();}
+function startFromHome(){
+  let pool=[];CH.filter(c=>selChaps.has(c.id)).forEach(c=>c.qs.forEach(q=>pool.push({c,q})));
+  pool=shuffle(pool);if(selCount!=="All")pool=pool.slice(0,selCount);
+  start(build(pool));
+}
+function show(id){["home","quiz","result"].forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0);}
+function renderQ(){
+  answered=false;const d=deck[idx];
+  $("qCount").textContent=`Question ${idx+1} of ${deck.length}`;
+  $("qScore").textContent=`Score ${score}`;
+  $("qBar").style.width=(idx/deck.length*100)+"%";
+  $("qTag").innerHTML=`<span class="dot" style="background:${d.c.color}"></span>${esc(d.c.name)}`;
+  $("qText").textContent=d.text;
+  const o=$("qOpts");o.innerHTML="";
+  d.opts.forEach((op,i)=>{const b=document.createElement("button");b.className="opt";
+    b.innerHTML=`<b>${"ABCD"[i]}</b><span>${esc(op.t)}</span>`;b.onclick=()=>pick(i);o.appendChild(b);});
+  $("qFb").className="fb";$("qFb").textContent="";
+  $("nextBtn").disabled=true;$("nextBtn").textContent=idx===deck.length-1?"See score":"Next";
+  o.firstChild.focus({preventScroll:true});
+}
+function pick(i){
+  if(answered)return;answered=true;
+  const d=deck[idx],btns=[...$("qOpts").children],ok=d.opts[i].ok;
+  btns.forEach((b,j)=>{b.disabled=true;if(d.opts[j].ok)b.classList.add("ok");});
+  const r=results[d.c.id]||(results[d.c.id]={c:d.c,right:0,total:0});r.total++;
+  const fb=$("qFb"),ans=d.opts.find(x=>x.ok).t;
+  if(ok){score++;r.right++;fb.className="fb show ok";fb.innerHTML=`<strong>Correct.</strong> ${esc(d.exp)}`;}
+  else{btns[i].classList.add("bad");wrong.push({d,picked:d.opts[i].t});
+    fb.className="fb show bad";fb.innerHTML=`<strong>Not quite.</strong> Answer: ${esc(ans)}. ${esc(d.exp)}`;}
+  $("qScore").textContent=`Score ${score}`;
+  $("nextBtn").disabled=false;$("nextBtn").focus({preventScroll:true});
+}
+function next(){if(!answered)return;idx++;idx<deck.length?renderQ():finish();}
+function finish(){
+  const n=Object.values(results).reduce((s,r)=>s+r.total,0);
+  show("result");
+  $("rScore").textContent=`${score}/${n}`;
+  const pct=n?Math.round(score/n*100):0;$("rPct").textContent=`${pct}%`;
+  $("rMsg").textContent=!n?"No questions answered.":pct>=90?"Excellent — you know this very well.":pct>=70?"Good work. Review the mistakes below to close the gaps.":pct>=50?"Fair. Go through the mistakes, then retry them.":"Re-read the lesson, then retry the wrong answers.";
+  $("rBrk").innerHTML=Object.values(results).map(r=>`<div><span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${r.c.color};margin-right:8px"></span>${esc(r.c.name)}</span><strong>${r.right}/${r.total}</strong></div>`).join("");
+  $("retryWrongBtn").classList.toggle("hidden",!wrong.length);
+  $("revPanel").classList.toggle("hidden",!wrong.length);
+  $("rRev").innerHTML=wrong.map(w=>`<div class="rev"><p><strong>${esc(w.d.text)}</strong></p><p class="y">Your answer: ${esc(w.picked)}</p><p class="c">Correct: ${esc(w.d.opts.find(x=>x.ok).t)}</p><p class="hint">${esc(w.d.exp)}</p></div>`).join("");
+}
+$("startBtn").onclick=startFromHome;
+$("nextBtn").onclick=next;
+$("quitBtn").onclick=finish;
+$("homeBtn").onclick=()=>{show("home");renderHome();};
+$("retryWrongBtn").onclick=()=>start(shuffle(wrong.map(w=>({...w.d,opts:shuffle(w.d.opts)}))));
+document.addEventListener("keydown",e=>{
+  if($("quiz").classList.contains("hidden"))return;
+  const k=parseInt(e.key,10);
+  if(k>=1&&k<=4&&!answered&&deck[idx].opts[k-1])pick(k-1);
+  else if(e.key==="Enter"&&answered){e.preventDefault();next();}
+});
+renderHome();
+</script>
+</body>
+</html>
